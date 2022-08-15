@@ -64,7 +64,7 @@ const Login = ({setIsLoggedIn}) => {
         "password" : datum.password
       }
       axios
-      .post(`http://pms-apis.herokuapp.com/core/auth/new/login/`, datas)
+      .post(`https://pms-apis.herokuapp.com/core/auth/new/login/`, datas)
       .then((response) => {
           if (response.status == 200) {
             setLoading(false)
