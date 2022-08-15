@@ -95,6 +95,7 @@ const MTable = () => {
     useSubDepartment,
     usedepartments,
     useSubDepartments,
+    useTeamDepartments,
     useroles,
     useUsers,
     urlKEY
@@ -184,6 +185,14 @@ const MTable = () => {
           perspectives !== [] && setLoading(false);
           console.log(result);
         });
+    } else if (Dashboardpage === "sub-subDept") {
+      fetch("https://pms-apis.herokuapp.com/core/subsub/")
+        .then((res) => res.json())
+        .then((result) => {
+          setKpis(result);
+          perspectives !== [] && setLoading(false);
+          console.log(result);
+        });
     } else if (Dashboardpage === "role") {
       fetch("https://pms-apis.herokuapp.com/core/role/")
         .then((res) => res.json())
@@ -261,6 +270,32 @@ const MTable = () => {
                 </TableCell>
               </TableRow>
             )}
+            {Dashboardpage === "sub-subDept" && (
+              <TableRow>
+                <TableCell className={classes.tableHeaderCell}>
+                  Team Department
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  SubDepartment
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  Manage
+                </TableCell>
+              </TableRow>
+            )}
+            {/* {Dashboardpage === "sub-sub-subDept" && (
+              <TableRow>
+                <TableCell className={classes.tableHeaderCell}>
+                  Individual Departments
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  Team Department
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  Manage
+                </TableCell>
+              </TableRow>
+            )} */}
             {Dashboardpage === "role" && (
               <TableRow>
                 <TableCell className={classes.tableHeaderCell}>
@@ -368,6 +403,30 @@ const MTable = () => {
                     </TableCell>
                   </>
                 )}
+                {Dashboardpage === "sub-subDept" && (
+                  <>
+                    <TableCell>{kpi.name}</TableCell>
+                    <TableCell>
+                      {useSubDepartments &&
+                        useSubDepartments.length > 0 &&
+                        useSubDepartments
+                          .filter((subDep) => subDep.id === kpi.subdepartment)
+                          .map((subd, index) => subd.name)}
+                    </TableCell>
+                  </>
+                )}
+                {/* {Dashboardpage === "sub-sub-subDept" && (
+                  <>
+                    <TableCell>{kpi.name}</TableCell>
+                    <TableCell>
+                      {useTeamDepartments &&
+                        useTeamDepartments.length > 0 &&
+                        useTeamDepartments
+                          .filter((teamDep) => teamDep.id === kpi.teamDepartment)
+                          .map((teamd, index) => teamd.name)}
+                    </TableCell>
+                  </>
+                )} */}
                 {Dashboardpage === "role" && (
                   <>
                     <TableCell>{kpi.role_name}</TableCell>
@@ -497,6 +556,7 @@ const MTable = () => {
           />
           {Dashboardpage === "dept" && "Add Department"}
           {Dashboardpage === "subDept" && "Add SubDepartment"}
+          {Dashboardpage === "sub-subDept" && "Add Team Department"}
           {Dashboardpage === "role" && "Add Role"}
           {Dashboardpage === "user" && "Add User"}
           {Dashboardpage === "persp" && "Add Perspective"}

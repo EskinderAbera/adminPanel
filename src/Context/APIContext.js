@@ -7,6 +7,7 @@ export function APIContextProvider({ children }) {
   const [useSubDepartment, setSubDepartment] = useState("");
   const [usedepartments, setDepartments] = useState([]);
   const [useSubDepartments, setSubDepartments] = useState([]);
+  const [useTeamDepartments, setTeamDepartments] = useState([]);
   const [useroles, setRoles] = useState([]);
   const [useUsers, setUsers] = useState([]);
   const [urlKEY, setUrlKEY] = useState("");
@@ -29,6 +30,10 @@ export function APIContextProvider({ children }) {
 
   const changeSubDepartments = (subDepartment) => {
     setSubDepartments(subDepartment);
+  };
+
+  const changeTeamDepartments = (teamDep) => {
+    setTeamDepartments(teamDep);
   };
 
   const changeUsers = (users) => {
@@ -65,6 +70,21 @@ export function APIContextProvider({ children }) {
 
   const updateSubDepartment = (id, updatedSubDepartment) => {
     setSubDepartments(useSubDepartments.map((Subdep) => Subdep.id === id ? updatedSubDepartment : Subdep))
+}
+
+  const addTeamDepartment = (id, name, subdepartment) => {
+    setTeamDepartments([
+      ...useTeamDepartments,
+      {
+        id,
+        name,
+        subdepartment,
+      },
+    ]);
+  };
+
+  const updateTeamDepartment = (id, updatedTeamDepartment) => {
+    setTeamDepartments(useTeamDepartments.map((teamDep) => teamDep.id === id ? updateTeamDepartment : teamDep))
 }
 
   const addRoles = (role_id, role_name, hierarchy) => {
@@ -116,6 +136,7 @@ export function APIContextProvider({ children }) {
         usedepartments,
         useroles,
         useSubDepartments,
+        useTeamDepartments,
         useUsers,
         urlKEY,
         changeUserType,
@@ -128,10 +149,12 @@ export function APIContextProvider({ children }) {
         changeUrlKEY,
         addDepartment,
         addSubDepartment,
+        addTeamDepartment,
         addRoles,
         addUsers,
         updateDepartment,
         updateSubDepartment,
+        updateTeamDepartment,
         updateRoles
       }}
     >

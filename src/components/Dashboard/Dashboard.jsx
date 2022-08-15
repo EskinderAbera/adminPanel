@@ -4,7 +4,7 @@ import { MdOutlineWavingHand } from "react-icons/md";
 import { useNavigate, Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Analytics from "../Analytics/Analytics";
-import { useEffect} from "react";
+import { useEffect } from "react";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -18,6 +18,9 @@ const Dashboard = () => {
 
   const handleSubDepartment = () => {
     navigate("/subDepartment", { state: { page: "subDept" } });
+  };
+  const handleTeamDepartment = () => {
+    navigate("/teamDepartment", { state: { page: "sub-subDept" } });
   };
 
   const handleRoles = () => {
@@ -55,22 +58,29 @@ const Dashboard = () => {
         <div className={styles.lines} onClick={handleSubDepartment}>
           <Spline titles="SubDepartment" />
         </div>
-        <div className={styles.lines} onClick={handleRoles}>
-          <Spline titles="Roles" />
+        <div className={styles.lines} onClick={handleTeamDepartment}>
+          <Spline titles="Team Department" />
         </div>
       </div>
       <div className={styles.charts}>
+      <div className={styles.lines} onClick={handleRoles}>
+          <Spline titles="Individual Departments" />
+        </div>
+        <div className={styles.lines} onClick={handleRoles}>
+          <Spline titles="Roles" />
+        </div>
         <div className={styles.lines} onClick={handleUsers}>
           <Spline titles="Users" />
         </div>
-        <div className={styles.lines} onClick={handlePerspectives}>
+        
+      </div>
+      <div className={styles.charts}>
+      <div className={styles.lines} onClick={handlePerspectives}>
           <Spline titles="Perspectives" />
         </div>
         <div className={styles.lines} onClick={handleObjectives}>
           <Spline titles="Objectives" />
         </div>
-      </div>
-      <div className={styles.charts}>
         <div className={styles.lines} onClick={handleKpis}>
           <Spline titles="KPIs" />
         </div>

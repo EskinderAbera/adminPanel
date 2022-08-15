@@ -47,6 +47,7 @@ function App() {
                 <Route path="/messages" element={<main>Messages</main>} />
                 <Route path="/dept" element={<Protected isLoggedIn={isLoggedIn}><MTable /></Protected>} />
                 <Route path="/subDepartment" element={<Protected isLoggedIn={isLoggedIn}><MTable /></Protected>} />
+                <Route path="/teamDepartment" element={<Protected isLoggedIn={isLoggedIn}><MTable /></Protected>} />
                 <Route path="/role" element={<Protected isLoggedIn={isLoggedIn}><MTable /></Protected>} />
                 <Route path="/user" element={<Protected isLoggedIn={isLoggedIn}><MTable /></Protected>} />
                 <Route path="/perspective" element={<Protected isLoggedIn={isLoggedIn}><MTable /></Protected>} />
