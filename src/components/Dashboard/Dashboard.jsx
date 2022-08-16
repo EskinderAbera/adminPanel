@@ -58,12 +58,12 @@ const Dashboard = () => {
         <div className={styles.lines} onClick={handleSubDepartment}>
           <Spline titles="SubDepartment" />
         </div>
-        <div className={styles.lines} onClick={handleTeamDepartment}>
+        <div className={styles.lines} /*onClick={handleTeamDepartment}*/>
           <Spline titles="Team Department" />
         </div>
       </div>
       <div className={styles.charts}>
-      <div className={styles.lines} onClick={handleRoles}>
+      <div className={styles.lines} /*onClick={handleRoles}*/>
           <Spline titles="Individual Departments" />
         </div>
         <div className={styles.lines} onClick={handleRoles}>
