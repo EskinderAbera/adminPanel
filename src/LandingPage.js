@@ -169,11 +169,13 @@ const LandingPage = () => {
     console.log(departmentId);
     console.log(subdepartmentId);
     usersList
-      .filter(
-        (user) =>
-          user.department === departmentId &&
-          user.subdepartment === subdepartmentId &&
-          user.role === roleId
+      .filter((user) =>
+        role !== "President"
+          ? user.department === departmentId &&
+            user.subdepartment === subdepartmentId &&
+            user.role === roleId
+          : user.department === departmentId &&
+            user.subdepartment === subdepartmentId
       )
       .map((us) => {
         console.log("userId: " + us.id);
