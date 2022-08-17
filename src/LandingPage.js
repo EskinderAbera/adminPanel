@@ -37,10 +37,12 @@ const LandingPage = () => {
   const [loading, setLoading] = useState(true);
   const [departmentResponse, setDepartmentResponse] = useState([]);
   const [subDepartmentResponse, setSubdepartmentResponse] = useState([]);
+  const [roleResponse, setRoleResponse] = useState([]);
   const [department, setDepartment] = useState("");
   const [departmentId, setDepartmentId] = useState(null);
   const [departments, setDepartments] = useState([]);
   const [role, setRole] = useState("");
+  const [roleId, setRoleId] = useState("");
   const [subdepartments, setSubdepartments] = useState([]);
   const [subdepartment, setSubdepartment] = useState("");
   const [subdepartmentId, setSubdepartmentId] = useState(null);
@@ -67,6 +69,11 @@ const LandingPage = () => {
     changeUserType(e.target.value);
     setRole(e.target.value);
     console.log(e.target.value);
+
+    roleResponse
+      .filter((role) => role.role_name === e.target.value)
+      .map((r) => setRoleId(r.role_id));
+
     if (e.target.value !== "President" && e.target.value !== "select") {
       setDepartments(departmentResponse);
     } else {
@@ -75,7 +82,7 @@ const LandingPage = () => {
     if (department !== "select") {
       setSubdepartments(subDepartmentResponse);
     }
-    if (e.target.value !== "Director") {
+    if (e.target.value !== "director") {
       setSubdepartments([]);
     }
   };
@@ -88,12 +95,12 @@ const LandingPage = () => {
       .filter((department) => department.dept_name === e.target.value)
       .map((dep) => setDepartmentId(dep.dept_id));
 
-    if (e.target.value !== "select" && role === "Director") {
+    if (e.target.value !== "select" && role === "director") {
       setSubdepartments(subDepartmentResponse);
     } else {
       setSubdepartments([]);
     }
-    if (role !== "Director") {
+    if (role !== "director") {
       setSubdepartments([]);
     }
 
@@ -108,6 +115,7 @@ const LandingPage = () => {
   };
 
   useEffect(() => {
+    // setRoleResponse(["President, VicePresident, Director, Manager"])
     fetch("https://pms-apis.herokuapp.com/core/department/")
       .then((response) => response.json())
       .then((res) => {
@@ -129,6 +137,7 @@ const LandingPage = () => {
     fetch("https://pms-apis.herokuapp.com/core/role/")
       .then((response) => response.json())
       .then((res) => {
+        setRoleResponse(res);
         changeRoles(res);
       });
     fetch("https://pms-apis.herokuapp.com/core/users/")
@@ -137,11 +146,17 @@ const LandingPage = () => {
         changeUsers(res);
         setUsersList(res);
       });
+  }, []);
 
-    if (departmentResponse !== [] && subDepartmentResponse !== []) {
+  useEffect(() => {
+    if (
+      departmentResponse.length !== 0 &&
+      subDepartmentResponse.length !== 0 &&
+      roleResponse.length !== 0
+    ) {
       setLoading(false);
     }
-  }, []);
+  }, [departmentResponse, subDepartmentResponse, roleResponse]);
 
   const handleNavigate = () => {
     const role = document.getElementById("roleId").value;
@@ -152,15 +167,16 @@ const LandingPage = () => {
     console.log("subDepartment: " + subDepartment);
 
     console.log(departmentId);
-        console.log(subdepartmentId);
+    console.log(subdepartmentId);
     usersList
       .filter(
         (user) =>
           user.department === departmentId &&
-          user.subdepartment === subdepartmentId
+          user.subdepartment === subdepartmentId &&
+          user.role === roleId
       )
       .map((us) => {
-        
+        console.log("userId: " + us.id);
         changeUrlKEY(us.id);
         setUserId(us.id);
       });
@@ -178,7 +194,7 @@ const LandingPage = () => {
       const path = "/dashboard";
       navigate(path);
     } else if (
-      role === "Director" &&
+      role === "director" &&
       department !== "select" &&
       subDepartment !== "select"
     ) {
@@ -232,9 +248,11 @@ const LandingPage = () => {
                         onChange={(e) => handleRoleChange(e)}
                       >
                         <option value="select">Select....</option>
-                        <option>President</option>
-                        <option>Vice President</option>
-                        <option>Director</option>
+                        {roleResponse.map((roles, index) => (
+                          <option key={index} value={roles.role_name}>
+                            {roles.role_name}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
