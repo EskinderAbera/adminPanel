@@ -1374,7 +1374,7 @@ const EditDept = () => {
                     Select
                   </option>
                   {useUsers
-                    // .filter((u) => filterperspectives!==[] ? u.id === filterperspectives[0].user : u.id !== null)
+                    .filter((u) => filterperspectives.length !==0 ? u.id === filterperspectives[0].user : u.id !== null)
                     .map((user, index) => (
                       <option key={index} value={user.username}>
                         {user.username}
