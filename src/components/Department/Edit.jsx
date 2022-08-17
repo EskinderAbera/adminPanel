@@ -1283,7 +1283,7 @@ const EditDept = () => {
                   <option key="select" value="select">
                     Select
                   </option>
-                  {ceoPerspective.map((perspect, index) => (
+                  {ceoPerspective.length!==0 && ceoPerspective.map((perspect, index) => (
                     <option key={index} value={perspect.perspective_name}>
                       {perspect.perspective_name}
                     </option>
@@ -1303,7 +1303,7 @@ const EditDept = () => {
                   <option key="select" value="select">
                     Select
                   </option>
-                  {ceoObjective
+                  {ceoObjective.length!==0 && ceoObjective
                     .filter((obj) => obj.perspective === ceoPerspectiveId)
                     .map((objec, index) => (
                       <option key={index} value={objec.objective_name}>
@@ -1322,7 +1322,7 @@ const EditDept = () => {
                     Select
                   </option>
                   {useUsers
-                    .filter((u) => filterperspectives !== [] && u.id === filterperspectives[0].user)
+                    .filter((u) => filterperspectives.length !==0 ? u.id === filterperspectives[0].user : u.id !== null)
                     .map((user, index) => (
                       <option key={index} value={user.username}>
                         {user.username}
@@ -1445,7 +1445,7 @@ const EditDept = () => {
                     Select
                   </option>
                   {useUsers
-                    .filter((u) => u.id === filterperspectives[0].user)
+                    .filter((u) => filterperspectives.length!==0 ? u.id === filterperspectives[0].user: u.id !== null)
                     .map((user, index) => (
                       <option key={index} value={user.username}>
                         {user.username}
