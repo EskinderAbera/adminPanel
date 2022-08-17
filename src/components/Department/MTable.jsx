@@ -185,6 +185,14 @@ const MTable = () => {
           perspectives !== [] && setLoading(false);
           console.log(result);
         });
+    } else if (Dashboardpage === "individualDep") {
+      fetch("https://pms-apis.herokuapp.com/core/individual/")
+        .then((res) => res.json())
+        .then((result) => {
+          setKpis(result);
+          perspectives !== [] && setLoading(false);
+          console.log(result);
+        });
     } else if (Dashboardpage === "sub-subDept") {
       fetch("https://pms-apis.herokuapp.com/core/subsub/")
         .then((res) => res.json())
@@ -283,7 +291,7 @@ const MTable = () => {
                 </TableCell>
               </TableRow>
             )}
-            {/* {Dashboardpage === "sub-sub-subDept" && (
+            {Dashboardpage === "individualDep" && (
               <TableRow>
                 <TableCell className={classes.tableHeaderCell}>
                   Individual Departments
@@ -295,7 +303,7 @@ const MTable = () => {
                   Manage
                 </TableCell>
               </TableRow>
-            )} */}
+            )}
             {Dashboardpage === "role" && (
               <TableRow>
                 <TableCell className={classes.tableHeaderCell}>
@@ -415,18 +423,18 @@ const MTable = () => {
                     </TableCell>
                   </>
                 )}
-                {/* {Dashboardpage === "sub-sub-subDept" && (
+                {Dashboardpage === "individualDep" && (
                   <>
                     <TableCell>{kpi.name}</TableCell>
                     <TableCell>
                       {useTeamDepartments &&
                         useTeamDepartments.length > 0 &&
                         useTeamDepartments
-                          .filter((teamDep) => teamDep.id === kpi.teamDepartment)
-                          .map((teamd, index) => teamd.name)}
+                          .filter((indivDep) => indivDep.id === kpi.sub_subdepartment)
+                          .map((indivDe, index) => indivDe.name)}
                     </TableCell>
                   </>
-                )} */}
+                )}
                 {Dashboardpage === "role" && (
                   <>
                     <TableCell>{kpi.role_name}</TableCell>
@@ -557,6 +565,7 @@ const MTable = () => {
           {Dashboardpage === "dept" && "Add Department"}
           {Dashboardpage === "subDept" && "Add SubDepartment"}
           {Dashboardpage === "sub-subDept" && "Add Team Department"}
+          {Dashboardpage === "individualDep" && "Add Individual Department"}
           {Dashboardpage === "role" && "Add Role"}
           {Dashboardpage === "user" && "Add User"}
           {Dashboardpage === "persp" && "Add Perspective"}

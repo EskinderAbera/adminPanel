@@ -27,6 +27,7 @@ const LandingPage = () => {
     changeUserType,
     changeDepartment,
     changeSubDepartment,
+    changeTeamDepartments,
     changeDepartments,
     changeSubDepartments,
     changeRoles,
@@ -118,6 +119,12 @@ const LandingPage = () => {
       .then((res) => {
         setSubdepartmentResponse(res);
         changeSubDepartments(res);
+      });
+    fetch("https://pms-apis.herokuapp.com/core/subsub/")
+      .then((response) => response.json())
+      .then((res) => {
+        // setSubdepartmentResponse(res);
+        changeTeamDepartments(res);
       });
     fetch("https://pms-apis.herokuapp.com/core/role/")
       .then((response) => response.json())

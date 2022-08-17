@@ -25,6 +25,8 @@ const EditDept = () => {
   const [subDepartmentId, setSubDepartmentId] = useState("");
   const [teamDepartment, setTeamDepartment] = useState("");
   const [teamDepartmentId, setTeamDepartmentId] = useState("");
+  const [individualDepartment, setIndividualDepartment] = useState("");
+  const [individaulDepartmentId, setIndividualDepartmentId] = useState("");
   const [password, setPassword] = useState("");
   const [Role_Name, setRoleName] = useState("");
   const [Hierarchy, setHierarchy] = useState("");
@@ -41,10 +43,6 @@ const EditDept = () => {
   const [ceoPerspectiveId, setCeoPerspectiveId] = useState("");
   const [ceoObjective, setCeoObjective] = useState([]);
   const [ceoObjectiveId, setCeoObjectiveId] = useState("");
-  const [users, setUsers] = useState([]);
-  const [roles, setRoles] = useState([]);
-  const [departments, setDepartments] = useState([]);
-  const [subDepartments, setSubDepartments] = useState([]);
   const [displayError, setDisplayError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const {
@@ -102,7 +100,10 @@ const EditDept = () => {
       setDepartmentId(index !== "" ? kpis[index].department : "");
     } else if (DashboardPage === "sub-subDept") {
       setTeamDepartment(index !== "" ? kpis[index].name : "");
-      setTeamDepartmentId(index !== "" ? kpis[index].id : "");
+      setSubDepartmentId(index !== "" ? kpis[index].subdepartment : "");
+    } else if (DashboardPage === "individualDep") {
+      setIndividualDepartment(index !== "" ? kpis[index].name : "");
+      setTeamDepartmentId(index !== "" ? kpis[index].sub_subdepartment : "");
     } else if (DashboardPage === "role") {
       setRoleName(index !== "" ? kpis[index].role_name : "");
       setHierarchy(index !== "" ? kpis[index].hierarchy : "");
@@ -235,12 +236,39 @@ const EditDept = () => {
         .catch((error) => {
           alert("There was an error!", error);
         });
+    } else if (DashboardPage === "individualDep") {
+      const indiDep = {
+        name: individualDepartment,
+        sub_subdepartment: teamDepartmentId,
+      };
+      if (individualDepartment === "" || teamDepartmentId === "") {
+        setDisplayError(true);
+        return;
+      } else {
+        setDisplayError(false);
+      }
+      axios
+        .post("https://pms-apis.herokuapp.com/core/individual/", indiDep)
+        .then((res) => {
+          const data = res.data;
+          if (res.status !== 201) {
+            const error = (data && data.message) || res.status;
+            return Promise.reject(error);
+          }
+          alert("Individual Department ADDED Successfully");
+          console.log(data);
+          setIndividualDepartment("");
+          setTeamDepartment("");
+        })
+        .catch((error) => {
+          alert("There was an error!", error);
+        });
     } else if (DashboardPage === "role") {
       const role = {
         role_name: Role_Name,
         hierarchy: Hierarchy,
       };
-      
+
       if(Role_Name === '' || Hierarchy === ''){
         setDisplayError(true);
         return;
@@ -532,7 +560,36 @@ const EditDept = () => {
         .catch((error) => {
           alert("There was an error!", error);
         });
-    } else if (DashboardPage === "role") {
+    }else if (DashboardPage === "individualDep") {
+      const indiDep = {
+        name: individualDepartment,
+        sub_subdepartment: teamDepartmentId,
+      };
+      if (individualDepartment === "" || teamDepartmentId === "") {
+        setDisplayError(true);
+        return;
+      } else {
+        setDisplayError(false);
+      }
+      axios
+        .put(`https://pms-apis.herokuapp.com/core/individual/${kpis[index].id}/`, indiDep)
+        .then((res) => {
+          const data = res.data;
+          if (res.status !== 201) {
+            console.log(res);
+            const error = (data && data.message) || res.status;
+            return Promise.reject(error);
+          }
+          alert("Individual Department UPDATE Successful");
+          console.log(data);
+          setIndividualDepartment("");
+          setTeamDepartment("");
+        })
+        .catch((error) => {
+          alert("There was an error!", error);
+        });
+      } 
+    else if (DashboardPage === "role") {
       const role = {
         role_name: Role_Name,
         hierarchy: Hierarchy,
@@ -822,6 +879,15 @@ const EditDept = () => {
       .filter((subDep) => subDep.name === e.target.value)
       .map((sub) => setSubDepartmentId(sub.id));
   };
+  const handleTeamDepartmentChange = (e) => {
+    setTeamDepartment(e.target.value);
+    if (e.target.value === "select") {
+      setTeamDepartment("Select");
+    }
+    useTeamDepartments
+      .filter((teamDep) => teamDep.name === e.target.value)
+      .map((td) => setTeamDepartmentId(td.id));
+  }
   const {
     register,
     handleSubmit,
@@ -948,6 +1014,45 @@ const EditDept = () => {
                   {useSubDepartments.map((dep, index) => (
                     <option key={index} value={dep.name}>
                       {dep.name}
+                    </option>
+                  ))}
+                </select>
+                {displayError && (
+                  <span className="errorStyle">This field is required</span>
+                )}
+              </div>
+            </>
+          )}
+          {DashboardPage === "individualDep" && (
+            <>
+              <div>
+                <span style={{ fontSize: "1.5rem" }}> Individual Department: </span>
+                <input
+                  className="DeptInput"
+                  type="text"
+                  onChange={(e) => setIndividualDepartment(e.target.value)}
+                 value={individualDepartment}
+                />
+                {displayError && (
+                  <span className="errorStyle">This field is required</span>
+                )}
+              </div>
+
+              <div>
+                <span style={{ fontSize: "1.5rem" }}> Team Department: </span>
+
+                <select
+                  id="subDepartment"
+                  name="message"
+                  onChange={(e) => handleTeamDepartmentChange(e)}
+                  value={teamDepartment}
+                >
+                  <option key="select" value="select">
+                    Select
+                  </option>
+                  {useTeamDepartments.map((teamDep, index) => (
+                    <option key={index} value={teamDep.name}>
+                      {teamDep.name}
                     </option>
                   ))}
                 </select>

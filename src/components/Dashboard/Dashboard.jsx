@@ -22,6 +22,9 @@ const Dashboard = () => {
   const handleTeamDepartment = () => {
     navigate("/teamDepartment", { state: { page: "sub-subDept" } });
   };
+  const handleIndividualDepartment = () => {
+    navigate("/individualDepartment", { state: { page: "individualDep" } });
+  };
 
   const handleRoles = () => {
     navigate("/role", { state: { page: "role" } });
@@ -58,12 +61,12 @@ const Dashboard = () => {
         <div className={styles.lines} onClick={handleSubDepartment}>
           <Spline titles="SubDepartment" />
         </div>
-        <div className={styles.lines} /*onClick={handleTeamDepartment}*/>
+        <div className={styles.lines} onClick={handleTeamDepartment}>
           <Spline titles="Team Department" />
         </div>
       </div>
       <div className={styles.charts}>
-      <div className={styles.lines} /*onClick={handleRoles}*/>
+      <div className={styles.lines} onClick={handleIndividualDepartment}>
           <Spline titles="Individual Departments" />
         </div>
         <div className={styles.lines} onClick={handleRoles}>

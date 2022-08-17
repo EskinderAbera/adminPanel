@@ -142,6 +142,7 @@ export function APIContextProvider({ children }) {
         changeUserType,
         changeDepartment,
         changeSubDepartment,
+        changeTeamDepartments,
         changeDepartments,
         changeRoles,
         changeSubDepartments,

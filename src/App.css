@@ -84,3 +84,8 @@ input{
     color: red;
     margin: 10px;
 }
+.form-control {
+	border-radius: 2px;
+	box-shadow: none;
+	border-color: #dddddd;
+}
