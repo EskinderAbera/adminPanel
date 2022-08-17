@@ -72,6 +72,8 @@ const EditDept = () => {
   const kpiUrl = `https://pms-apis.herokuapp.com/bsc/kpi/${urlKEY}/`;
 
   useEffect(() => {
+    console.log("filterperspectives");
+    console.log(filterperspectives);
     fetch(perspUrl)
       .then((response) => response.json())
       .then((res) => {
@@ -1320,7 +1322,7 @@ const EditDept = () => {
                     Select
                   </option>
                   {useUsers
-                    .filter((u) => u.id === filterperspectives[0].user)
+                    .filter((u) => filterperspectives !== [] && u.id === filterperspectives[0].user)
                     .map((user, index) => (
                       <option key={index} value={user.username}>
                         {user.username}
@@ -1372,7 +1374,7 @@ const EditDept = () => {
                     Select
                   </option>
                   {useUsers
-                    .filter((u) => u.id === filterperspectives[0].user)
+                    // .filter((u) => filterperspectives!==[] ? u.id === filterperspectives[0].user : u.id !== null)
                     .map((user, index) => (
                       <option key={index} value={user.username}>
                         {user.username}
