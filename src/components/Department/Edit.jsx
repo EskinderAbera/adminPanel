@@ -43,13 +43,13 @@ const EditDept = () => {
   const [ceoPerspectiveId, setCeoPerspectiveId] = useState("");
   const [ceoObjective, setCeoObjective] = useState([]);
   const [ceoObjectiveId, setCeoObjectiveId] = useState("");
-  const [displayError, setDisplayError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const {
     userType,
     useDepartment,
     useSubDepartment,
     useTeamDepartments,
+    useIndividualDepartments,
     useUsers,
     useroles,
     usedepartments,
@@ -157,12 +157,6 @@ const EditDept = () => {
       const dept = {
         dept_name: department,
       };
-      if (department === "") {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .post("https://pms-apis.herokuapp.com/core/department/", dept)
         .then((res) => {
@@ -172,27 +166,21 @@ const EditDept = () => {
             return Promise.reject(error);
           }
           // HandleSuccess();
-          alert("Department ADDED Successfully");
+          // alert("Department ADDED Successfully");
+          HandleSuccess("Department");
           console.log(data);
           addDepartment(data.dept_id, data.dept_name);
           setDepartment("");
         })
 
         .catch((error) => {
-          // HandleError();
-          // alert('There was an error!', error);
+          HandleError();
         });
     } else if (DashboardPage === "subDept") {
       const subDept = {
         name: subDepartment,
         department: departmentId,
       };
-      if (departmentId === "" || subDepartment === "") {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .post("https://pms-apis.herokuapp.com/core/subdepartment/", subDept)
         .then((res) => {
@@ -201,26 +189,21 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("SubDepartment ADDED Successfully");
+          // alert("SubDepartment ADDED Successfully");
+          HandleSuccess("SubDepartment");
           console.log(data);
           addSubDepartment(data.id, data.name, data.department);
           setSubDepartment("");
           setDepartmentId("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     } else if (DashboardPage === "sub-subDept") {
       const teamDept = {
         name: teamDepartment,
         subdepartment: subDepartmentId,
       };
-      if (subDepartmentId === "" || teamDepartment === "") {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .post("https://pms-apis.herokuapp.com/core/subsub/", teamDept)
         .then((res) => {
@@ -229,26 +212,21 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("Team Department ADDED Successfully");
+          // alert("Team Department ADDED Successfully");
+          HandleSuccess("Team Department");
           console.log(data);
           addTeamDepartment(data.id, data.name, data.subdepartment);
           setTeamDepartment("");
           setSubDepartmentId("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     } else if (DashboardPage === "individualDep") {
       const indiDep = {
         name: individualDepartment,
         sub_subdepartment: teamDepartmentId,
       };
-      if (individualDepartment === "" || teamDepartmentId === "") {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .post("https://pms-apis.herokuapp.com/core/individual/", indiDep)
         .then((res) => {
@@ -257,13 +235,14 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("Individual Department ADDED Successfully");
+          // alert("Individual Department ADDED Successfully");
+          HandleSuccess("Team Department");
           console.log(data);
           setIndividualDepartment("");
           setTeamDepartment("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     } else if (DashboardPage === "role") {
       const role = {
@@ -271,12 +250,6 @@ const EditDept = () => {
         hierarchy: Hierarchy,
       };
 
-      if(Role_Name === '' || Hierarchy === ''){
-        setDisplayError(true);
-        return;
-      }else{
-        setDisplayError(false);
-      }
 
       axios
         .post("https://pms-apis.herokuapp.com/core/role/", role)
@@ -286,14 +259,16 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("Role ADDED Successfully");
+          // alert("Role ADDED Successfully");
+          HandleSuccess("Role");
           console.log(data);
           addRoles(data.role_id, data.role_name, data.hierarchy);
           setRoleName("");
           setHierarchy("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          // alert("There was an error!", error);
+          HandleError();
         });
     } else if (DashboardPage === "user") {
       const user = {
@@ -303,29 +278,11 @@ const EditDept = () => {
         role: roleId,
         department: departmentId,
         subdepartment: subDepartmentId,
+        sub_subdepartment: teamDepartmentId,
+        individuals: individaulDepartmentId,
         password: password,
       };
       console.log(user);
-      if (
-        username === "" ||
-        roleId === "" ||
-        departmentId === "" ||
-        subDepartmentId === ""
-      ){
-        setDisplayError(true);
-        return;
-      }else {
-        setPasswordError(false);
-        setDisplayError(false);
-      }
-       if(password.length < 8){
-        setPasswordError(true);
-        return;
-      }
-       else {
-        setPasswordError(false);
-        setDisplayError(false);
-      }
       axios
         .post("https://pms-apis.herokuapp.com/core/auth/register/", user)
         .then((res) => {
@@ -334,7 +291,8 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("User ADDED Successfully");
+          // alert("User ADDED Successfully");
+          HandleSuccess("User");
           console.log(data);
           setUsername("");
           setFirstName("");
@@ -342,9 +300,11 @@ const EditDept = () => {
           setRole("");
           setDepartment("");
           setSubDepartment("");
+          setTeamDepartment("");
+          setIndividualDepartment("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     } else if (DashboardPage === "persp") {
       const persp = {
@@ -353,12 +313,6 @@ const EditDept = () => {
         user: userId,
       };
       console.log(persp);
-      if (userId === "" || perspective === "" || perspectiveWeight === "") {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .post(
           `https://pms-apis.herokuapp.com/bsc/perspective/${urlKEY}/`,
@@ -370,14 +324,15 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("Perspective ADDED Successfully");
+          // alert("Perspective ADDED Successfully");
+          HandleSuccess("Perspective");
           console.log(data);
           setPerspective("");
           setPerspectiveWeight("");
           setUserId("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     } else if (DashboardPage === "obj") {
       const objects = {
@@ -387,12 +342,6 @@ const EditDept = () => {
         user: userId,
       };
       console.log(objects);
-      if (ceoPerspectiveId === "" || userId === "" || objective === '' || objectiveWeight === '') {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .post(
           `https://pms-apis.herokuapp.com/bsc/objective/${urlKEY}/`,
@@ -404,14 +353,14 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("Objective ADDED Successfully");
+          HandleSuccess("Objective");
           setObjective("");
           setObjectiveWeight("");
           setPerspective("");
           setUserId("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     } else if (DashboardPage === "kpi") {
       const kpi = {
@@ -424,20 +373,6 @@ const EditDept = () => {
         user: userId,
       };
       console.log(kpi);
-      if (
-        kpiName === "" ||
-        kpiWeight === "" ||
-        kpiTarget === "" ||
-        userId === "" ||
-        kpiUnitMeasurement === "" ||
-        ceoPerspectiveId === "" ||
-        ceoObjectiveId === ""
-      ) {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .post(kpiUrl, kpi)
         .then((res) => {
@@ -447,7 +382,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("KPI ADDED Successfully");
+          HandleSuccess("KPI");
           console.log(data);
           setObjective("");
           setKpiName("");
@@ -457,7 +392,7 @@ const EditDept = () => {
           setKpiUnitMeasurement("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     }
   };
@@ -466,12 +401,6 @@ const EditDept = () => {
       const dept = {
         dept_name: department,
       };
-      if (department === "") {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .put(
           `https://pms-apis.herokuapp.com/core/department/${kpis[index].dept_id}/`,
@@ -484,7 +413,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("Department UPDATE Successful");
+          HandleSuccess("Department");
           console.log(data);
           const dept_id = data.dept_id;
           const dept_name = data.dept_name;
@@ -492,19 +421,13 @@ const EditDept = () => {
           setDepartment("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     } else if (DashboardPage === "subDept") {
       const subDept = {
         name: subDepartment,
         department: departmentId,
       };
-      if (departmentId === "" || subDepartment === "") {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .put(
           `https://pms-apis.herokuapp.com/core/subdepartment_detail/${kpis[index].id}/`,
@@ -516,7 +439,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("SubDepartment UPDATE Successful");
+          HandleSuccess("Subdepartment");
           console.log(data);
           const id = data.id;
           const name = data.name;
@@ -526,19 +449,13 @@ const EditDept = () => {
           setDepartmentId("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     } else if (DashboardPage === "sub-subDept") {
       const teamDept = {
         name: teamDepartment,
         subdepartment: subDepartmentId,
       };
-      if (subDepartmentId === "" || teamDepartment === "") {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .put(
           `https://pms-apis.herokuapp.com/core/subsub/${kpis[index].id}/`,
@@ -550,7 +467,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("Team Department UPDATE Successful");
+          HandleSuccess("Team Department");
           console.log(data);
           const id = data.id;
           const name = data.name;
@@ -560,19 +477,13 @@ const EditDept = () => {
           setSubDepartmentId("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     }else if (DashboardPage === "individualDep") {
       const indiDep = {
         name: individualDepartment,
         sub_subdepartment: teamDepartmentId,
       };
-      if (individualDepartment === "" || teamDepartmentId === "") {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .put(`https://pms-apis.herokuapp.com/core/individual/${kpis[index].id}/`, indiDep)
         .then((res) => {
@@ -582,13 +493,13 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("Individual Department UPDATE Successful");
+          HandleSuccess("Individual Department");
           console.log(data);
           setIndividualDepartment("");
           setTeamDepartment("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
       } 
     else if (DashboardPage === "role") {
@@ -596,12 +507,6 @@ const EditDept = () => {
         role_name: Role_Name,
         hierarchy: Hierarchy,
       };
-      if(Role_Name === '' || Hierarchy === ''){
-        setDisplayError(true);
-        return;
-      }else{
-        setDisplayError(false);
-      }
       axios
         .put(
           `https://pms-apis.herokuapp.com/core/role_detail/${kpis[index].role_id}/`,
@@ -613,7 +518,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("Role UPDATE Successful");
+          HandleSuccess("Role");
           console.log(data);
           const role_id = data.role_id;
           const role_name = data.role_name;
@@ -623,7 +528,7 @@ const EditDept = () => {
           setHierarchy("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     } else if (DashboardPage === "user") {
       const user = {
@@ -633,28 +538,11 @@ const EditDept = () => {
         role: roleId,
         department: departmentId,
         subdepartment: subDepartmentId,
+        sub_subdepartment: teamDepartmentId,
+        individuals: individaulDepartmentId,
         password: password,
       };
       console.log(user);
-      if (
-        username === "" ||
-        roleId === "" ||
-        departmentId === "" ||
-        subDepartmentId === ""
-      ){
-        setDisplayError(true);
-        return;
-      }else {
-        setPasswordError(false);
-        setDisplayError(false);
-      } if(password.length < 8){
-        setPasswordError(true);
-        return;
-      }
-       else {
-        setPasswordError(false);
-        setDisplayError(false);
-      }
       axios
         .put(
           `https://pms-apis.herokuapp.com/core/user/${kpis[index].id}/`,
@@ -668,16 +556,18 @@ const EditDept = () => {
             return Promise.reject(error);
           }
           console.log(res);
-          alert("User UPDATE Successful");
+          HandleSuccess("User");
           setUsername("");
           setFirstName("");
           setLastName("");
           setRole("");
           setDepartment("");
           setSubDepartment("");
+          setTeamDepartment("");
+          setIndividualDepartment("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     } else if (DashboardPage === "persp") {
       const persp = {
@@ -686,12 +576,6 @@ const EditDept = () => {
         user: userId,
       };
       console.log(persp);
-      if (userId === "" || perspective === "" || perspectiveWeight === "") {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .put(
           `https://pms-apis.herokuapp.com/bsc/perspective/${kpis[index].perspective_id}/`,
@@ -703,13 +587,13 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("Perspective UPDATE Successful");
+          HandleSuccess("Perspective");
           setPerspective("");
           setPerspectiveWeight("");
           setUserId("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     } else if (DashboardPage === "obj") {
       const obj = {
@@ -719,12 +603,6 @@ const EditDept = () => {
         user: userId,
       };
       console.log(obj);
-      if (ceoPerspectiveId === "" || userId === "" || objective === '' || objectiveWeight === '') {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .put(
           `https://pms-apis.herokuapp.com/bsc/objective/${kpis[index].objective_id}/`,
@@ -736,14 +614,14 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("Objective UPDATE Successful");
+          HandleSuccess("Objective");
           setObjective("");
           setObjectiveWeight("");
           setPerspective("");
           setUserId("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     } else if (DashboardPage === "kpi") {
       const kpi = {
@@ -756,20 +634,6 @@ const EditDept = () => {
         user: userId,
       };
       console.log(kpi);
-      if (
-        kpiName === "" ||
-        kpiWeight === "" ||
-        kpiTarget === "" ||
-        userId === "" ||
-        kpiUnitMeasurement === "" ||
-        ceoPerspectiveId === "" ||
-        ceoObjectiveId === ""
-      ) {
-        setDisplayError(true);
-        return;
-      } else {
-        setDisplayError(false);
-      }
       axios
         .put(
           `https://pms-apis.herokuapp.com/bsc/kpi/${kpis[index].kpi_id}/`,
@@ -782,7 +646,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          alert("KPI UPDATE Successful");
+          HandleSuccess("KPI");
           setObjective("");
           setKpiName("");
           setKpiWeight("");
@@ -791,7 +655,7 @@ const EditDept = () => {
           setKpiUnitMeasurement("");
         })
         .catch((error) => {
-          alert("There was an error!", error);
+          HandleError();
         });
     }
   };
@@ -812,13 +676,13 @@ const EditDept = () => {
     //   });
   };
 
-  const HandleError = () => {
-    toast.error("Department is required!", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
-  const HandleSuccess = () => {
-    toast.success("Department Added Successfully", {
+    const HandleError = () => {
+      toast.error("Please Fill all the required fields", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    };
+  const HandleSuccess = (name) => {
+    toast.success(`${name} Added Successfully`, {
       position: toast.POSITION.TOP_RIGHT,
     });
   };
@@ -831,6 +695,8 @@ const EditDept = () => {
     ceoPerspective
       .filter((persp) => persp.perspective_name === e.target.value)
       .map((p) => setCeoPerspectiveId(p.perspective_id));
+
+    setCeoObjectiveId("");
   };
   const handleObjectiveChange = (e) => {
     setObjective(e.target.value);
@@ -870,6 +736,7 @@ const EditDept = () => {
     usedepartments
       .filter((dep) => dep.dept_name === e.target.value)
       .map((d) => setDepartmentId(d.dept_id));
+    setSubDepartmentId("");
   };
 
   const handleSubDepartmentChange = (e) => {
@@ -880,15 +747,26 @@ const EditDept = () => {
     useSubDepartments
       .filter((subDep) => subDep.name === e.target.value)
       .map((sub) => setSubDepartmentId(sub.id));
+    setTeamDepartmentId("");
   };
   const handleTeamDepartmentChange = (e) => {
     setTeamDepartment(e.target.value);
     if (e.target.value === "select") {
-      setTeamDepartment("Select");
+      setTeamDepartmentId("Select");
     }
     useTeamDepartments
       .filter((teamDep) => teamDep.name === e.target.value)
       .map((td) => setTeamDepartmentId(td.id));
+    setIndividualDepartmentId("");
+  }
+  const handleIndividualDepartmentChange = (e) => {
+    setIndividualDepartment(e.target.value);
+    if (e.target.value === "select") {
+      setIndividualDepartmentId("Select");
+    }
+    useTeamDepartments
+      .filter((teamDep) => teamDep.name === e.target.value)
+      .map((td) => setIndividualDepartmentId(td.id));
   }
   const {
     register,
@@ -944,9 +822,6 @@ const EditDept = () => {
                 onChange={(e) => setDepartment(e.target.value)}
                 value={department}
               />
-              {displayError && (
-                <span className="errorStyle">This field is required</span>
-              )}
             </>
           )}
           {DashboardPage === "subDept" && (
@@ -959,9 +834,6 @@ const EditDept = () => {
                   onChange={(e) => setSubDepartment(e.target.value)}
                   value={subDepartment}
                 />
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -981,9 +853,6 @@ const EditDept = () => {
                     </option>
                   ))}
                 </select>
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
             </>
           )}
@@ -997,9 +866,6 @@ const EditDept = () => {
                   onChange={(e) => setTeamDepartment(e.target.value)}
                   value={teamDepartment}
                 />
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1019,9 +885,6 @@ const EditDept = () => {
                     </option>
                   ))}
                 </select>
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
             </>
           )}
@@ -1035,9 +898,6 @@ const EditDept = () => {
                   onChange={(e) => setIndividualDepartment(e.target.value)}
                  value={individualDepartment}
                 />
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1058,9 +918,6 @@ const EditDept = () => {
                     </option>
                   ))}
                 </select>
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
             </>
           )}
@@ -1073,9 +930,6 @@ const EditDept = () => {
                   onChange={(e) => setRoleName(e.target.value)}
                   value={Role_Name}
                 />
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1087,9 +941,6 @@ const EditDept = () => {
                   onChange={(e) => setHierarchy(e.target.value)}
                   value={Hierarchy}
                 />
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
             </div>
           )}
@@ -1104,9 +955,6 @@ const EditDept = () => {
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}
                 />
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1142,9 +990,6 @@ const EditDept = () => {
                     </option>
                   ))}
                 </select>
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1162,9 +1007,6 @@ const EditDept = () => {
                     </option>
                   ))}
                 </select>
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1187,6 +1029,44 @@ const EditDept = () => {
               </div>
 
               <div>
+                <span style={{ fontSize: "1.5rem" }}> Team Department: </span>
+                <select
+                  id="teamDepartment"
+                  onChange={(e) => handleTeamDepartmentChange(e)}
+                >
+                  <option key="select" value="select">
+                    Select
+                  </option>
+                  {useTeamDepartments
+                    .filter((td) => td.subdepartment === subDepartmentId)
+                    .map((t, index) => (
+                      <option key={index} value={t.name}>
+                        {t.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+
+              <div>
+                <span style={{ fontSize: "1.5rem" }}> Individual Department: </span>
+                <select
+                  id="individualDepartment"
+                  onChange={(e) => handleIndividualDepartmentChange(e)}
+                >
+                  <option key="select" value="select">
+                    Select
+                  </option>
+                  {useIndividualDepartments
+                    .filter((id) => id.sub_subdepartment === teamDepartmentId)
+                    .map((i, index) => (
+                      <option key={index} value={i.name}>
+                        {i.name}
+                      </option>
+                    ))}
+                </select>
+              </div>
+
+              <div>
                 <span style={{ fontSize: "1.5rem" }}> Password: </span>
                 <input
                   id="HierarchyInput"
@@ -1194,11 +1074,6 @@ const EditDept = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                 />
-                {passwordError && (
-                  <span className="errorStyle">
-                    Password must be greater than 8 characters.
-                  </span>
-                )}
               </div>
             </div>
           )}
@@ -1213,9 +1088,6 @@ const EditDept = () => {
                   onChange={(e) => setKpiName(e.target.value)}
                   value={kpiName}
                 />
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1226,9 +1098,6 @@ const EditDept = () => {
                   onChange={(e) => setKpiWeight(e.target.value)}
                   value={kpiWeight}
                 />
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1239,9 +1108,6 @@ const EditDept = () => {
                   onChange={(e) => setKpiTarget(e.target.value)}
                   value={kpiTarget}
                 />
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1269,9 +1135,6 @@ const EditDept = () => {
                     USD
                   </option>
                 </select>
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1289,9 +1152,6 @@ const EditDept = () => {
                     </option>
                   ))}
                 </select>
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1311,9 +1171,6 @@ const EditDept = () => {
                       </option>
                     ))}
                 </select>
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
               <div>
                 <span style={{ fontSize: "1.5rem" }}> User: </span>
@@ -1329,9 +1186,6 @@ const EditDept = () => {
                       </option>
                     ))}
                 </select>
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
             </div>
           )}
@@ -1346,9 +1200,6 @@ const EditDept = () => {
                   onChange={(e) => handlePerspectiveChange(e)}
                   value={perspective}
                 />
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1362,9 +1213,6 @@ const EditDept = () => {
                   onChange={(e) => setPerspectiveWeight(e.target.value)}
                   value={perspectiveWeight}
                 />
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1381,9 +1229,6 @@ const EditDept = () => {
                       </option>
                     ))}
                 </select>
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
             </div>
           )}
@@ -1398,9 +1243,6 @@ const EditDept = () => {
                   onChange={(e) => handleObjectiveChange(e)}
                   value={objective}
                 />
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1411,9 +1253,6 @@ const EditDept = () => {
                   onChange={(e) => setObjectiveWeight(e.target.value)}
                   value={objectiveWeight}
                 />
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1432,9 +1271,6 @@ const EditDept = () => {
                     </option>
                   ))}
                 </select>
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
 
               <div>
@@ -1452,9 +1288,6 @@ const EditDept = () => {
                       </option>
                     ))}
                 </select>
-                {displayError && (
-                  <span className="errorStyle">This field is required</span>
-                )}
               </div>
             </div>
           )}

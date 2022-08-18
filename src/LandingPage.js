@@ -27,7 +27,10 @@ const LandingPage = () => {
     changeUserType,
     changeDepartment,
     changeSubDepartment,
+    changeTeamDepartment,
+    changeIndividualDepartment,
     changeTeamDepartments,
+    changeIndividualDepartments,
     changeDepartments,
     changeSubDepartments,
     changeRoles,
@@ -37,15 +40,22 @@ const LandingPage = () => {
   const [loading, setLoading] = useState(true);
   const [departmentResponse, setDepartmentResponse] = useState([]);
   const [subDepartmentResponse, setSubdepartmentResponse] = useState([]);
+  const [teamDepartmentResponse, setTeamDepartmentResponse] = useState([]);
+  const [individualDepartmentResponse, setIndividualDepartmentResponse] =
+    useState([]);
   const [roleResponse, setRoleResponse] = useState([]);
-  const [department, setDepartment] = useState("");
+  const [department, setDepartment] = useState("select");
   const [departmentId, setDepartmentId] = useState(null);
   const [departments, setDepartments] = useState([]);
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("select");
   const [roleId, setRoleId] = useState("");
   const [subdepartments, setSubdepartments] = useState([]);
-  const [subdepartment, setSubdepartment] = useState("");
+  const [subdepartment, setSubdepartment] = useState("select");
   const [subdepartmentId, setSubdepartmentId] = useState(null);
+  const [teamDepartment, setTeamDepartment] = useState("select");
+  const [teamDepartmentId, setTeamDepartmentId] = useState(null);
+  const [individualDepartment, setIndividualDepartment] = useState("select");
+  const [individualDepartmentId, setIndividualDepartmentId] = useState(null);
   const [userId, setUserId] = useState("");
   const [usersList, setUsersList] = useState([]);
   const url = "https://pms-apis.herokuapp.com";
@@ -62,19 +72,21 @@ const LandingPage = () => {
     });
   };
 
-  // const handleChange = (e) => {
-  //   setDirector(e.target.value);
-  // };
   const handleRoleChange = (e) => {
     changeUserType(e.target.value);
     setRole(e.target.value);
+    const tempRole = e.target.value;
     console.log(e.target.value);
 
     roleResponse
       .filter((role) => role.role_name === e.target.value)
       .map((r) => setRoleId(r.role_id));
 
-    if (e.target.value !== "President" && e.target.value !== "select") {
+    if (
+      e.target.value !== "President" &&
+      e.target.value !== "admin" &&
+      e.target.value !== "select"
+    ) {
       setDepartments(departmentResponse);
     } else {
       setDepartments([]);
@@ -82,8 +94,24 @@ const LandingPage = () => {
     if (department !== "select") {
       setSubdepartments(subDepartmentResponse);
     }
-    if (e.target.value !== "director") {
-      setSubdepartments([]);
+
+    if (tempRole === "admin" || tempRole === "President") {
+      setDepartmentId(null);
+      setSubdepartmentId(null);
+      setTeamDepartmentId(null);
+      setIndividualDepartmentId(null);
+    }
+    if(tempRole === "Vice President"){
+      setSubdepartmentId(null);
+      setTeamDepartmentId(null);
+      setIndividualDepartmentId(null);
+    }
+    if (tempRole === "director") {
+      setTeamDepartmentId(null);
+      setIndividualDepartmentId(null);
+    }
+    if (tempRole === "Manager") {
+      setIndividualDepartmentId(null);
     }
   };
 
@@ -91,31 +119,53 @@ const LandingPage = () => {
     changeDepartment(e.target.value);
     setDepartment(e.target.value);
 
+    console.log(e.target.value);
+
     departmentResponse
       .filter((department) => department.dept_name === e.target.value)
       .map((dep) => setDepartmentId(dep.dept_id));
 
-    if (e.target.value !== "select" && role === "director") {
+    if (
+      e.target.value !== "select" &&
+      (role === "director" || role === "Manager" || role === "Individuals")
+    ) {
       setSubdepartments(subDepartmentResponse);
     } else {
       setSubdepartments([]);
     }
-    if (role !== "director") {
+    if (role !== "director" && role !== "Manager" && role !== "Individuals") {
       setSubdepartments([]);
     }
+    
 
     HandleDepartmentId(e.target.value);
   };
 
   const handleSubDepartmentChange = (e) => {
     changeSubDepartment(e.target.value);
+    setSubdepartment(e.target.value);
     subDepartmentResponse
       .filter((subdepartment) => subdepartment.name === e.target.value)
       .map((subdep) => setSubdepartmentId(subdep.id));
   };
 
+  const handleTeamDepartmentChange = (e) => {
+    changeTeamDepartment(e.target.value);
+    setTeamDepartment(e.target.value);
+    teamDepartmentResponse
+      .filter((teamDepres) => teamDepres.name === e.target.value)
+      .map((tdr) => setTeamDepartmentId(tdr.id));
+  };
+
+  const handleIndividualDepartmentChange = (e) => {
+    changeIndividualDepartment(e.target.value);
+    setIndividualDepartment(e.target.value);
+    individualDepartmentResponse
+      .filter((individualDep) => individualDep.name === e.target.value)
+      .map((idr) => setIndividualDepartmentId(idr.id));
+  };
+
   useEffect(() => {
-    // setRoleResponse(["President, VicePresident, Director, Manager"])
     fetch("https://pms-apis.herokuapp.com/core/department/")
       .then((response) => response.json())
       .then((res) => {
@@ -131,8 +181,14 @@ const LandingPage = () => {
     fetch("https://pms-apis.herokuapp.com/core/subsub/")
       .then((response) => response.json())
       .then((res) => {
-        // setSubdepartmentResponse(res);
+        setTeamDepartmentResponse(res);
         changeTeamDepartments(res);
+      });
+    fetch("https://pms-apis.herokuapp.com/core/individual/")
+      .then((response) => response.json())
+      .then((res) => {
+        setIndividualDepartmentResponse(res);
+        changeIndividualDepartments(res);
       });
     fetch("https://pms-apis.herokuapp.com/core/role/")
       .then((response) => response.json())
@@ -159,53 +215,35 @@ const LandingPage = () => {
   }, [departmentResponse, subDepartmentResponse, roleResponse]);
 
   const handleNavigate = () => {
-    const role = document.getElementById("roleId").value;
-    const department = document.getElementById("departmentId").value;
-    const subDepartment = document.getElementById("subDepartmentId").value;
-    console.log("role: " + role);
-    console.log("department: " + department);
-    console.log("subDepartment: " + subDepartment);
+    console.log("roleId: " + roleId);
+    console.log("departmentId: " + departmentId);
+    console.log("subDepartmentId: " + subdepartmentId);
+    console.log("teamDepartmentId: " + teamDepartmentId);
+    console.log("individualDepartmentId: " + individualDepartmentId);
 
-    console.log(departmentId);
-    console.log(subdepartmentId);
     usersList
       .filter((user) =>
         role !== "President"
           ? user.department === departmentId &&
             user.subdepartment === subdepartmentId &&
+            user.sub_subdepartment === teamDepartmentId &&
+            user.individuals === individualDepartmentId &&
             user.role === roleId
           : user.department === departmentId &&
-            user.subdepartment === subdepartmentId
+            user.subdepartment === subdepartmentId &&
+            user.sub_subdepartment === teamDepartmentId &&
+            user.individuals === individualDepartmentId
       )
       .map((us) => {
         console.log("userId: " + us.id);
         changeUrlKEY(us.id);
         setUserId(us.id);
+        setLoading(true);
+        const path = "/dashboard";
+        navigate(path);
       });
 
-    if (
-      role === "President" &&
-      department === "select" &&
-      subDepartment === "select"
-    ) {
-      setLoading(true);
-      const path = "/dashboard";
-      navigate(path);
-    } else if (role === "Vice President" && department !== "select") {
-      setLoading(true);
-      const path = "/dashboard";
-      navigate(path);
-    } else if (
-      role === "director" &&
-      department !== "select" &&
-      subDepartment !== "select"
-    ) {
-      setLoading(true);
-      const path = "/dashboard";
-      navigate(path);
-    } else {
-      HandleError();
-    }
+    HandleError();
   };
 
   return (
@@ -258,39 +296,105 @@ const LandingPage = () => {
                       </select>
                     </div>
                   </div>
-                  <div className="cta">
-                    <div className="form-group">
-                      <select
-                        id="departmentId"
-                        className="form-control selecting"
-                        onChange={(e) => handleDepartmentChange(e)}
-                      >
-                        <option key="select" value="select">
-                          Select....
-                        </option>
-                        {departments.map((department, index) => (
-                          <option key={index}>{department.dept_name}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
+                  {role !== "" &&
+                    role !== "select" &&
+                    role !== "President" &&
+                    role !== "admin" && (
+                      <div className="cta">
+                        <div className="form-group">
+                          <select
+                            id="departmentId"
+                            className="form-control selecting"
+                            onChange={(e) => handleDepartmentChange(e)}
+                          >
+                            <option key="select" value="select">
+                              Select....
+                            </option>
+                            {departments.map((department, index) => (
+                              <option key={index}>
+                                {department.dept_name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    )}
 
-                  <div className="cta">
-                    <div className="form-group">
-                      <select
-                        id="subDepartmentId"
-                        className="form-control selecting"
-                        onChange={(e) => handleSubDepartmentChange(e)}
-                      >
-                        <option value="select">Select....</option>
-                        {subdepartments
-                          .filter((sub) => sub.department === departmentId)
-                          .map((subdep, index) => (
-                            <option key={index}>{subdep.name}</option>
-                          ))}
-                      </select>
-                    </div>
-                  </div>
+                  {(role === "director" ||
+                    role === "Manager" ||
+                    role === "Individuals") &&
+                    department !== "" &&
+                    department !== "select" && (
+                      <div className="cta">
+                        <div className="form-group">
+                          <select
+                            id="subDepartmentId"
+                            className="form-control selecting"
+                            onChange={(e) => handleSubDepartmentChange(e)}
+                          >
+                            <option value="select">Select....</option>
+                            {subdepartments
+                              .filter((sub) => sub.department === departmentId)
+                              .map((subdep, index) => (
+                                <option key={index}>{subdep.name}</option>
+                              ))}
+                          </select>
+                        </div>
+                      </div>
+                    )}
+
+                  {(role === "Manager" || role === "Individuals") &&
+                    subdepartment !== "select" &&
+                    subdepartment !== "" && (
+                      <div className="cta">
+                        <div className="form-group">
+                          <select
+                            id="teamDepartmentId"
+                            className="form-control selecting"
+                            onChange={(e) => handleTeamDepartmentChange(e)}
+                          >
+                            <option value="select">Select....</option>
+                            {teamDepartmentResponse
+                              .filter(
+                                (teamDep) =>
+                                  teamDep.subdepartment === subdepartmentId
+                              )
+                              .map((td, index) => (
+                                <option key={index}>{td.name}</option>
+                              ))}
+                          </select>
+                        </div>
+                      </div>
+                    )}
+
+                  {role === "Individuals" &&
+                    subdepartment !== "select" &&
+                    subdepartment !== "" &&
+                    teamDepartment !== "select" &&
+                    teamDepartment !== "" && (
+                      <div className="cta">
+                        <div className="form-group">
+                          <select
+                            id="individualId"
+                            className="form-control selecting"
+                            onChange={(e) =>
+                              handleIndividualDepartmentChange(e)
+                            }
+                          >
+                            <option value="select">Select....</option>
+                            {individualDepartmentResponse
+                              .filter(
+                                (individualDep) =>
+                                  individualDep.sub_subdepartment ===
+                                  teamDepartmentId
+                              )
+                              .map((ind, index) => (
+                                <option key={index}>{ind.name}</option>
+                              ))}
+                          </select>
+                        </div>
+                      </div>
+                    )}
 
                   <button className="btnl third" onClick={handleNavigate}>
                     MANAGE

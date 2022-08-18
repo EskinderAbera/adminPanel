@@ -5,9 +5,12 @@ export function APIContextProvider({ children }) {
   const [userType, setUserType] = useState("");
   const [useDepartment, setDepartment] = useState("");
   const [useSubDepartment, setSubDepartment] = useState("");
+  const [useTeamDepartment, setTeamDepartment] = useState("");
+  const [useIndividualDepartment, setIndividualDepartment] = useState("");
   const [usedepartments, setDepartments] = useState([]);
   const [useSubDepartments, setSubDepartments] = useState([]);
   const [useTeamDepartments, setTeamDepartments] = useState([]);
+  const [useIndividualDepartments, setIndividualDepartments] = useState([]);
   const [useroles, setRoles] = useState([]);
   const [useUsers, setUsers] = useState([]);
   const [urlKEY, setUrlKEY] = useState("");
@@ -21,6 +24,15 @@ export function APIContextProvider({ children }) {
   const changeSubDepartment = (subdepartment) => {
     setSubDepartment(subdepartment);
   };
+
+  const changeTeamDepartment = (teamDep) => {
+    setTeamDepartment(teamDep);
+  };
+
+  const changeIndividualDepartment = (individualDep) => {
+    setIndividualDepartment(individualDep);
+  };
+
   const changeRoles = (roles) => {
     setRoles(roles);
   };
@@ -34,6 +46,9 @@ export function APIContextProvider({ children }) {
 
   const changeTeamDepartments = (teamDep) => {
     setTeamDepartments(teamDep);
+  };
+  const changeIndividualDepartments = (indiDep) => {
+    setIndividualDepartments(indiDep);
   };
 
   const changeUsers = (users) => {
@@ -132,17 +147,23 @@ export function APIContextProvider({ children }) {
       value={{
         useDepartment,
         useSubDepartment,
+        useTeamDepartment,
+        useIndividualDepartment,
         userType,
         usedepartments,
         useroles,
         useSubDepartments,
         useTeamDepartments,
+        useIndividualDepartments,
         useUsers,
         urlKEY,
         changeUserType,
         changeDepartment,
         changeSubDepartment,
+        changeTeamDepartment,
+        changeIndividualDepartment,
         changeTeamDepartments,
+        changeIndividualDepartments,
         changeDepartments,
         changeRoles,
         changeSubDepartments,
