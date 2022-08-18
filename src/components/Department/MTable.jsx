@@ -96,6 +96,7 @@ const MTable = () => {
     usedepartments,
     useSubDepartments,
     useTeamDepartments,
+    useIndividualDepartments,
     useroles,
     useUsers,
     urlKEY
@@ -336,6 +337,12 @@ const MTable = () => {
                   Sub Department
                 </TableCell>
                 <TableCell className={classes.tableHeaderCell}>
+                  Team Department
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
+                  Individual Department
+                </TableCell>
+                <TableCell className={classes.tableHeaderCell}>
                   Manage
                 </TableCell>
               </TableRow>
@@ -481,6 +488,21 @@ const MTable = () => {
                           .filter((subdep) => subdep.id === kpi.subdepartment)
                           .map((sub) => sub.name)}
                     </TableCell>
+                    <TableCell>
+                      {useTeamDepartments &&
+                        useTeamDepartments.length > 0 &&
+                        useTeamDepartments
+                          .filter((teamDep) => teamDep.id === kpi.sub_subdepartment)
+                          .map((t) => t.name)}
+                    </TableCell>
+                    <TableCell>
+                      {useIndividualDepartments &&
+                        useIndividualDepartments.length > 0 &&
+                        useIndividualDepartments
+                          .filter((indiDep) => indiDep.id === kpi.individuals)
+                          .map((i) => i.name)}
+                    </TableCell>
+
                   </>
                 )}
                 {Dashboardpage === "obj" && (

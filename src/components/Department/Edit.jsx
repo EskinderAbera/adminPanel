@@ -116,6 +116,8 @@ const EditDept = () => {
       setRoleId(index !== "" ? kpis[index].role: "");
       setDepartmentId(index !== "" ? kpis[index].department : "");
       setSubDepartmentId(index !== "" ? kpis[index].subdepartment : "");
+      setTeamDepartmentId(index !== "" ? kpis[index].sub_subdepartment : "");
+      setIndividualDepartmentId(index !== "" ? kpis[index].individuals : "");
     } else if (DashboardPage === "persp") {
       console.log(kpis);
       setPerspective(index !== "" ? kpis[index].perspective_name : "");
@@ -539,8 +541,7 @@ const EditDept = () => {
         department: departmentId,
         subdepartment: subDepartmentId,
         sub_subdepartment: teamDepartmentId,
-        individuals: individaulDepartmentId,
-        password: password,
+        individuals: individaulDepartmentId
       };
       console.log(user);
       axios
@@ -764,7 +765,7 @@ const EditDept = () => {
     if (e.target.value === "select") {
       setIndividualDepartmentId("Select");
     }
-    useTeamDepartments
+    useIndividualDepartments
       .filter((teamDep) => teamDep.name === e.target.value)
       .map((td) => setIndividualDepartmentId(td.id));
   }
