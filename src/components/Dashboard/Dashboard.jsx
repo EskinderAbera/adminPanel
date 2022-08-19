@@ -3,7 +3,6 @@ import Spline from "./Charts/Spline";
 import { MdOutlineWavingHand } from "react-icons/md";
 import { useNavigate, Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import Analytics from "../Analytics/Analytics";
 import { useEffect } from "react";
 
 const Dashboard = () => {

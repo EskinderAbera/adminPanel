@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./LandingPage.css";
-import shape from "./components/img/shape.png";
 import hailes from "./resources/images/hailes_cleanup.jpg";
 import loader from "./resources/images/loader.gif";
 import coop from "./resources/images/coop.png";
@@ -58,6 +57,7 @@ const LandingPage = () => {
   const [individualDepartmentId, setIndividualDepartmentId] = useState(null);
   const [userId, setUserId] = useState("");
   const [usersList, setUsersList] = useState([]);
+  const [status, setStatus] = useState("");
   const url = "https://pms-apis.herokuapp.com";
 
   const HandleDepartmentId = (department) => {
@@ -101,7 +101,7 @@ const LandingPage = () => {
       setTeamDepartmentId(null);
       setIndividualDepartmentId(null);
     }
-    if(tempRole === "Vice President"){
+    if (tempRole === "Vice President") {
       setSubdepartmentId(null);
       setTeamDepartmentId(null);
       setIndividualDepartmentId(null);
@@ -136,7 +136,6 @@ const LandingPage = () => {
     if (role !== "director" && role !== "Manager" && role !== "Individuals") {
       setSubdepartments([]);
     }
-    
 
     HandleDepartmentId(e.target.value);
   };
@@ -199,8 +198,8 @@ const LandingPage = () => {
     fetch("https://pms-apis.herokuapp.com/core/users/")
       .then((response) => response.json())
       .then((res) => {
-        changeUsers(res);
         setUsersList(res);
+        changeUsers(res);
       });
   }, []);
 
@@ -208,11 +207,14 @@ const LandingPage = () => {
     if (
       departmentResponse.length !== 0 &&
       subDepartmentResponse.length !== 0 &&
-      roleResponse.length !== 0
+      roleResponse.length !== 0 &&
+      individualDepartmentResponse.length !== 0 &&
+      teamDepartmentResponse.length !== 0 &&
+      usersList.length !== 0
     ) {
       setLoading(false);
     }
-  }, [departmentResponse, subDepartmentResponse, roleResponse]);
+  }, [departmentResponse, subDepartmentResponse, roleResponse, individualDepartmentResponse, teamDepartmentResponse,usersList]);
 
   const handleNavigate = () => {
     console.log("roleId: " + roleId);

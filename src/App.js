@@ -1,16 +1,8 @@
 import "./App.css";
 import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
 import Container from "./components/Container/Container";
-import RightNavbar from "./components/RightNavbar/RightNavbar";
 import Dashboard from "./components/Dashboard/Dashboard";
-import Analytics from "./components/Analytics/Analytics";
-import Campaings from "./components/Campaigns/Campaings";
-import Team from "./components/Team/Team";
-import NavContext from "./Context/NavContext";
-import KPIList from "./components/KPI/KPIList";
-import Department from "./components/Department/Department";
 import MTable from "./components/Department/MTable";
 import EditDept from "./components/Department/Edit";
 import LandingPage from "./LandingPage";
@@ -25,10 +17,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavContext.Provider value={value}>
-        <Navbar />
         <Container
-          stickyNav={<RightNavbar />}
           content={
             <APIContextProvider>
               <Routes>
@@ -41,10 +30,6 @@ function App() {
                 ></Route>
                 <Route path="/landing" element={ <Protected isLoggedIn={isLoggedIn}><LandingPage /></Protected>} />
                 <Route path="/dashboard" element={<Protected isLoggedIn={isLoggedIn}><Dashboard /></Protected>} />
-                <Route path="/analytics" element={<Analytics />} />
-                <Route path="/campaings" element={<Campaings />} />
-                <Route path="/team" element={<Team />} />
-                <Route path="/messages" element={<main>Messages</main>} />
                 <Route path="/dept" element={<Protected isLoggedIn={isLoggedIn}><MTable /></Protected>} />
                 <Route path="/subDepartment" element={<Protected isLoggedIn={isLoggedIn}><MTable /></Protected>} />
                 <Route path="/teamDepartment" element={<Protected isLoggedIn={isLoggedIn}><MTable /></Protected>} />
@@ -59,7 +44,6 @@ function App() {
             </APIContextProvider>
           }
         />
-      </NavContext.Provider>
     </div>
   );
 }

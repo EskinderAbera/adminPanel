@@ -1,9 +1,8 @@
 import styles from "./Container.module.scss";
 
-const Container = ({ stickyNav, content }) => {
+const Container = ({  content }) => {
   return (
     <div className={styles.container}>
-      {stickyNav}
       {content}
     </div>
   );

@@ -415,7 +415,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          HandleSuccess("Department");
+          HandleSuccessUpdate("Department");
           console.log(data);
           const dept_id = data.dept_id;
           const dept_name = data.dept_name;
@@ -441,7 +441,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          HandleSuccess("Subdepartment");
+          HandleSuccessUpdate("Subdepartment");
           console.log(data);
           const id = data.id;
           const name = data.name;
@@ -469,7 +469,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          HandleSuccess("Team Department");
+          HandleSuccessUpdate("Team Department");
           console.log(data);
           const id = data.id;
           const name = data.name;
@@ -495,7 +495,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          HandleSuccess("Individual Department");
+          HandleSuccessUpdate("Individual Department");
           console.log(data);
           setIndividualDepartment("");
           setTeamDepartment("");
@@ -520,7 +520,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          HandleSuccess("Role");
+          HandleSuccessUpdate("Role");
           console.log(data);
           const role_id = data.role_id;
           const role_name = data.role_name;
@@ -557,7 +557,7 @@ const EditDept = () => {
             return Promise.reject(error);
           }
           console.log(res);
-          HandleSuccess("User");
+          HandleSuccessUpdate("User");
           setUsername("");
           setFirstName("");
           setLastName("");
@@ -588,7 +588,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          HandleSuccess("Perspective");
+          HandleSuccessUpdate("Perspective");
           setPerspective("");
           setPerspectiveWeight("");
           setUserId("");
@@ -615,7 +615,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          HandleSuccess("Objective");
+          HandleSuccessUpdate("Objective");
           setObjective("");
           setObjectiveWeight("");
           setPerspective("");
@@ -647,7 +647,7 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          HandleSuccess("KPI");
+          HandleSuccessUpdate("KPI");
           setObjective("");
           setKpiName("");
           setKpiWeight("");
@@ -687,6 +687,11 @@ const EditDept = () => {
       position: toast.POSITION.TOP_RIGHT,
     });
   };
+  const HandleSuccessUpdate = (name) => {
+    toast.success(`${name} Updated Successfully`, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  }
 
   const handlePerspectiveChange = (e) => {
     setPerspective(e.target.value);

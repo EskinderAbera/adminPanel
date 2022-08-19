@@ -6,13 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useAPI } from "../../Context/APIContext";
 import loader from "../../resources/images/loader.gif";
-import {
-  faChevronRight,
-  faChevronLeft,
-  faCircle,
-  faCheckCircle,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import {
   Table,
   TableBody,
@@ -21,14 +15,9 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Avatar,
-  Grid,
-  Typography,
   TablePagination,
-  TableFooter,
 } from "@material-ui/core";
 import { useEffect } from "react";
-import { FaCircle, FaPlus } from "react-icons/fa";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -37,56 +26,26 @@ const useStyles = makeStyles((theme) => ({
   tableContainer: {
     borderRadius: 15,
     margin: "10px 10px",
-    maxWidth: 950,
+    maxWidth: 1250,
   },
   tableHeaderCell: {
     fontWeight: "bold",
     backgroundColor: theme.palette.primary.dark,
     color: theme.palette.getContrastText(theme.palette.primary.dark),
   },
-  avatar: {
-    backgroundColor: theme.palette.primary.light,
-    color: theme.palette.getContrastText(theme.palette.primary.light),
-  },
   name: {
     fontWeight: "bold",
     color: theme.palette.secondary.dark,
-  },
-  status: {
-    fontWeight: "bold",
-    fontSize: "0.75rem",
-    color: "white",
-    backgroundColor: "grey",
-    borderRadius: 8,
-    padding: "3px 10px",
-    display: "inline-block",
-  },
+  }
 }));
-
-let USERS = [],
-  STATUSES = ["Active", "Pending", "Blocked"];
-for (let i = 0; i < 14; i++) {
-  USERS[i] = {
-    name: faker.name.findName(),
-    email: faker.internet.email(),
-    phone: faker.phone.phoneNumber(),
-    jobTitle: faker.name.jobTitle(),
-    company: faker.company.companyName(),
-    joinDate: faker.date.past().toLocaleDateString("en-US"),
-    status: STATUSES[Math.floor(Math.random() * STATUSES.length)],
-  };
-}
 
 const MTable = () => {
   const location = useLocation();
   const Dashboardpage = location.state.page;
   const classes = useStyles();
-  const [page, setPage] = React.useState(1);
-  const [rowsPerPage, setRowsPerPage] = React.useState(1);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [kpis, setKpis] = useState([]);
-  const [departmentName, setDepartmentName] = useState("");
-  const [RoleName, setRoleName] = useState("");
-  const [hierarchy, setHierarchy] = useState("");
   const [index, setIndex] = useState(0);
   const [perspectives, setPerspective] = useState([]);
   const {
@@ -99,7 +58,7 @@ const MTable = () => {
     useIndividualDepartments,
     useroles,
     useUsers,
-    urlKEY
+    urlKEY,
   } = useAPI();
   const [loading, setLoading] = useState(true);
 
@@ -113,7 +72,7 @@ const MTable = () => {
   };
   let navigate = useNavigate();
 
-  const editPage = (dept, deptId, index) => {
+  const editPage = ( index) => {
     let path = "/Edit";
     navigate(path, {
       state: {
@@ -140,7 +99,7 @@ const MTable = () => {
     //     alert("There was an error!", error);
     //   });
   };
-  const handleAdd = (index) => {
+  const handleAdd = () => {
     let path = "/Edit";
     navigate(path, {
       state: {
@@ -158,11 +117,10 @@ const MTable = () => {
     console.log("Subdepartment: " + useSubDepartment);
   }, [useDepartment, userType]);
   useEffect(() => {
-    const perspUrl =
-         `https://pms-apis.herokuapp.com/bsc/perspective/${urlKEY}/`;
+    const perspUrl = `https://pms-apis.herokuapp.com/bsc/perspective/${urlKEY}/`;
     const objUrl = `https://pms-apis.herokuapp.com/bsc/objective/${urlKEY}/`;
 
-    const kpiUrl = `https://pms-apis.herokuapp.com/bsc/kpi/${urlKEY}/`
+    const kpiUrl = `https://pms-apis.herokuapp.com/bsc/kpi/${urlKEY}/`;
 
     fetch(perspUrl)
       .then((res) => res.json())
@@ -219,31 +177,30 @@ const MTable = () => {
           console.log(result);
         });
     } else if (Dashboardpage === "persp") {
-        fetch(perspUrl)
-          .then((res) => res.json())
-          .then((result) => {
-            setKpis(result);
-            perspectives !== [] && setLoading(false);
-            console.log(result);
-          });
+      fetch(perspUrl)
+        .then((res) => res.json())
+        .then((result) => {
+          setKpis(result);
+          perspectives !== [] && setLoading(false);
+          console.log(result);
+        });
     } else if (Dashboardpage === "obj") {
-        fetch(objUrl)
-          .then((res) => res.json())
-          .then((result) => {
-            setKpis(result);
-            perspectives !== [] && setLoading(false);
-            console.log(result);
-          });
+      fetch(objUrl)
+        .then((res) => res.json())
+        .then((result) => {
+          setKpis(result);
+          perspectives !== [] && setLoading(false);
+          console.log(result);
+        });
     } else if (Dashboardpage === "kpi") {
-        fetch(kpiUrl)
-          .then((res) => res.json())
-          .then((result) => {
-            setKpis(result);
-            perspectives !== [] && setLoading(false);
-            console.log(result);
-          
-          })
-        }
+      fetch(kpiUrl)
+        .then((res) => res.json())
+        .then((result) => {
+          setKpis(result);
+          perspectives !== [] && setLoading(false);
+          console.log(result);
+        });
+    }
   }, []);
 
   return loading ? (
@@ -399,184 +356,199 @@ const MTable = () => {
             )}
           </TableHead>
           <TableBody>
-            {kpis.map((kpi, index) => (
-              <TableRow key={index}>
-                {Dashboardpage === "dept" && (
-                  <>
-                    <TableCell>{kpi.dept_name}</TableCell>
-                  </>
-                )}
-                {Dashboardpage === "subDept" && (
-                  <>
-                    <TableCell>{kpi.name}</TableCell>
-                    <TableCell>
-                      {usedepartments &&
-                        usedepartments.length > 0 &&
-                        usedepartments
-                          .filter((dep) => dep.dept_id === kpi.department)
-                          .map((department, index) => department.dept_name)}
-                    </TableCell>
-                  </>
-                )}
-                {Dashboardpage === "sub-subDept" && (
-                  <>
-                    <TableCell>{kpi.name}</TableCell>
-                    <TableCell>
-                      {useSubDepartments &&
-                        useSubDepartments.length > 0 &&
-                        useSubDepartments
-                          .filter((subDep) => subDep.id === kpi.subdepartment)
-                          .map((subd, index) => subd.name)}
-                    </TableCell>
-                  </>
-                )}
-                {Dashboardpage === "individualDep" && (
-                  <>
-                    <TableCell>{kpi.name}</TableCell>
-                    <TableCell>
-                      {useTeamDepartments &&
-                        useTeamDepartments.length > 0 &&
-                        useTeamDepartments
-                          .filter((indivDep) => indivDep.id === kpi.sub_subdepartment)
-                          .map((indivDe, index) => indivDe.name)}
-                    </TableCell>
-                  </>
-                )}
-                {Dashboardpage === "role" && (
-                  <>
-                    <TableCell>{kpi.role_name}</TableCell>
-                    <TableCell>{kpi.hierarchy}</TableCell>
-                  </>
-                )}
-                {Dashboardpage === "persp" && (
-                  <>
-                    <TableCell>{kpi.perspective_name}</TableCell>
-                    <TableCell>{parseFloat(kpi.perspective_weight)*100}</TableCell>
-                    <TableCell>
-                      {useUsers &&
-                        useUsers.length > 0 &&
-                        useUsers
-                          .filter((user) => user.id === kpi.user)
-                          .map((us) => us.username)}
-                    </TableCell>
-                  </>
-                )}
-                {Dashboardpage === "user" && (
-                  <>
-                    <TableCell>{kpi.username}</TableCell>
-                    <TableCell>{kpi.first_name}</TableCell>
-                    <TableCell>{kpi.last_name}</TableCell>
-                    <TableCell>
-                      {useroles && useroles.length > 0
-                        ? useroles
-                            .filter((role) => role.role_id === kpi.role)
-                            .map((ro) => ro.role_name)
-                        : "j"}
-                    </TableCell>
-
-                    <TableCell>
-                      {usedepartments && usedepartments.length > 0
-                        ? usedepartments
+            {kpis
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((kpi, index) => (
+                <TableRow key={index}>
+                  {Dashboardpage === "dept" && (
+                    <>
+                      <TableCell>{kpi.dept_name}</TableCell>
+                    </>
+                  )}
+                  {Dashboardpage === "subDept" && (
+                    <>
+                      <TableCell>{kpi.name}</TableCell>
+                      <TableCell>
+                        {usedepartments &&
+                          usedepartments.length > 0 &&
+                          usedepartments
                             .filter((dep) => dep.dept_id === kpi.department)
-                            .map((department) => department.dept_name)
-                        : ""}
-                    </TableCell>
-                    <TableCell>
-                      {useSubDepartments &&
-                        useSubDepartments.length > 0 &&
-                        useSubDepartments
-                          .filter((subdep) => subdep.id === kpi.subdepartment)
-                          .map((sub) => sub.name)}
-                    </TableCell>
-                    <TableCell>
-                      {useTeamDepartments &&
-                        useTeamDepartments.length > 0 &&
-                        useTeamDepartments
-                          .filter((teamDep) => teamDep.id === kpi.sub_subdepartment)
-                          .map((t) => t.name)}
-                    </TableCell>
-                    <TableCell>
-                      {useIndividualDepartments &&
-                        useIndividualDepartments.length > 0 &&
-                        useIndividualDepartments
-                          .filter((indiDep) => indiDep.id === kpi.individuals)
-                          .map((i) => i.name)}
-                    </TableCell>
-
-                  </>
-                )}
-                {Dashboardpage === "obj" && (
-                  <>
-                    <TableCell>{kpi.objective_name}</TableCell>
-                    <TableCell>{parseFloat(kpi.objective_weight)*100}</TableCell>
-                    {/* <TableCell>{kpi.perspective}</TableCell> */}
-                    {perspectives && perspectives.length > 0
-                      ? perspectives
-                          .filter(
-                            (persp) => persp.perspective_id === kpi.perspective
-                          )
-                          .map((per) => (
-                            <TableCell key={index}>
-                              {" "}
-                              {per.perspective_name}{" "}
-                            </TableCell>
-                          ))
-                      : ""}
-                    <TableCell>
-                      {useUsers && useUsers.length > 0
-                        ? useUsers
+                            .map((department, index) => department.dept_name)}
+                      </TableCell>
+                    </>
+                  )}
+                  {Dashboardpage === "sub-subDept" && (
+                    <>
+                      <TableCell>{kpi.name}</TableCell>
+                      <TableCell>
+                        {useSubDepartments &&
+                          useSubDepartments.length > 0 &&
+                          useSubDepartments
+                            .filter((subDep) => subDep.id === kpi.subdepartment)
+                            .map((subd, index) => subd.name)}
+                      </TableCell>
+                    </>
+                  )}
+                  {Dashboardpage === "individualDep" && (
+                    <>
+                      <TableCell>{kpi.name}</TableCell>
+                      <TableCell>
+                        {useTeamDepartments &&
+                          useTeamDepartments.length > 0 &&
+                          useTeamDepartments
+                            .filter(
+                              (indivDep) =>
+                                indivDep.id === kpi.sub_subdepartment
+                            )
+                            .map((indivDe, index) => indivDe.name)}
+                      </TableCell>
+                    </>
+                  )}
+                  {Dashboardpage === "role" && (
+                    <>
+                      <TableCell>{kpi.role_name}</TableCell>
+                      <TableCell>{kpi.hierarchy}</TableCell>
+                    </>
+                  )}
+                  {Dashboardpage === "persp" && (
+                    <>
+                      <TableCell>{kpi.perspective_name}</TableCell>
+                      <TableCell>
+                        {parseFloat(kpi.perspective_weight) * 100}
+                      </TableCell>
+                      <TableCell>
+                        {useUsers &&
+                          useUsers.length > 0 &&
+                          useUsers
                             .filter((user) => user.id === kpi.user)
-                            .map((us) => us.username)
-                        : ""}
-                    </TableCell>
-                  </>
-                )}
-                {Dashboardpage === "kpi" && (
-                  <>
-                    <TableCell>{kpi.kpi_name}</TableCell>
-                    <TableCell>{parseFloat(kpi.kpi_weight)*100}</TableCell>
-                    <TableCell>{kpi.kpi_unit_measurement === "Percentage" ? parseFloat(kpi.kpi_target)*100:kpi.kpi_target}</TableCell>
-                    <TableCell>{kpi.kpi_unit_measurement}</TableCell>
-                  </>
-                )}
-                <TableCell>
-                  <button
-                    className="btn edit"
-                    style={{
-                      backgroundColor: "orange",
-                    }}
-                    onClick={() => editPage(kpi.dept_name, kpi.dept_id, index)}
-                  >
-                    Edit
-                  </button>
+                            .map((us) => us.username)}
+                      </TableCell>
+                    </>
+                  )}
+                  {Dashboardpage === "user" && (
+                    <>
+                      <TableCell>{kpi.username}</TableCell>
+                      <TableCell>{kpi.first_name}</TableCell>
+                      <TableCell>{kpi.last_name}</TableCell>
+                      <TableCell>
+                        {useroles && useroles.length > 0
+                          ? useroles
+                              .filter((role) => role.role_id === kpi.role)
+                              .map((ro) => ro.role_name)
+                          : "j"}
+                      </TableCell>
 
-                  <button
-                    className="btn delete"
-                    style={{
-                      backgroundColor: "red",
-                    }}
-                    onClick={() => handleDelete(index)}
-                  >
-                    Delete
-                  </button>
-                </TableCell>
-              </TableRow>
-            ))}
+                      <TableCell>
+                        {usedepartments && usedepartments.length > 0
+                          ? usedepartments
+                              .filter((dep) => dep.dept_id === kpi.department)
+                              .map((department) => department.dept_name)
+                          : ""}
+                      </TableCell>
+                      <TableCell>
+                        {useSubDepartments &&
+                          useSubDepartments.length > 0 &&
+                          useSubDepartments
+                            .filter((subdep) => subdep.id === kpi.subdepartment)
+                            .map((sub) => sub.name)}
+                      </TableCell>
+                      <TableCell>
+                        {useTeamDepartments &&
+                          useTeamDepartments.length > 0 &&
+                          useTeamDepartments
+                            .filter(
+                              (teamDep) => teamDep.id === kpi.sub_subdepartment
+                            )
+                            .map((t) => t.name)}
+                      </TableCell>
+                      <TableCell>
+                        {useIndividualDepartments &&
+                          useIndividualDepartments.length > 0 &&
+                          useIndividualDepartments
+                            .filter((indiDep) => indiDep.id === kpi.individuals)
+                            .map((i) => i.name)}
+                      </TableCell>
+                    </>
+                  )}
+                  {Dashboardpage === "obj" && (
+                    <>
+                      <TableCell>{kpi.objective_name}</TableCell>
+                      <TableCell>
+                        {parseFloat(kpi.objective_weight) * 100}
+                      </TableCell>
+                      {/* <TableCell>{kpi.perspective}</TableCell> */}
+                      {perspectives && perspectives.length > 0
+                        ? perspectives
+                            .filter(
+                              (persp) =>
+                                persp.perspective_id === kpi.perspective
+                            )
+                            .map((per) => (
+                              <TableCell key={index}>
+                                {" "}
+                                {per.perspective_name}{" "}
+                              </TableCell>
+                            ))
+                        : ""}
+                      <TableCell>
+                        {useUsers && useUsers.length > 0
+                          ? useUsers
+                              .filter((user) => user.id === kpi.user)
+                              .map((us) => us.username)
+                          : ""}
+                      </TableCell>
+                    </>
+                  )}
+                  {Dashboardpage === "kpi" && (
+                    <>
+                      <TableCell>{kpi.kpi_name}</TableCell>
+                      <TableCell>{parseFloat(kpi.kpi_weight) * 100}</TableCell>
+                      <TableCell>
+                        {kpi.kpi_unit_measurement === "Percentage"
+                          ? parseFloat(kpi.kpi_target) * 100
+                          : kpi.kpi_target}
+                      </TableCell>
+                      <TableCell>{kpi.kpi_unit_measurement}</TableCell>
+                    </>
+                  )}
+                  <TableCell>
+                    <button
+                      className="btn edit"
+                      style={{
+                        backgroundColor: "orange",
+                      }}
+                      onClick={() =>
+                        editPage(index)
+                      }
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      className="btn delete"
+                      style={{
+                        backgroundColor: "red",
+                      }}
+                      onClick={() => handleDelete(index)}
+                    >
+                      Delete
+                    </button>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
-          {/* <TableFooter>
-        <TablePagination
-            component="div"
-            count={USERS.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-        </TableFooter> */}
+            <TablePagination
+              component="tbody"
+              count={kpis.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
         </Table>
       </TableContainer>
       <div>
-        <button className="btn add" onClick={() => handleAdd(index)}>
+        <button className="btn add" onClick={handleAdd}>
           <FontAwesomeIcon
             style={{
               width: "25px",
