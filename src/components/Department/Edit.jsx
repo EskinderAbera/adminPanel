@@ -804,6 +804,21 @@ const EditDept = () => {
           : DashboardPage === "dept"
           ? "Add Department"
           : null}
+        {pageType !== "ADD" && DashboardPage === "subDept"
+          ? "Edit Subdepartment"
+          : DashboardPage === "subDept"
+          ? "Add Subdepartment"
+          : null}
+        {pageType !== "ADD" && DashboardPage === "sub-subDept"
+          ? "Edit Team Department"
+          : DashboardPage === "sub-subDept"
+          ? "Add Team Department"
+          : null}
+        {pageType !== "ADD" && DashboardPage === "individualDep"
+          ? "Edit Individual Department"
+          : DashboardPage === "individualDep"
+          ? "Add Individual Department"
+          : null}
         {pageType !== "ADD" && DashboardPage === "user"
           ? "Edit User"
           : DashboardPage === "user"
@@ -913,10 +928,7 @@ const EditDept = () => {
           {DashboardPage === "individualDep" && (
             <>
               <div>
-                <span>
-                  {" "}
-                  Individual Department:{" "}
-                </span>
+                <span> Individual Department: </span>
                 <input
                   className="DeptInput"
                   type="text"
@@ -1073,10 +1085,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span>
-                  {" "}
-                  Individual Department:{" "}
-                </span>
+                <span> Individual Department: </span>
                 <select
                   id="individualDepartment"
                   onChange={(e) => handleIndividualDepartmentChange(e)}
@@ -1094,22 +1103,24 @@ const EditDept = () => {
                 </select>
               </div>
 
-              <div>
-                <span> Password: </span>
-                <input
-                  id="HierarchyInput"
-                  type="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
-                />
-              </div>
+              {pageType === "ADD" && (
+                <div>
+                  <span> Password: </span>
+                  <input
+                    id="HierarchyInput"
+                    type="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                  />
+                </div>
+              )}
             </div>
           )}
 
           {DashboardPage === "kpi" && (
             <div className="InputFields">
               <div>
-                <span > KPI Name: </span>
+                <span> KPI Name: </span>
                 <input
                   className="UserInput"
                   type="text"
@@ -1139,10 +1150,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span>
-                  {" "}
-                  KPI Unit of Measurement:{" "}
-                </span>
+                <span> KPI Unit of Measurement: </span>
                 <select
                   id="unitofmeasurement"
                   onChange={(e) => setKpiUnitMeasurement(e.target.value)}
@@ -1237,10 +1245,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span>
-                  {" "}
-                  Perspective Weight:{" "}
-                </span>
+                <span> Perspective Weight: </span>
                 <input
                   id="HierarchyInput"
                   type="text"
