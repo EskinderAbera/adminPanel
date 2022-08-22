@@ -46,12 +46,15 @@ body {
     align-items: center;
     justify-content: center;
     border: 1px solid blue;
+    /* height: 100vh; */
     height: 90vh;
     margin: 50px 50px;
+    /* background-color: #526270; */
     background-color: #242424;
     color: #fff;
 }
 .header{
+    /* margin-top: 50; */
     font-size: 2rem;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
@@ -79,6 +82,16 @@ body {
 }
 input{
     height: 30px;
+    /* width: 100%;
+    color: #fff;
+}
+select{
+    height: 30px;
+    width: 100%;
+    color: #fff;
+}
+select { */
+
 }
 .errorStyle{
     color: red;
@@ -88,4 +101,27 @@ input{
 	border-radius: 2px;
 	box-shadow: none;
 	border-color: #dddddd;
+}
+/* span {
+    font-size: 14px;
+    display: block;
+}
+div {
+    margin-bottom: 10px;
+}
+input {
+    background-color: transparent;
+    border: 1px solid rgba(254,254,254,.3);
+    border-radius: 5px;
+    padding: 0 8px;
+}
+select{
+    background-color: transparent;
+    border: 1px solid rgba(254,254,254,.3);
+    border-radius: 5px;
+    padding: 0 8px;
+    font-size: 12px;
+} */
+span{
+    font-size: 1.5rem;
 }

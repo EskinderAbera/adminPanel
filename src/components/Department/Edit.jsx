@@ -837,7 +837,7 @@ const EditDept = () => {
         >
           {DashboardPage === "dept" && (
             <>
-              <span style={{ fontSize: "1.5rem" }}> Department: </span>
+              <span> Department: </span>
               <input
                 className="DeptInput"
                 type="text"
@@ -849,7 +849,7 @@ const EditDept = () => {
           {DashboardPage === "subDept" && (
             <>
               <div>
-                <span style={{ fontSize: "1.5rem" }}> SubDepartment: </span>
+                <span> SubDepartment: </span>
                 <input
                   className="DeptInput"
                   type="text"
@@ -859,7 +859,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Department: </span>
+                <span> Department: </span>
 
                 <select
                   id="subDepartment"
@@ -881,7 +881,7 @@ const EditDept = () => {
           {DashboardPage === "sub-subDept" && (
             <>
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Team Department: </span>
+                <span> Team Department: </span>
                 <input
                   className="DeptInput"
                   type="text"
@@ -891,7 +891,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Sub-Departments: </span>
+                <span> Sub-Departments: </span>
 
                 <select
                   id="subDepartment"
@@ -913,7 +913,7 @@ const EditDept = () => {
           {DashboardPage === "individualDep" && (
             <>
               <div>
-                <span style={{ fontSize: "1.5rem" }}>
+                <span>
                   {" "}
                   Individual Department:{" "}
                 </span>
@@ -926,7 +926,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Team Department: </span>
+                <span> Team Department: </span>
 
                 <select
                   id="subDepartment"
@@ -949,7 +949,7 @@ const EditDept = () => {
           {DashboardPage === "role" && (
             <div className="InputFields">
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Role Name: </span>
+                <span> Role Name: </span>
                 <input
                   className="RoleInput"
                   onChange={(e) => setRoleName(e.target.value)}
@@ -958,7 +958,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Hierarchy: </span>
+                <span> Hierarchy: </span>
                 <input
                   id="HierarchyInput"
                   type="text"
@@ -973,7 +973,7 @@ const EditDept = () => {
           {DashboardPage === "user" && (
             <div className="InputFields">
               <div>
-                <span style={{ fontSize: "1.5rem" }}> UserName: </span>
+                <span> UserName: </span>
                 <input
                   className="UserInput"
                   type="text"
@@ -983,7 +983,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> First Name: </span>
+                <span> First Name: </span>
                 <input
                   id="HierarchyInput"
                   type="text"
@@ -993,7 +993,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Last Name: </span>
+                <span> Last Name: </span>
                 <input
                   id="HierarchyInput"
                   type="text"
@@ -1003,7 +1003,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Role: </span>
+                <span> Role: </span>
 
                 <select id="userRole" onChange={(e) => handleRoleChange(e)}>
                   <option key="select" value="select">
@@ -1018,7 +1018,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Department: </span>
+                <span> Department: </span>
                 <select
                   id="userDepartment"
                   onChange={(e) => handleDepartmentChange(e)}
@@ -1035,7 +1035,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> SubDepartment: </span>
+                <span> SubDepartment: </span>
                 <select
                   id="userSubDepartment"
                   onChange={(e) => handleSubDepartmentChange(e)}
@@ -1054,7 +1054,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Team Department: </span>
+                <span> Team Department: </span>
                 <select
                   id="teamDepartment"
                   onChange={(e) => handleTeamDepartmentChange(e)}
@@ -1073,7 +1073,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}>
+                <span>
                   {" "}
                   Individual Department:{" "}
                 </span>
@@ -1095,7 +1095,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Password: </span>
+                <span> Password: </span>
                 <input
                   id="HierarchyInput"
                   type="password"
@@ -1109,7 +1109,7 @@ const EditDept = () => {
           {DashboardPage === "kpi" && (
             <div className="InputFields">
               <div>
-                <span style={{ fontSize: "1.5rem" }}> KPI Name: </span>
+                <span > KPI Name: </span>
                 <input
                   className="UserInput"
                   type="text"
@@ -1119,7 +1119,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> KPI Weight: </span>
+                <span> KPI Weight: </span>
                 <input
                   id="HierarchyInput"
                   type="text"
@@ -1129,7 +1129,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> KPI Target: </span>
+                <span> KPI Target: </span>
                 <input
                   id="HierarchyInput"
                   type="text"
@@ -1139,7 +1139,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}>
+                <span>
                   {" "}
                   KPI Unit of Measurement:{" "}
                 </span>
@@ -1166,7 +1166,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Perspective: </span>
+                <span> Perspective: </span>
                 <select
                   id="kpiPerspective"
                   onChange={(e) => handlePerspectiveChange(e)}
@@ -1184,7 +1184,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Objective: </span>
+                <span> Objective: </span>
                 <select
                   id="kpiObjective"
                   onChange={(e) => handleObjectiveChange(e)}
@@ -1203,7 +1203,7 @@ const EditDept = () => {
                 </select>
               </div>
               <div>
-                <span style={{ fontSize: "1.5rem" }}> User: </span>
+                <span> User: </span>
                 <select id="kpiUser" onChange={(e) => handleUserChange(e)}>
                   <option key="select" value="select">
                     Select
@@ -1227,7 +1227,7 @@ const EditDept = () => {
           {DashboardPage === "persp" && (
             <div className="InputFields">
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Perspective Name: </span>
+                <span> Perspective Name: </span>
                 <input
                   id="HierarchyInput"
                   type="text"
@@ -1237,7 +1237,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}>
+                <span>
                   {" "}
                   Perspective Weight:{" "}
                 </span>
@@ -1250,7 +1250,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> User: </span>
+                <span> User: </span>
                 <select id="objUsers" onChange={(e) => handleUserChange(e)}>
                   <option key="select" value="select">
                     Select
@@ -1274,7 +1274,7 @@ const EditDept = () => {
           {DashboardPage === "obj" && (
             <div className="InputFields">
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Objective Name: </span>
+                <span> Objective Name: </span>
                 <input
                   className="UserInput"
                   type="text"
@@ -1284,7 +1284,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Objective Weight: </span>
+                <span> Objective Weight: </span>
                 <input
                   id="HierarchyInput"
                   type="text"
@@ -1294,7 +1294,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Perspective: </span>
+                <span> Perspective: </span>
 
                 <select
                   id="objPerspective"
@@ -1312,7 +1312,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> User: </span>
+                <span> User: </span>
 
                 <select id="objUsers" onChange={(e) => handleUserChange(e)}>
                   <option key="select" value="select">

@@ -357,7 +357,7 @@ const MTable = () => {
           </TableHead>
           <TableBody>
             {kpis
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((kpi, index) => (
                 <TableRow key={index}>
                   {Dashboardpage === "dept" && (
@@ -537,14 +537,14 @@ const MTable = () => {
                 </TableRow>
               ))}
           </TableBody>
-            <TablePagination
+            {/* <TablePagination
               component="tbody"
               count={kpis.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}
               onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
+            /> */}
         </Table>
       </TableContainer>
       <div>
