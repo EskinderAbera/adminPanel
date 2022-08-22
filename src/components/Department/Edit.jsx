@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAPI } from "../../Context/APIContext";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify/dist/react-toastify";
 
 const EditDept = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const index = location.state.index;
   const filterperspectives = location.state.perspectives;
   const DashboardPage = location.state.dashboardPage;
@@ -113,7 +114,7 @@ const EditDept = () => {
       setUsername(index !== "" ? kpis[index].username : "");
       setFirstName(index !== "" ? kpis[index].first_name : "");
       setLastName(index !== "" ? kpis[index].last_name : "");
-      setRoleId(index !== "" ? kpis[index].role: "");
+      setRoleId(index !== "" ? kpis[index].role : "");
       setDepartmentId(index !== "" ? kpis[index].department : "");
       setSubDepartmentId(index !== "" ? kpis[index].subdepartment : "");
       setTeamDepartmentId(index !== "" ? kpis[index].sub_subdepartment : "");
@@ -124,7 +125,7 @@ const EditDept = () => {
       setPerspectiveWeight(
         index !== "" ? parseFloat(kpis[index].perspective_weight) * 100 : ""
       );
-      setUserId(index !== '' ? kpis[index].user : '');
+      setUserId(index !== "" ? kpis[index].user : "");
     } else if (DashboardPage === "obj") {
       setObjective(index !== "" ? kpis[index].objective_name : "");
       setObjectiveWeight(
@@ -251,7 +252,6 @@ const EditDept = () => {
         role_name: Role_Name,
         hierarchy: Hierarchy,
       };
-
 
       axios
         .post("https://pms-apis.herokuapp.com/core/role/", role)
@@ -481,13 +481,16 @@ const EditDept = () => {
         .catch((error) => {
           HandleError();
         });
-    }else if (DashboardPage === "individualDep") {
+    } else if (DashboardPage === "individualDep") {
       const indiDep = {
         name: individualDepartment,
         sub_subdepartment: teamDepartmentId,
       };
       axios
-        .put(`https://pms-apis.herokuapp.com/core/individual/${kpis[index].id}/`, indiDep)
+        .put(
+          `https://pms-apis.herokuapp.com/core/individual/${kpis[index].id}/`,
+          indiDep
+        )
         .then((res) => {
           const data = res.data;
           if (res.status !== 201) {
@@ -503,8 +506,7 @@ const EditDept = () => {
         .catch((error) => {
           HandleError();
         });
-      } 
-    else if (DashboardPage === "role") {
+    } else if (DashboardPage === "role") {
       const role = {
         role_name: Role_Name,
         hierarchy: Hierarchy,
@@ -541,7 +543,7 @@ const EditDept = () => {
         department: departmentId,
         subdepartment: subDepartmentId,
         sub_subdepartment: teamDepartmentId,
-        individuals: individaulDepartmentId
+        individuals: individaulDepartmentId,
       };
       console.log(user);
       axios
@@ -677,21 +679,35 @@ const EditDept = () => {
     //   });
   };
 
-    const HandleError = () => {
-      toast.error("Please Fill all the required fields", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    };
+  const HandleError = () => {
+    toast.error("Please Fill all the required fields", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
   const HandleSuccess = (name) => {
     toast.success(`${name} Added Successfully`, {
-      position: toast.POSITION.TOP_RIGHT,
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      onClose: () => navigate(-1),
     });
   };
   const HandleSuccessUpdate = (name) => {
     toast.success(`${name} Updated Successfully`, {
-      position: toast.POSITION.TOP_RIGHT,
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      onClose: () => navigate(-1),
     });
-  }
+  };
 
   const handlePerspectiveChange = (e) => {
     setPerspective(e.target.value);
@@ -764,7 +780,7 @@ const EditDept = () => {
       .filter((teamDep) => teamDep.name === e.target.value)
       .map((td) => setTeamDepartmentId(td.id));
     setIndividualDepartmentId("");
-  }
+  };
   const handleIndividualDepartmentChange = (e) => {
     setIndividualDepartment(e.target.value);
     if (e.target.value === "select") {
@@ -773,7 +789,7 @@ const EditDept = () => {
     useIndividualDepartments
       .filter((teamDep) => teamDep.name === e.target.value)
       .map((td) => setIndividualDepartmentId(td.id));
-  }
+  };
   const {
     register,
     handleSubmit,
@@ -897,12 +913,15 @@ const EditDept = () => {
           {DashboardPage === "individualDep" && (
             <>
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Individual Department: </span>
+                <span style={{ fontSize: "1.5rem" }}>
+                  {" "}
+                  Individual Department:{" "}
+                </span>
                 <input
                   className="DeptInput"
                   type="text"
                   onChange={(e) => setIndividualDepartment(e.target.value)}
-                 value={individualDepartment}
+                  value={individualDepartment}
                 />
               </div>
 
@@ -1054,7 +1073,10 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span style={{ fontSize: "1.5rem" }}> Individual Department: </span>
+                <span style={{ fontSize: "1.5rem" }}>
+                  {" "}
+                  Individual Department:{" "}
+                </span>
                 <select
                   id="individualDepartment"
                   onChange={(e) => handleIndividualDepartmentChange(e)}
@@ -1152,11 +1174,12 @@ const EditDept = () => {
                   <option key="select" value="select">
                     Select
                   </option>
-                  {ceoPerspective.length!==0 && ceoPerspective.map((perspect, index) => (
-                    <option key={index} value={perspect.perspective_name}>
-                      {perspect.perspective_name}
-                    </option>
-                  ))}
+                  {ceoPerspective.length !== 0 &&
+                    ceoPerspective.map((perspect, index) => (
+                      <option key={index} value={perspect.perspective_name}>
+                        {perspect.perspective_name}
+                      </option>
+                    ))}
                 </select>
               </div>
 
@@ -1169,13 +1192,14 @@ const EditDept = () => {
                   <option key="select" value="select">
                     Select
                   </option>
-                  {ceoObjective.length!==0 && ceoObjective
-                    .filter((obj) => obj.perspective === ceoPerspectiveId)
-                    .map((objec, index) => (
-                      <option key={index} value={objec.objective_name}>
-                        {objec.objective_name}
-                      </option>
-                    ))}
+                  {ceoObjective.length !== 0 &&
+                    ceoObjective
+                      .filter((obj) => obj.perspective === ceoPerspectiveId)
+                      .map((objec, index) => (
+                        <option key={index} value={objec.objective_name}>
+                          {objec.objective_name}
+                        </option>
+                      ))}
                 </select>
               </div>
               <div>
@@ -1185,7 +1209,11 @@ const EditDept = () => {
                     Select
                   </option>
                   {useUsers
-                    .filter((u) => filterperspectives.length !==0 ? u.id === filterperspectives[0].user : u.id !== null)
+                    .filter((u) =>
+                      filterperspectives.length !== 0
+                        ? u.id === filterperspectives[0].user
+                        : u.id !== null
+                    )
                     .map((user, index) => (
                       <option key={index} value={user.username}>
                         {user.username}
@@ -1228,7 +1256,11 @@ const EditDept = () => {
                     Select
                   </option>
                   {useUsers
-                    .filter((u) => filterperspectives.length !==0 ? u.id === filterperspectives[0].user : u.id !== null)
+                    .filter((u) =>
+                      filterperspectives.length !== 0
+                        ? u.id === filterperspectives[0].user
+                        : u.id !== null
+                    )
                     .map((user, index) => (
                       <option key={index} value={user.username}>
                         {user.username}
@@ -1287,7 +1319,11 @@ const EditDept = () => {
                     Select
                   </option>
                   {useUsers
-                    .filter((u) => filterperspectives.length!==0 ? u.id === filterperspectives[0].user: u.id !== null)
+                    .filter((u) =>
+                      filterperspectives.length !== 0
+                        ? u.id === filterperspectives[0].user
+                        : u.id !== null
+                    )
                     .map((user, index) => (
                       <option key={index} value={user.username}>
                         {user.username}
