@@ -1,126 +1,142 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
 body {
-    --margin-xl: 4rem;
-    --margin-lg: 3rem;
-    --margin-md: 2rem;
-    --margin-sm: 1rem;
-    --margin-xs: 0.8rem;
-    --margin-xxs: 0.5rem;
+  --margin-xl: 4rem;
+  --margin-lg: 3rem;
+  --margin-md: 2rem;
+  --margin-sm: 1rem;
+  --margin-xs: 0.8rem;
+  --margin-xxs: 0.5rem;
 
-    --padding-xl: 4rem;
-    --padding-lg: 3rem;
-    --padding-md: 2rem;
-    --padding-sm: 1rem;
-    --padding-xs: 0.8rem;
-    --padding-xxs: 0.5rem;
+  --padding-xl: 4rem;
+  --padding-lg: 3rem;
+  --padding-md: 2rem;
+  --padding-sm: 1rem;
+  --padding-xs: 0.8rem;
+  --padding-xxs: 0.5rem;
 
-    font-family: "Poppins", sans-serif;
-    overflow: hidden;
-    background: rgb(240, 244, 248);
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+  background: rgb(240, 244, 248);
 }
 
 .App {
-    display: flex;
+  display: flex;
 }
 .Table {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.btn{
-    margin: 0 10px;
+.addBtn {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
 }
-.add{
-    margin-top: 20px;
-    border: 1px solid #242424;
-    color: #fff;
-    background-color: #242424;
+.btn {
+  margin: 0 10px;
 }
-.add:hover{
-    background-color: #efefef;
-    color: #242424;
+.add {
+  margin: 20px 30px;
+  padding: 5px;
+  font-size: 31px;
+  border: none;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  box-shadow: 0 2px 4px darkslategray;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  color: #fff;
+  background-color: #48abe0;
 }
-.Container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 50px 0;
-    height: 100vh;
-    background-color: #304b62;
-    color: #fff;
+.add:hover {
+  background-color: #efefef;
+  color: #242424;
 }
-.header{
-    margin-top: 50px 0;
-    font-size: 2rem;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 0;
+  height: 100vh;
+  background-color: #304b62;
+  color: #fff;
 }
-.InputContainer{
-    /* display: flex; */
-    width: 50vh;
-    margin-top: 50px;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+.header {
+  margin-top: 50px 0;
+  font-size: 2rem;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+.InputContainer {
+  /* display: flex; */
+  width: 50vh;
+  margin-top: 50px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.saveadd{
-    border: 1px solid #242424;
-    background-color: blue;
-    color: #fff;
+.saveadd {
+  border: 1px solid #242424;
+  background-color: blue;
+  color: #fff;
 }
-.delete{
-    border: 1px solid #242424;
-    background-color: red;
-    color: #fff;
+.delete {
+  border: 1px solid #242424;
+  background-color: red;
+  color: #fff;
 }
-.InputFields{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    margin-bottom: 50px;
+.InputFields {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 50px;
 }
-.Container input{
-    height: 30px;
-    width: 100%;
-    color: #fff;
+.Container input {
+  height: 30px;
+  width: 100%;
+  color: #fff;
 }
-select{
-    height: 30px;
-    width: 100%;
-    color: #fff;
+select {
+  height: 30px;
+  width: 100%;
+  color: #fff;
 }
 .Container select option {
-    margin: 40px;
-    background: #b7b7d5;
-    color: #fff;
-    padding: 0 7px;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+  margin: 40px;
+  background: #b7b7d5;
+  color: #fff;
+  padding: 0 7px;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 }
 
 .form-control {
-	border-radius: 2px;
-	box-shadow: none;
-	border-color: #dddddd;
+  border-radius: 2px;
+  box-shadow: none;
+  border-color: #dddddd;
 }
 span {
-    font-size: 14px;
-    display: block;
+  font-size: 13px;
+  display: block;
 }
- .InputContainer div {
-    margin-bottom: 10px;
+.InputContainer div {
+  margin-bottom: 10px;
 }
 .Container input {
-    background-color: transparent;
-    border: 1px solid rgba(254,254,254,.3);
-    border-radius: 5px;
-    padding: 0 8px;
+  background-color: transparent;
+  border: 1px solid rgba(254, 254, 254, 0.3);
+  border-radius: 5px;
+  padding: 0 8px;
+  font-size: 14px;
 }
-select{
-    background-color: transparent;
-    border: 1px solid rgba(254,254,254,.3);
-    border-radius: 5px;
-    padding: 0 8px;
-    font-size: 12px;
+select {
+  background-color: transparent;
+  border: 1px solid rgba(254, 254, 254, 0.3);
+  border-radius: 5px;
+  padding: 0 8px;
+  font-weight: lighter;
+  font-size: 14px;
 }
-span{
-    font-size: 14px;
-}
+

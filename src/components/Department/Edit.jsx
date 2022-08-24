@@ -80,20 +80,27 @@ const EditDept = () => {
       .then((res) => {
         console.log(res);
         setCeoPerspective(res);
+        index !== "" &&
+          res
+            .filter(
+              (perspectives) =>
+                perspectives.perspective_id === kpis[index].perspective
+            )
+            .map((perspective) => setPerspective(perspective.perspective_name));
       });
 
     fetch(objUrl)
       .then((response) => response.json())
       .then((res) => {
         setCeoObjective(res);
+        index !== "" &&
+        res
+          .filter(
+            (objectives) => objectives.objective_id === kpis[index].objective
+          )
+          .map((objective) => setObjective(objective.objective_name));
       });
   }, []);
-
-  useEffect(() => {
-    console.log(
-      "SubDepartment " + subDepartment + " with an Id of : " + subDepartmentId
-    );
-  }, [subDepartment]);
 
   useEffect(() => {
     if (DashboardPage === "dept") {
@@ -101,12 +108,37 @@ const EditDept = () => {
     } else if (DashboardPage === "subDept") {
       setSubDepartment(index !== "" ? kpis[index].name : "");
       setDepartmentId(index !== "" ? kpis[index].department : "");
+      index !== "" &&
+        usedepartments
+          .filter(
+            (departments) => departments.dept_id === kpis[index].department
+          )
+          .map((department) => {
+            setDepartment(department.dept_name);
+          });
     } else if (DashboardPage === "sub-subDept") {
       setTeamDepartment(index !== "" ? kpis[index].name : "");
       setSubDepartmentId(index !== "" ? kpis[index].subdepartment : "");
+      index !== "" &&
+        useSubDepartments
+          .filter(
+            (subdepartments) => subdepartments.id === kpis[index].subdepartment
+          )
+          .map((subdepartment) => {
+            setSubDepartment(subdepartment.name);
+          });
     } else if (DashboardPage === "individualDep") {
       setIndividualDepartment(index !== "" ? kpis[index].name : "");
       setTeamDepartmentId(index !== "" ? kpis[index].sub_subdepartment : "");
+      index !== "" &&
+        useTeamDepartments
+          .filter(
+            (teamDepartments) =>
+              teamDepartments.id === kpis[index].sub_subdepartment
+          )
+          .map((teamDepartment) => {
+            setTeamDepartment(teamDepartment.name);
+          });
     } else if (DashboardPage === "role") {
       setRoleName(index !== "" ? kpis[index].role_name : "");
       setHierarchy(index !== "" ? kpis[index].hierarchy : "");
@@ -115,10 +147,50 @@ const EditDept = () => {
       setFirstName(index !== "" ? kpis[index].first_name : "");
       setLastName(index !== "" ? kpis[index].last_name : "");
       setRoleId(index !== "" ? kpis[index].role : "");
+      index !== "" &&
+        useroles
+          .filter((roles) => roles.role_id === kpis[index].role)
+          .map((role) => {
+            setRole(role.role_name);
+          });
       setDepartmentId(index !== "" ? kpis[index].department : "");
+      index !== "" &&
+        usedepartments
+          .filter(
+            (departments) => departments.dept_id === kpis[index].department
+          )
+          .map((department) => {
+            setDepartment(department.dept_name);
+          });
       setSubDepartmentId(index !== "" ? kpis[index].subdepartment : "");
+      index !== "" &&
+        useSubDepartments
+          .filter(
+            (subdepartments) => subdepartments.id === kpis[index].subdepartment
+          )
+          .map((subdepartment) => {
+            setSubDepartment(subdepartment.name);
+          });
       setTeamDepartmentId(index !== "" ? kpis[index].sub_subdepartment : "");
+      index !== "" &&
+        useTeamDepartments
+          .filter(
+            (teamDepartments) =>
+              teamDepartments.id === kpis[index].sub_subdepartment
+          )
+          .map((teamDepartment) => {
+            setTeamDepartment(teamDepartment.name);
+          });
       setIndividualDepartmentId(index !== "" ? kpis[index].individuals : "");
+      index !== "" &&
+        useIndividualDepartments
+          .filter(
+            (individualDepartments) =>
+              individualDepartments.id === kpis[index].individuals
+          )
+          .map((individualDepartment) => {
+            setIndividualDepartment(individualDepartment.name);
+          });
     } else if (DashboardPage === "persp") {
       console.log(kpis);
       setPerspective(index !== "" ? kpis[index].perspective_name : "");
@@ -126,6 +198,10 @@ const EditDept = () => {
         index !== "" ? parseFloat(kpis[index].perspective_weight) * 100 : ""
       );
       setUserId(index !== "" ? kpis[index].user : "");
+      index !== "" &&
+        useUsers
+          .filter((users) => users.id === kpis[index].user)
+          .map((user) => setUsername(user.username));
     } else if (DashboardPage === "obj") {
       setObjective(index !== "" ? kpis[index].objective_name : "");
       setObjectiveWeight(
@@ -133,8 +209,11 @@ const EditDept = () => {
       );
       setCeoPerspectiveId(index !== "" ? kpis[index].perspective : "");
       setUserId(index !== "" ? kpis[index].user : "");
+      index !== "" &&
+        useUsers
+          .filter((users) => users.id === kpis[index].user)
+          .map((user) => setUsername(user.username));
     } else if (DashboardPage === "kpi") {
-      // console.log(kpiname);
       setKpiName(index !== "" ? kpis[index].kpi_name : "");
       console.log();
       setKpiWeight(
@@ -153,6 +232,10 @@ const EditDept = () => {
       setCeoPerspectiveId(index !== "" ? kpis[index].perspective : "");
       setCeoObjectiveId(index !== "" ? kpis[index].objective : "");
       setUserId(index !== "" ? kpis[index].user : "");
+      index !== "" &&
+      useUsers
+        .filter((users) => users.id === kpis[index].user)
+        .map((user) => setUsername(user.username));
     }
   }, []);
   const handleAdd = () => {
@@ -748,6 +831,11 @@ const EditDept = () => {
     useroles
       .filter((rol) => rol.role_name === e.target.value)
       .map((r) => setRoleId(r.role_id));
+
+    setDepartment("select");
+    setTeamDepartment("select");
+    setIndividualDepartment("select");
+    setSubDepartment("select");
   };
 
   const handleDepartmentChange = (e) => {
@@ -759,6 +847,11 @@ const EditDept = () => {
       .filter((dep) => dep.dept_name === e.target.value)
       .map((d) => setDepartmentId(d.dept_id));
     setSubDepartmentId("");
+    setTeamDepartmentId("");
+    setIndividualDepartmentId("");
+    setSubDepartment("select");
+    setTeamDepartment("select");
+    setIndividualDepartment("select");
   };
 
   const handleSubDepartmentChange = (e) => {
@@ -770,6 +863,9 @@ const EditDept = () => {
       .filter((subDep) => subDep.name === e.target.value)
       .map((sub) => setSubDepartmentId(sub.id));
     setTeamDepartmentId("");
+    setIndividualDepartmentId("");
+    setTeamDepartment("select");
+    setIndividualDepartment("select");
   };
   const handleTeamDepartmentChange = (e) => {
     setTeamDepartment(e.target.value);
@@ -780,6 +876,7 @@ const EditDept = () => {
       .filter((teamDep) => teamDep.name === e.target.value)
       .map((td) => setTeamDepartmentId(td.id));
     setIndividualDepartmentId("");
+    setIndividualDepartment("select");
   };
   const handleIndividualDepartmentChange = (e) => {
     setIndividualDepartment(e.target.value);
@@ -879,6 +976,7 @@ const EditDept = () => {
                 <select
                   id="subDepartment"
                   name="message"
+                  value={department}
                   onChange={(e) => handleDepartmentChange(e)}
                 >
                   <option key="select" value="select">
@@ -911,6 +1009,7 @@ const EditDept = () => {
                 <select
                   id="subDepartment"
                   name="message"
+                  value={subDepartment}
                   onChange={(e) => handleSubDepartmentChange(e)}
                 >
                   <option key="select" value="select">
@@ -1017,7 +1116,11 @@ const EditDept = () => {
               <div>
                 <span> Role: </span>
 
-                <select id="userRole" onChange={(e) => handleRoleChange(e)}>
+                <select
+                  id="userRole"
+                  value={role}
+                  onChange={(e) => handleRoleChange(e)}
+                >
                   <option key="select" value="select">
                     Select
                   </option>
@@ -1029,84 +1132,218 @@ const EditDept = () => {
                 </select>
               </div>
 
-              <div>
-                <span> Department: </span>
-                <select
-                  id="userDepartment"
-                  onChange={(e) => handleDepartmentChange(e)}
-                >
-                  <option key="select" value="select">
-                    Select
-                  </option>
-                  {usedepartments.map((dep, index) => (
-                    <option key={index} value={dep.dept_name}>
-                      {dep.dept_name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <span> SubDepartment: </span>
-                <select
-                  id="userSubDepartment"
-                  onChange={(e) => handleSubDepartmentChange(e)}
-                >
-                  <option key="select" value="select">
-                    Select
-                  </option>
-                  {useSubDepartments
-                    .filter((sub) => sub.department === departmentId)
-                    .map((subDep, index) => (
-                      <option key={index} value={subDep.name}>
-                        {subDep.name}
+              {role === "Vice President" && (
+                <>
+                  <div>
+                    <span> Department: </span>
+                    <select
+                      id="userDepartment"
+                      value={department}
+                      onChange={(e) => handleDepartmentChange(e)}
+                    >
+                      <option key="select" value="select">
+                        Select
                       </option>
-                    ))}
-                </select>
-              </div>
+                      {usedepartments.map((dep, index) => (
+                        <option key={index} value={dep.dept_name}>
+                          {dep.dept_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </>
+              )}
 
-              <div>
-                <span> Team Department: </span>
-                <select
-                  id="teamDepartment"
-                  onChange={(e) => handleTeamDepartmentChange(e)}
-                >
-                  <option key="select" value="select">
-                    Select
-                  </option>
-                  {useTeamDepartments
-                    .filter((td) => td.subdepartment === subDepartmentId)
-                    .map((t, index) => (
-                      <option key={index} value={t.name}>
-                        {t.name}
+              {role === "director" && (
+                <>
+                  <div>
+                    <span> Department: </span>
+                    <select
+                      id="userDepartment"
+                      value={department}
+                      onChange={(e) => handleDepartmentChange(e)}
+                    >
+                      <option key="select" value="select">
+                        Select
                       </option>
-                    ))}
-                </select>
-              </div>
+                      {usedepartments.map((dep, index) => (
+                        <option key={index} value={dep.dept_name}>
+                          {dep.dept_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-              <div>
-                <span> Individual Department: </span>
-                <select
-                  id="individualDepartment"
-                  onChange={(e) => handleIndividualDepartmentChange(e)}
-                >
-                  <option key="select" value="select">
-                    Select
-                  </option>
-                  {useIndividualDepartments
-                    .filter((id) => id.sub_subdepartment === teamDepartmentId)
-                    .map((i, index) => (
-                      <option key={index} value={i.name}>
-                        {i.name}
+                  <div>
+                    <span> SubDepartment: </span>
+                    <select
+                      id="userSubDepartment"
+                      value={subDepartment}
+                      onChange={(e) => handleSubDepartmentChange(e)}
+                    >
+                      <option key="select" value="select">
+                        Select
                       </option>
-                    ))}
-                </select>
-              </div>
+                      {useSubDepartments
+                        .filter((sub) => sub.department === departmentId)
+                        .map((subDep, index) => (
+                          <option key={index} value={subDep.name}>
+                            {subDep.name}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                </>
+              )}
+              {role === "Manager" && (
+                <>
+                  <div>
+                    <span> Department: </span>
+                    <select
+                      id="userDepartment"
+                      value={department}
+                      onChange={(e) => handleDepartmentChange(e)}
+                    >
+                      <option key="select" value="select">
+                        Select
+                      </option>
+                      {usedepartments.map((dep, index) => (
+                        <option key={index} value={dep.dept_name}>
+                          {dep.dept_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
+                  <div>
+                    <span> SubDepartment: </span>
+                    <select
+                      id="userSubDepartment"
+                      value={subDepartment}
+                      onChange={(e) => handleSubDepartmentChange(e)}
+                    >
+                      <option key="select" value="select">
+                        Select
+                      </option>
+                      {useSubDepartments
+                        .filter((sub) => sub.department === departmentId)
+                        .map((subDep, index) => (
+                          <option key={index} value={subDep.name}>
+                            {subDep.name}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <span> Team Department: </span>
+                    <select
+                      id="teamDepartment"
+                      value={teamDepartment}
+                      onChange={(e) => handleTeamDepartmentChange(e)}
+                    >
+                      <option key="select" value="select">
+                        Select
+                      </option>
+                      {useTeamDepartments
+                        .filter((td) => td.subdepartment === subDepartmentId)
+                        .map((t, index) => (
+                          <option key={index} value={t.name}>
+                            {t.name}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                </>
+              )}
+              {role === "Individuals" && (
+                <>
+                  <div>
+                    <span> Department: </span>
+                    <select
+                      id="userDepartment"
+                      value={department}
+                      onChange={(e) => handleDepartmentChange(e)}
+                    >
+                      <option key="select" value="select">
+                        Select
+                      </option>
+                      {usedepartments.map((dep, index) => (
+                        <option key={index} value={dep.dept_name}>
+                          {dep.dept_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <span> SubDepartment: </span>
+                    <select
+                      id="userSubDepartment"
+                      value={subDepartment}
+                      onChange={(e) => handleSubDepartmentChange(e)}
+                    >
+                      <option key="select" value="select">
+                        Select
+                      </option>
+                      {useSubDepartments
+                        .filter((sub) => sub.department === departmentId)
+                        .map((subDep, index) => (
+                          <option key={index} value={subDep.name}>
+                            {subDep.name}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <span> Team Department: </span>
+                    <select
+                      id="teamDepartment"
+                      value={teamDepartment}
+                      onChange={(e) => handleTeamDepartmentChange(e)}
+                    >
+                      <option key="select" value="select">
+                        Select
+                      </option>
+                      {useTeamDepartments
+                        .filter((td) => td.subdepartment === subDepartmentId)
+                        .map((t, index) => (
+                          <option key={index} value={t.name}>
+                            {t.name}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <span> Individual Department: </span>
+                    <select
+                      id="individualDepartment"
+                      value={individualDepartment}
+                      onChange={(e) => handleIndividualDepartmentChange(e)}
+                    >
+                      <option key="select" value="select">
+                        Select
+                      </option>
+                      {useIndividualDepartments
+                        .filter(
+                          (id) => id.sub_subdepartment === teamDepartmentId
+                        )
+                        .map((i, index) => (
+                          <option key={index} value={i.name}>
+                            {i.name}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                </>
+              )}
               {pageType === "ADD" && (
                 <div>
                   <span> Password: </span>
                   <input
+                    autoComplete="new-password"
                     id="HierarchyInput"
                     type="password"
                     onChange={(e) => setPassword(e.target.value)}
@@ -1153,6 +1390,7 @@ const EditDept = () => {
                 <span> KPI Unit of Measurement: </span>
                 <select
                   id="unitofmeasurement"
+                  value={kpiUnitMeasurement}
                   onChange={(e) => setKpiUnitMeasurement(e.target.value)}
                 >
                   <option key="select" value="select">
@@ -1177,6 +1415,7 @@ const EditDept = () => {
                 <span> Perspective: </span>
                 <select
                   id="kpiPerspective"
+                  value={perspective}
                   onChange={(e) => handlePerspectiveChange(e)}
                 >
                   <option key="select" value="select">
@@ -1195,6 +1434,7 @@ const EditDept = () => {
                 <span> Objective: </span>
                 <select
                   id="kpiObjective"
+                  value={objective}
                   onChange={(e) => handleObjectiveChange(e)}
                 >
                   <option key="select" value="select">
@@ -1212,7 +1452,7 @@ const EditDept = () => {
               </div>
               <div>
                 <span> User: </span>
-                <select id="kpiUser" onChange={(e) => handleUserChange(e)}>
+                <select id="kpiUser" value={username} onChange={(e) => handleUserChange(e)}>
                   <option key="select" value="select">
                     Select
                   </option>
@@ -1236,12 +1476,19 @@ const EditDept = () => {
             <div className="InputFields">
               <div>
                 <span> Perspective Name: </span>
-                <input
-                  id="HierarchyInput"
-                  type="text"
-                  onChange={(e) => handlePerspectiveChange(e)}
+                 <select
+                  id="perspectives"
                   value={perspective}
-                />
+                  onChange={(e) => handlePerspectiveChange(e)}
+                >
+                  <option key="select" value="select">
+                    Select
+                  </option>
+                  <option value="Financial">Financial</option>
+                  <option value="Customer">Customer</option>
+                  <option value="Internal Business Process">Internal Business Process</option>
+                  <option value="Learning and Growth">Learning and Growth</option>
+                </select>
               </div>
 
               <div>
@@ -1256,7 +1503,7 @@ const EditDept = () => {
 
               <div>
                 <span> User: </span>
-                <select id="objUsers" onChange={(e) => handleUserChange(e)}>
+                <select id="objUsers" value={username} onChange={(e) => handleUserChange(e)}>
                   <option key="select" value="select">
                     Select
                   </option>
@@ -1303,6 +1550,7 @@ const EditDept = () => {
 
                 <select
                   id="objPerspective"
+                  value={perspective}
                   onChange={(e) => handlePerspectiveChange(e)}
                 >
                   <option key="select" value="select">
@@ -1319,7 +1567,11 @@ const EditDept = () => {
               <div>
                 <span> User: </span>
 
-                <select id="objUsers" onChange={(e) => handleUserChange(e)}>
+                <select
+                  id="objUsers"
+                  value={username}
+                  onChange={(e) => handleUserChange(e)}
+                >
                   <option key="select" value="select">
                     Select
                   </option>

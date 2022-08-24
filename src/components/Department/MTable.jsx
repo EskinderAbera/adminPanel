@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   tableContainer: {
     borderRadius: 15,
     margin: "10px 10px",
-    maxWidth: 1250,
+    maxWidth: 1250
   },
   tableHeaderCell: {
     fontWeight: "bold",
@@ -357,7 +357,7 @@ const MTable = () => {
           </TableHead>
           <TableBody>
             {kpis
-              // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((kpi, index) => (
                 <TableRow key={index}>
                   {Dashboardpage === "dept" && (
@@ -518,7 +518,7 @@ const MTable = () => {
                         backgroundColor: "orange",
                       }}
                       onClick={() =>
-                        editPage(index)
+                        editPage((page * rowsPerPage) + index)
                       }
                     >
                       Edit
@@ -529,7 +529,7 @@ const MTable = () => {
                       style={{
                         backgroundColor: "red",
                       }}
-                      onClick={() => handleDelete(index)}
+                      onClick={() => handleDelete((page * rowsPerPage) + index)}
                     >
                       Delete
                     </button>
@@ -537,26 +537,22 @@ const MTable = () => {
                 </TableRow>
               ))}
           </TableBody>
-            {/* <TablePagination
+            <TablePagination
               component="tbody"
               count={kpis.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}
               onChangeRowsPerPage={handleChangeRowsPerPage}
-            /> */}
+            />
         </Table>
       </TableContainer>
-      <div>
+      <div className="addBtn">
         <button className="btn add" onClick={handleAdd}>
           <FontAwesomeIcon
-            style={{
-              width: "25px",
-              height: "25px",
-            }}
             icon={faPlus}
           />
-          {Dashboardpage === "dept" && "Add Department"}
+          {/* {Dashboardpage === "dept" && "Add Department"}
           {Dashboardpage === "subDept" && "Add SubDepartment"}
           {Dashboardpage === "sub-subDept" && "Add Team Department"}
           {Dashboardpage === "individualDep" && "Add Individual Department"}
@@ -564,7 +560,7 @@ const MTable = () => {
           {Dashboardpage === "user" && "Add User"}
           {Dashboardpage === "persp" && "Add Perspective"}
           {Dashboardpage === "obj" && "Add Objective"}
-          {Dashboardpage === "kpi" && "Add KPI"}
+          {Dashboardpage === "kpi" && "Add KPI"} */}
         </button>
       </div>
     </div>

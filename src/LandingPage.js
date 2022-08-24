@@ -164,6 +164,12 @@ const LandingPage = () => {
       .map((idr) => setIndividualDepartmentId(idr.id));
   };
 
+  const handleUserChange = (e) => {
+    usersList
+      .filter((users) => users.username === e.target.value)
+      .map((user) => setUserId(user.id));
+  };
+
   useEffect(() => {
     fetch("https://pms-apis.herokuapp.com/core/department/")
       .then((response) => response.json())
@@ -204,6 +210,10 @@ const LandingPage = () => {
   }, []);
 
   useEffect(() => {
+    console.log("User id: " + userId);
+  }, [userId]);
+
+  useEffect(() => {
     if (
       departmentResponse.length !== 0 &&
       subDepartmentResponse.length !== 0 &&
@@ -214,7 +224,14 @@ const LandingPage = () => {
     ) {
       setLoading(false);
     }
-  }, [departmentResponse, subDepartmentResponse, roleResponse, individualDepartmentResponse, teamDepartmentResponse,usersList]);
+  }, [
+    departmentResponse,
+    subDepartmentResponse,
+    roleResponse,
+    individualDepartmentResponse,
+    teamDepartmentResponse,
+    usersList,
+  ]);
 
   const handleNavigate = () => {
     console.log("roleId: " + roleId);
@@ -223,29 +240,36 @@ const LandingPage = () => {
     console.log("teamDepartmentId: " + teamDepartmentId);
     console.log("individualDepartmentId: " + individualDepartmentId);
 
-    usersList
-      .filter((user) =>
-        role !== "President"
-          ? user.department === departmentId &&
-            user.subdepartment === subdepartmentId &&
-            user.sub_subdepartment === teamDepartmentId &&
-            user.individuals === individualDepartmentId &&
-            user.role === roleId
-          : user.department === departmentId &&
-            user.subdepartment === subdepartmentId &&
-            user.sub_subdepartment === teamDepartmentId &&
-            user.individuals === individualDepartmentId
-      )
-      .map((us) => {
-        console.log("userId: " + us.id);
-        changeUrlKEY(us.id);
-        setUserId(us.id);
-        setLoading(true);
-        const path = "/dashboard";
-        navigate(path);
-      });
+    if (role !== "Individuals") {
+      usersList
+        .filter((user) =>
+          role !== "President"
+            ? user.department === departmentId &&
+              user.subdepartment === subdepartmentId &&
+              user.sub_subdepartment === teamDepartmentId &&
+              user.individuals === individualDepartmentId &&
+              user.role === roleId
+            : user.department === departmentId &&
+              user.subdepartment === subdepartmentId &&
+              user.sub_subdepartment === teamDepartmentId &&
+              user.individuals === individualDepartmentId
+        )
+        .map((us) => {
+          console.log("userId: " + us.id);
+          changeUrlKEY(us.id);
+          setUserId(us.id);
+          setLoading(true);
+          const path = "/dashboard";
+          navigate(path);
+        });
 
-    HandleError();
+      HandleError();
+    } else {
+      changeUrlKEY(userId);
+      setLoading(true);
+      const path = "/dashboard";
+      navigate(path);
+    }
   };
 
   return (
@@ -287,7 +311,7 @@ const LandingPage = () => {
                       <select
                         id="roleId"
                         className="form-control selecting"
-                        onChange={(e) => handleRoleChange(e)}
+                        onChange={handleRoleChange}
                       >
                         <option value="select">Select....</option>
                         {roleResponse.map((roles, index) => (
@@ -307,7 +331,7 @@ const LandingPage = () => {
                           <select
                             id="departmentId"
                             className="form-control selecting"
-                            onChange={(e) => handleDepartmentChange(e)}
+                            onChange={handleDepartmentChange}
                           >
                             <option key="select" value="select">
                               Select....
@@ -332,7 +356,7 @@ const LandingPage = () => {
                           <select
                             id="subDepartmentId"
                             className="form-control selecting"
-                            onChange={(e) => handleSubDepartmentChange(e)}
+                            onChange={handleSubDepartmentChange}
                           >
                             <option value="select">Select....</option>
                             {subdepartments
@@ -353,7 +377,7 @@ const LandingPage = () => {
                           <select
                             id="teamDepartmentId"
                             className="form-control selecting"
-                            onChange={(e) => handleTeamDepartmentChange(e)}
+                            onChange={handleTeamDepartmentChange}
                           >
                             <option value="select">Select....</option>
                             {teamDepartmentResponse
@@ -379,8 +403,8 @@ const LandingPage = () => {
                           <select
                             id="individualId"
                             className="form-control selecting"
-                            onChange={(e) =>
-                              handleIndividualDepartmentChange(e)
+                            onChange={
+                              handleIndividualDepartmentChange
                             }
                           >
                             <option value="select">Select....</option>
@@ -392,6 +416,34 @@ const LandingPage = () => {
                               )
                               .map((ind, index) => (
                                 <option key={index}>{ind.name}</option>
+                              ))}
+                          </select>
+                        </div>
+                      </div>
+                    )}
+
+                  {role === "Individuals" &&
+                    subdepartment !== "select" &&
+                    subdepartment !== "" &&
+                    teamDepartment !== "select" &&
+                    teamDepartment !== "" &&
+                    individualDepartment !== "select" &&
+                    individualDepartment !== "" && (
+                      <div className="cta">
+                        <div className="form-group">
+                          <select
+                            id="usersId"
+                            className="form-control selecting"
+                            onChange={(e) => handleUserChange(e)}
+                          >
+                            <option value="select">Select....</option>
+                            {usersList
+                              .filter(
+                                (users) =>
+                                  users.individuals === individualDepartmentId
+                              )
+                              .map((user, index) => (
+                                <option key={index}>{user.username}</option>
                               ))}
                           </select>
                         </div>
