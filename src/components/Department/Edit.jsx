@@ -5,6 +5,9 @@ import { useAPI } from "../../Context/APIContext";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify/dist/react-toastify";
+import SaveAsOutlinedIcon from "@mui/icons-material/SaveAsOutlined";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
 const EditDept = () => {
   const location = useLocation();
@@ -94,11 +97,11 @@ const EditDept = () => {
       .then((res) => {
         setCeoObjective(res);
         index !== "" &&
-        res
-          .filter(
-            (objectives) => objectives.objective_id === kpis[index].objective
-          )
-          .map((objective) => setObjective(objective.objective_name));
+          res
+            .filter(
+              (objectives) => objectives.objective_id === kpis[index].objective
+            )
+            .map((objective) => setObjective(objective.objective_name));
       });
   }, []);
 
@@ -233,9 +236,9 @@ const EditDept = () => {
       setCeoObjectiveId(index !== "" ? kpis[index].objective : "");
       setUserId(index !== "" ? kpis[index].user : "");
       index !== "" &&
-      useUsers
-        .filter((users) => users.id === kpis[index].user)
-        .map((user) => setUsername(user.username));
+        useUsers
+          .filter((users) => users.id === kpis[index].user)
+          .map((user) => setUsername(user.username));
     }
   }, []);
   const handleAdd = () => {
@@ -949,13 +952,15 @@ const EditDept = () => {
         >
           {DashboardPage === "dept" && (
             <>
-              <span> Department: </span>
-              <input
-                className="DeptInput"
-                type="text"
-                onChange={(e) => setDepartment(e.target.value)}
-                value={department}
-              />
+              <div>
+                <span> Department: </span>
+                <input
+                  className="DeptInput"
+                  type="text"
+                  onChange={(e) => setDepartment(e.target.value)}
+                  value={department}
+                />
+              </div>
             </>
           )}
           {DashboardPage === "subDept" && (
@@ -1452,7 +1457,11 @@ const EditDept = () => {
               </div>
               <div>
                 <span> User: </span>
-                <select id="kpiUser" value={username} onChange={(e) => handleUserChange(e)}>
+                <select
+                  id="kpiUser"
+                  value={username}
+                  onChange={(e) => handleUserChange(e)}
+                >
                   <option key="select" value="select">
                     Select
                   </option>
@@ -1476,7 +1485,7 @@ const EditDept = () => {
             <div className="InputFields">
               <div>
                 <span> Perspective Name: </span>
-                 <select
+                <select
                   id="perspectives"
                   value={perspective}
                   onChange={(e) => handlePerspectiveChange(e)}
@@ -1486,8 +1495,12 @@ const EditDept = () => {
                   </option>
                   <option value="Financial">Financial</option>
                   <option value="Customer">Customer</option>
-                  <option value="Internal Business Process">Internal Business Process</option>
-                  <option value="Learning and Growth">Learning and Growth</option>
+                  <option value="Internal Business Process">
+                    Internal Business Process
+                  </option>
+                  <option value="Learning and Growth">
+                    Learning and Growth
+                  </option>
                 </select>
               </div>
 
@@ -1503,7 +1516,11 @@ const EditDept = () => {
 
               <div>
                 <span> User: </span>
-                <select id="objUsers" value={username} onChange={(e) => handleUserChange(e)}>
+                <select
+                  id="objUsers"
+                  value={username}
+                  onChange={(e) => handleUserChange(e)}
+                >
                   <option key="select" value="select">
                     Select
                   </option>
@@ -1591,10 +1608,26 @@ const EditDept = () => {
             </div>
           )}
 
-          {pageType === "ADD" && <button className="btn saveadd">ADD</button>}
-          {pageType !== "ADD" && <button className="btn saveadd">SAVE</button>}
+          <div className="btnArrange">
+            {pageType === "ADD" && (
+              <button className="btn saveadd">
+                <AddCircleOutlineOutlinedIcon />
+                ADD
+              </button>
+            )}
+            {pageType !== "ADD" && (
+              <button className="btn saveadd">
+                <SaveAsOutlinedIcon /> SAVE
+              </button>
+            )}
 
-          <button className="btn delete">DELETE</button>
+            {pageType !== "ADD" && (
+              <button className="btn delete">
+                <DeleteForeverOutlinedIcon />
+                Delete
+              </button>
+            )}
+          </div>
         </form>
       </div>
       <ToastContainer

@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import { useAPI } from "../../Context/APIContext";
 import loader from "../../resources/images/loader.gif";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import {
   Table,
   TableBody,
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   tableContainer: {
     borderRadius: 15,
     margin: "10px 10px",
-    maxWidth: 1250
+    maxWidth: 1250,
   },
   tableHeaderCell: {
     fontWeight: "bold",
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   name: {
     fontWeight: "bold",
     color: theme.palette.secondary.dark,
-  }
+  },
 }));
 
 const MTable = () => {
@@ -72,7 +73,7 @@ const MTable = () => {
   };
   let navigate = useNavigate();
 
-  const editPage = ( index) => {
+  const editPage = (index) => {
     let path = "/Edit";
     navigate(path, {
       state: {
@@ -514,44 +515,38 @@ const MTable = () => {
                   <TableCell>
                     <button
                       className="btn edit"
-                      style={{
-                        backgroundColor: "orange",
-                      }}
-                      onClick={() =>
-                        editPage((page * rowsPerPage) + index)
-                      }
+                      onClick={() => editPage(page * rowsPerPage + index)}
                     >
-                      Edit
+                      {/* Edit */}
+                      <ModeEditOutlinedIcon />
                     </button>
 
-                    <button
+                    {/* <button
                       className="btn delete"
                       style={{
                         backgroundColor: "red",
                       }}
-                      onClick={() => handleDelete((page * rowsPerPage) + index)}
+                      onClick={() => handleDelete(page * rowsPerPage + index)}
                     >
                       Delete
-                    </button>
+                    </button> */}
                   </TableCell>
                 </TableRow>
               ))}
           </TableBody>
-            <TablePagination
-              component="tbody"
-              count={kpis.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
+          <TablePagination
+            component="tbody"
+            count={kpis.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
         </Table>
       </TableContainer>
       <div className="addBtn">
         <button className="btn add" onClick={handleAdd}>
-          <FontAwesomeIcon
-            icon={faPlus}
-          />
+          <FontAwesomeIcon icon={faPlus} />
           {/* {Dashboardpage === "dept" && "Add Department"}
           {Dashboardpage === "subDept" && "Add SubDepartment"}
           {Dashboardpage === "sub-subDept" && "Add Team Department"}

@@ -4,10 +4,12 @@ import { MdOutlineWavingHand } from "react-icons/md";
 import { useNavigate, Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useAPI } from "../../Context/APIContext";
 
 const Dashboard = () => {
   const location = useLocation();
   let navigate = useNavigate();
+  const { userType } = useAPI();
   const Users = ["Departments", "Roles", "Users"];
   const Bsc = ["Perspective", "Objective", "KPIs"];
 
@@ -49,44 +51,52 @@ const Dashboard = () => {
     <main className={styles.container}>
       <div className={styles.welcome}>
         <h1>
-          Hello , Admin.
+          Hello , admin
           <MdOutlineWavingHand />
         </h1>
       </div>
-      <div className={styles.charts}>
-        <div className={styles.lines} onClick={handleDepartment}>
-          <Spline titles="Departments" />
-        </div>
-        <div className={styles.lines} onClick={handleSubDepartment}>
-          <Spline titles="SubDepartment" />
-        </div>
-        <div className={styles.lines} onClick={handleTeamDepartment}>
-          <Spline titles="Team Department" />
-        </div>
-      </div>
-      <div className={styles.charts}>
-      <div className={styles.lines} onClick={handleIndividualDepartment}>
-          <Spline titles="Individual Departments" />
-        </div>
-        <div className={styles.lines} onClick={handleRoles}>
-          <Spline titles="Roles" />
-        </div>
-        <div className={styles.lines} onClick={handleUsers}>
-          <Spline titles="Users" />
-        </div>
-        
-      </div>
-      <div className={styles.charts}>
-      <div className={styles.lines} onClick={handlePerspectives}>
-          <Spline titles="Perspectives" />
-        </div>
-        <div className={styles.lines} onClick={handleObjectives}>
-          <Spline titles="Objectives" />
-        </div>
-        <div className={styles.lines} onClick={handleKpis}>
-          <Spline titles="KPIs" />
-        </div>
-      </div>
+
+      {userType === "admin" && (
+        <>
+          <div className={styles.charts}>
+            <div className={styles.lines} onClick={handleDepartment}>
+              <Spline titles="Departments" />
+            </div>
+            <div className={styles.lines} onClick={handleSubDepartment}>
+              <Spline titles="SubDepartment" />
+            </div>
+            <div className={styles.lines} onClick={handleTeamDepartment}>
+              <Spline titles="Team Department" />
+            </div>
+          </div>
+          <div className={styles.charts}>
+            <div className={styles.lines} onClick={handleIndividualDepartment}>
+              <Spline titles="Individual Departments" />
+            </div>
+            <div className={styles.lines} onClick={handleRoles}>
+              <Spline titles="Roles" />
+            </div>
+            <div className={styles.lines} onClick={handleUsers}>
+              <Spline titles="Users" />
+            </div>
+          </div>
+        </>
+      )}
+      {userType !== "admin" && (
+        <>
+          <div className={styles.charts}>
+            <div className={styles.lines} onClick={handlePerspectives}>
+              <Spline titles="Perspectives" />
+            </div>
+            <div className={styles.lines} onClick={handleObjectives}>
+              <Spline titles="Objectives" />
+            </div>
+            <div className={styles.lines} onClick={handleKpis}>
+              <Spline titles="KPIs" />
+            </div>
+          </div>
+        </>
+      )}
     </main>
   );
 };

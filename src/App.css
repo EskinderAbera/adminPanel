@@ -34,7 +34,17 @@ body {
   align-self: flex-end;
 }
 .btn {
-  margin: 0 10px;
+  margin: 10px 10px;
+  color: #fff;
+}
+.btn.edit {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  background-color: #303f9f;
+}
+.btn.edit:hover {
+  color: yellow;
 }
 .add {
   margin: 20px 30px;
@@ -80,19 +90,19 @@ body {
 
 .saveadd {
   border: 1px solid #242424;
-  background-color: blue;
+  background-color: green;
   color: #fff;
 }
 .delete {
   border: 1px solid #242424;
-  background-color: red;
+  background-color: rgba(255, 0, 0, 0.686);
   color: #fff;
 }
 .InputFields {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin-bottom: 50px;
+  margin-bottom: 50px; */
 }
 .Container input {
   height: 30px;
@@ -140,3 +150,11 @@ select {
   font-size: 14px;
 }
 
+.material-icons.md-18 {
+  font-size: 18px;
+}
+.btnArrange {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
