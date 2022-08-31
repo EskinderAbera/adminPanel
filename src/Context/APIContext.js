@@ -57,7 +57,6 @@ export function APIContextProvider({ children }) {
   const changeUrlKEY = (url) => {
     setUrlKEY(url);
   };
-
   const addDepartment = (dept_id, dept_name) => {
     setDepartments([
       ...usedepartments,
@@ -69,8 +68,12 @@ export function APIContextProvider({ children }) {
   };
 
   const updateDepartment = (dept_id, updatedDepartment) => {
-    setDepartments(usedepartments.map((dep) => dep.dept_id === dept_id ? updatedDepartment : dep))
-}
+    setDepartments(
+      usedepartments.map((dep) =>
+        dep.dept_id === dept_id ? updatedDepartment : dep
+      )
+    );
+  };
 
   const addSubDepartment = (id, name, department) => {
     setSubDepartments([
@@ -84,8 +87,12 @@ export function APIContextProvider({ children }) {
   };
 
   const updateSubDepartment = (id, updatedSubDepartment) => {
-    setSubDepartments(useSubDepartments.map((Subdep) => Subdep.id === id ? updatedSubDepartment : Subdep))
-}
+    setSubDepartments(
+      useSubDepartments.map((Subdep) =>
+        Subdep.id === id ? updatedSubDepartment : Subdep
+      )
+    );
+  };
 
   const addTeamDepartment = (id, name, subdepartment) => {
     setTeamDepartments([
@@ -97,10 +104,31 @@ export function APIContextProvider({ children }) {
       },
     ]);
   };
+  const addIndividualDepartment = (id, name, sub_subdepartment) => {
+    setIndividualDepartments([
+      ...useTeamDepartments,
+      {
+        id,
+        name,
+        sub_subdepartment,
+      },
+    ]);
+  };
 
   const updateTeamDepartment = (id, updatedTeamDepartment) => {
-    setTeamDepartments(useTeamDepartments.map((teamDep) => teamDep.id === id ? updateTeamDepartment : teamDep))
-}
+    setTeamDepartments(
+      useTeamDepartments.map((teamDep) =>
+        teamDep.id === id ? updatedTeamDepartment : teamDep
+      )
+    );
+  };
+  const updateIndividualDepartment = (id, updatedIndividualDep) => {
+    setIndividualDepartments(
+      useIndividualDepartments.map((indiDep) =>
+        indiDep.id === id ? updatedIndividualDep : indiDep
+      )
+    );
+  };
 
   const addRoles = (role_id, role_name, hierarchy) => {
     setRoles([
@@ -114,8 +142,10 @@ export function APIContextProvider({ children }) {
   };
 
   const updateRoles = (role_id, updatedRoles) => {
-    setRoles(useroles.map((rol) => rol.role_id === role_id ? updatedRoles : rol))
-}
+    setRoles(
+      useroles.map((rol) => (rol.role_id === role_id ? updatedRoles : rol))
+    );
+  };
   const addUsers = (
     id,
     first_name,
@@ -172,12 +202,14 @@ export function APIContextProvider({ children }) {
         addDepartment,
         addSubDepartment,
         addTeamDepartment,
+        addIndividualDepartment,
         addRoles,
         addUsers,
         updateDepartment,
         updateSubDepartment,
         updateTeamDepartment,
-        updateRoles
+        updateIndividualDepartment,
+        updateRoles,
       }}
     >
       {children}

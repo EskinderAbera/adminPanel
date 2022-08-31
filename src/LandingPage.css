@@ -61,6 +61,7 @@ a {
 
 .container {
   position: relative;
+  /* flex: 1; */
   max-width: 81rem;
   width: 100%;
   margin: 0 auto;
@@ -73,15 +74,15 @@ a {
   background-color: #001d31;
 }
 
-.img-loader{
+.img-loader {
   display: block;
   margin-left: auto;
   margin-right: auto;
   margin-top: auto;
   margin-left: auto;
   width: 50%;
- 
- /* top:auto; 
+
+  /* top:auto; 
  right: 0; 
  width: 30px; 
  height: 30px;
@@ -424,8 +425,8 @@ header .container {
 .btnl {
   box-sizing: border-box;
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   background-color: transparent;
   border: 2px solid #e74c3c;
   border-radius: 0.6em;
@@ -436,8 +437,8 @@ header .container {
   display: -ms-flexbox;
   display: flex;
   -webkit-align-self: center;
-      -ms-flex-item-align: center;
-          align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1;
@@ -446,10 +447,11 @@ header .container {
   text-decoration: none;
   text-align: center;
   text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 700;
 }
-.btnl:hover, .btnl:focus {
+.btnl:hover,
+.btnl:focus {
   color: #fff;
   outline: 0;
 }
@@ -461,6 +463,6 @@ header .container {
   -webkit-transition: all 150ms ease-in-out;
   transition: all 150ms ease-in-out;
 }
-.third:hover{
+.third:hover {
   background-color: #2094e2;
 }

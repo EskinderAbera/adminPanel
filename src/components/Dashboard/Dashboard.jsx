@@ -10,9 +10,9 @@ const Dashboard = () => {
   const location = useLocation();
   let navigate = useNavigate();
   const { userType } = useAPI();
+
   const Users = ["Departments", "Roles", "Users"];
   const Bsc = ["Perspective", "Objective", "KPIs"];
-
   const handleDepartment = () => {
     navigate("/dept", { state: { page: "dept" } });
   };
@@ -49,29 +49,29 @@ const Dashboard = () => {
 
   return (
     <main className={styles.container}>
-      <div className={styles.welcome}>
+      {/* <div className={styles.welcome}>
         <h1>
           Hello , admin
           <MdOutlineWavingHand />
         </h1>
-      </div>
+      </div> */}
 
       {userType === "admin" && (
         <>
           <div className={styles.charts}>
             <div className={styles.lines} onClick={handleDepartment}>
-              <Spline titles="Departments" />
+              <Spline titles="Processes" />
             </div>
             <div className={styles.lines} onClick={handleSubDepartment}>
-              <Spline titles="SubDepartment" />
+              <Spline titles="Sub-Processes" />
             </div>
             <div className={styles.lines} onClick={handleTeamDepartment}>
-              <Spline titles="Team Department" />
+              <Spline titles="Head Office Teams / Branchs" />
             </div>
           </div>
           <div className={styles.charts}>
             <div className={styles.lines} onClick={handleIndividualDepartment}>
-              <Spline titles="Individual Departments" />
+              <Spline titles="Positions" />
             </div>
             <div className={styles.lines} onClick={handleRoles}>
               <Spline titles="Roles" />

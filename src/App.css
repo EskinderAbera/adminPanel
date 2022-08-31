@@ -25,13 +25,26 @@ body {
 }
 .Table {
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
+}
+.Clickbar {
+  align-self: flex-start;
+  cursor: pointer;
+}
+.Table div i {
+  margin: 10px;
+  /* margin-top: 30px; */
+  font-size: 1.5rem;
+  color: #fff;
+  background-color: #303f9f;
+  padding: 5px;
+  text-align: center;
 }
 .addBtn {
   display: flex;
   flex-direction: row;
-  align-self: flex-end;
 }
 .btn {
   margin: 10px 10px;
@@ -59,7 +72,7 @@ body {
   transition: all 0.2s ease;
 
   color: #fff;
-  background-color: #48abe0;
+  background-color: #303f9f;
 }
 .add:hover {
   background-color: #efefef;
@@ -67,6 +80,7 @@ body {
 }
 .Container {
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -98,16 +112,47 @@ body {
   background-color: rgba(255, 0, 0, 0.686);
   color: #fff;
 }
-.InputFields {
-  /* display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  margin-bottom: 50px; */
-}
+
 .Container input {
   height: 30px;
   width: 100%;
   color: #fff;
+}
+.search-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 70%;
+}
+.search-header > .btn {
+  position: fixed;
+  right: 0;
+}
+@media only screen and (max-width: 851px) {
+  .search-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 70%;
+  }
+}
+.search-bar {
+  min-width: 50%;
+  padding: 8px;
+  border: none;
+  outline: none;
+  margin: 10px 0;
+  background-color: rgba(255, 255, 255, 0.473);
+}
+
+.search-button {
+  background-color: #303f9f;
+  color: white;
+  padding: 8px 10px;
+  border: none;
+}
+.search-button:active {
+  background-color: #303f9f64;
 }
 select {
   height: 30px;
@@ -157,4 +202,72 @@ select {
   margin: 0;
   display: flex;
   justify-content: center;
+}
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: space-between; */
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 65px;
+  padding-top: 50px;
+  padding-left: 20px;
+  left: -100%;
+  opacity: 1;
+  transition: all 0.5s ease-in;
+}
+.nav-menu.active {
+  background: #2c3b46;
+  left: 0;
+  opacity: 0.9;
+  transition: all 0.5s ease-in;
+  /* z-index: 1; */
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.Table > ul li {
+  margin-top: 30px;
+  cursor: pointer;
+}
+.searchBar {
+  justify-content: flex-end;
+  margin-left: 10px;
+}
+label {
+  margin-left: 10px;
+}
+.profileContainer {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  margin: 10px auto;
+}
+
+.profileContainer > img {
+  width: 100px;
+  height: 100px;
+}
+.profileContainer > p {
+  font-size: 1rem;
+  margin: 0;
+}
+hr {
+  background-color: #676e73;
+}
+.IconTitle {
+  display: flex;
+  height: 100%;
+}
+.sideBarDiv {
+  margin: 0;
+  padding: 0;
 }

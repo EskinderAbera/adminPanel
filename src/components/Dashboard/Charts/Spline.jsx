@@ -8,28 +8,30 @@ const Spline = ({ titles }) => {
     <div className="{styles.chart}">
       {/* <div className={styles.canvas_wrapper}> */}
       <div className={styles.card}>
-        {titles === "Departments" && (
+        {titles === "Processes" && (
           <>
-            <p className={styles.title}>Departments</p>
-            <p className={styles.text}>Manage Your Departments</p>
+            <p className={styles.title}>Processes</p>
+            <p className={styles.text}>Manage Your Processes</p>
           </>
         )}
-        {titles === "SubDepartment" && (
+        {titles === "Sub-Processes" && (
           <>
-            <p className={styles.title}>SubDepartments</p>
-            <p className={styles.text}>Manage Your SubDepartments</p>
+            <p className={styles.title}>Sub-Processes</p>
+            <p className={styles.text}>Manage Your Sub-Processes</p>
           </>
         )}
-        {titles === "Team Department" && (
+        {titles === "Head Office Teams / Branchs" && (
           <>
-            <p className={styles.title}>Team Department</p>
-            <p className={styles.text}>Manage Your Team Departments</p>
+            <p className={styles.title}>Head Office Teams / Branchs</p>
+            <p className={styles.text}>
+              Manage Your Head Office Teams / Branchs
+            </p>
           </>
         )}
-        {titles === "Individual Departments" && (
+        {titles === "Positions" && (
           <>
-            <p className={styles.title}>Individual Departments</p>
-            <p className={styles.text}>Manage Your Individual Departments</p>
+            <p className={styles.title}>Positions</p>
+            <p className={styles.text}>Manage Your Positions</p>
           </>
         )}
         {titles === "Roles" && (

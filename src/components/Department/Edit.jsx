@@ -61,11 +61,13 @@ const EditDept = () => {
     addDepartment,
     addSubDepartment,
     addTeamDepartment,
+    addIndividualDepartment,
     addRoles,
     addUsers,
     updateDepartment,
     updateSubDepartment,
     updateTeamDepartment,
+    updateIndividualDepartment,
     updateRoles,
     urlKEY,
   } = useAPI();
@@ -325,8 +327,9 @@ const EditDept = () => {
             return Promise.reject(error);
           }
           // alert("Individual Department ADDED Successfully");
-          HandleSuccess("Team Department");
+          HandleSuccess("Individual Department");
           console.log(data);
+          addIndividualDepartment(data.id, data.name, data.sub_subdepartment);
           setIndividualDepartment("");
           setTeamDepartment("");
         })
@@ -585,7 +588,11 @@ const EditDept = () => {
             return Promise.reject(error);
           }
           HandleSuccessUpdate("Individual Department");
+          const id = data.id;
+          const name = data.name;
+          const sub_subdepartment = data.sub_subdepartment;
           console.log(data);
+          updateIndividualDepartment(id, { id, name, sub_subdepartment });
           setIndividualDepartment("");
           setTeamDepartment("");
         })
@@ -852,7 +859,9 @@ const EditDept = () => {
     setSubDepartmentId("");
     setTeamDepartmentId("");
     setIndividualDepartmentId("");
-    setSubDepartment("select");
+    if (DashboardPage !== "subDept") {
+      setSubDepartment("select");
+    }
     setTeamDepartment("select");
     setIndividualDepartment("select");
   };
@@ -867,7 +876,9 @@ const EditDept = () => {
       .map((sub) => setSubDepartmentId(sub.id));
     setTeamDepartmentId("");
     setIndividualDepartmentId("");
-    setTeamDepartment("select");
+    if (DashboardPage !== "sub-subDept") {
+      setTeamDepartment("select");
+    }
     setIndividualDepartment("select");
   };
   const handleTeamDepartmentChange = (e) => {
@@ -879,7 +890,9 @@ const EditDept = () => {
       .filter((teamDep) => teamDep.name === e.target.value)
       .map((td) => setTeamDepartmentId(td.id));
     setIndividualDepartmentId("");
-    setIndividualDepartment("select");
+    if (DashboardPage !== "individualDep") {
+      setIndividualDepartment("select");
+    }
   };
   const handleIndividualDepartmentChange = (e) => {
     setIndividualDepartment(e.target.value);
@@ -900,24 +913,24 @@ const EditDept = () => {
     <div className="Container">
       <div className="header">
         {pageType !== "ADD" && DashboardPage === "dept"
-          ? "Edit Department"
+          ? "Edit Process"
           : DashboardPage === "dept"
-          ? "Add Department"
+          ? "Add Process"
           : null}
         {pageType !== "ADD" && DashboardPage === "subDept"
-          ? "Edit Subdepartment"
+          ? "Edit Sub-Process"
           : DashboardPage === "subDept"
-          ? "Add Subdepartment"
+          ? "Add Sub-Process"
           : null}
         {pageType !== "ADD" && DashboardPage === "sub-subDept"
-          ? "Edit Team Department"
+          ? "Edit Head Office Team / Branch"
           : DashboardPage === "sub-subDept"
-          ? "Add Team Department"
+          ? "Add Head Office Team / Branch"
           : null}
         {pageType !== "ADD" && DashboardPage === "individualDep"
-          ? "Edit Individual Department"
+          ? "Edit Position"
           : DashboardPage === "individualDep"
-          ? "Add Individual Department"
+          ? "Add Position"
           : null}
         {pageType !== "ADD" && DashboardPage === "user"
           ? "Edit User"
@@ -953,7 +966,7 @@ const EditDept = () => {
           {DashboardPage === "dept" && (
             <>
               <div>
-                <span> Department: </span>
+                <span> Process: </span>
                 <input
                   className="DeptInput"
                   type="text"
@@ -966,7 +979,7 @@ const EditDept = () => {
           {DashboardPage === "subDept" && (
             <>
               <div>
-                <span> SubDepartment: </span>
+                <span> Sub-Process: </span>
                 <input
                   className="DeptInput"
                   type="text"
@@ -976,7 +989,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span> Department: </span>
+                <span> Process: </span>
 
                 <select
                   id="subDepartment"
@@ -999,7 +1012,7 @@ const EditDept = () => {
           {DashboardPage === "sub-subDept" && (
             <>
               <div>
-                <span> Team Department: </span>
+                <span> Head Office Team / Branch: </span>
                 <input
                   className="DeptInput"
                   type="text"
@@ -1009,7 +1022,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span> Sub-Departments: </span>
+                <span> Sub-Process:: </span>
 
                 <select
                   id="subDepartment"
@@ -1032,7 +1045,7 @@ const EditDept = () => {
           {DashboardPage === "individualDep" && (
             <>
               <div>
-                <span> Individual Department: </span>
+                <span> Position: </span>
                 <input
                   className="DeptInput"
                   type="text"
@@ -1042,7 +1055,7 @@ const EditDept = () => {
               </div>
 
               <div>
-                <span> Team Department: </span>
+                <span> Head Office Team / Branch: </span>
 
                 <select
                   id="subDepartment"
@@ -1140,7 +1153,7 @@ const EditDept = () => {
               {role === "Vice President" && (
                 <>
                   <div>
-                    <span> Department: </span>
+                    <span> Process: </span>
                     <select
                       id="userDepartment"
                       value={department}
@@ -1162,7 +1175,7 @@ const EditDept = () => {
               {role === "director" && (
                 <>
                   <div>
-                    <span> Department: </span>
+                    <span> Process: </span>
                     <select
                       id="userDepartment"
                       value={department}
@@ -1180,7 +1193,7 @@ const EditDept = () => {
                   </div>
 
                   <div>
-                    <span> SubDepartment: </span>
+                    <span> Sub-Process: </span>
                     <select
                       id="userSubDepartment"
                       value={subDepartment}
@@ -1203,7 +1216,7 @@ const EditDept = () => {
               {role === "Manager" && (
                 <>
                   <div>
-                    <span> Department: </span>
+                    <span> Process: </span>
                     <select
                       id="userDepartment"
                       value={department}
@@ -1221,7 +1234,7 @@ const EditDept = () => {
                   </div>
 
                   <div>
-                    <span> SubDepartment: </span>
+                    <span> Sub-Process: </span>
                     <select
                       id="userSubDepartment"
                       value={subDepartment}
@@ -1241,7 +1254,7 @@ const EditDept = () => {
                   </div>
 
                   <div>
-                    <span> Team Department: </span>
+                    <span> Head Office Team / Branch: </span>
                     <select
                       id="teamDepartment"
                       value={teamDepartment}
@@ -1264,7 +1277,7 @@ const EditDept = () => {
               {role === "Individuals" && (
                 <>
                   <div>
-                    <span> Department: </span>
+                    <span> Process: </span>
                     <select
                       id="userDepartment"
                       value={department}
@@ -1282,7 +1295,7 @@ const EditDept = () => {
                   </div>
 
                   <div>
-                    <span> SubDepartment: </span>
+                    <span> Sub-Process: </span>
                     <select
                       id="userSubDepartment"
                       value={subDepartment}
@@ -1302,7 +1315,7 @@ const EditDept = () => {
                   </div>
 
                   <div>
-                    <span> Team Department: </span>
+                    <span> Head Office Team / Branch: </span>
                     <select
                       id="teamDepartment"
                       value={teamDepartment}
@@ -1322,7 +1335,7 @@ const EditDept = () => {
                   </div>
 
                   <div>
-                    <span> Individual Department: </span>
+                    <span> Position: </span>
                     <select
                       id="individualDepartment"
                       value={individualDepartment}

@@ -273,7 +273,7 @@ const LandingPage = () => {
   };
 
   return (
-    <main>
+    <main style={{ flex: "1" }}>
       {loading ? (
         <div className="loader-landing">
           {"Loading..."}
@@ -403,9 +403,7 @@ const LandingPage = () => {
                           <select
                             id="individualId"
                             className="form-control selecting"
-                            onChange={
-                              handleIndividualDepartmentChange
-                            }
+                            onChange={handleIndividualDepartmentChange}
                           >
                             <option value="select">Select....</option>
                             {individualDepartmentResponse
