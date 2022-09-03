@@ -1,148 +1,175 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 // import { baseUrl, url } from "./Constants";
 import { useNavigate } from "react-router-dom";
-import styles from './Login.module.css'
-import { fadeIn } from 'react-animations';
-import styled, { keyframes } from 'styled-components'
+import styles from "./Login.module.css";
+import hailes from "./resources/images/hailes_cleanup.jpg";
+import { bounce, fadeIn } from "react-animations";
+import coop from "./resources/images/coop.png";
+import styled, { keyframes } from "styled-components";
+import { ToastContainer, toast } from "react-toastify/dist/react-toastify";
+import { injectStyle } from "react-toastify/dist/inject-style";
 import { Spinner } from "react-bootstrap";
+import { useAPI } from "./Context/APIContext";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-const SlideInLeft = styled.div`animation: 2s ${keyframes `${fadeIn}`} `;
+const SlideInLeft = styled.div`
+  animation: 2s ${keyframes`${fadeIn}`};
+`;
 
-const Login = ({setIsLoggedIn}) => {
-  
+const Login = ({ setIsLoggedIn }) => {
   let navigate = useNavigate();
+  const { changeUrlKEY, changeUserType } = useAPI();
 
-  const [datum, setData] = useState({
-    username: '',
-    password: '',
-    check_textInputChange: false,
-    secureTextEntry: true,
-    isValidUser: true,
-    isValidPassword: true,
-    isShort:false
-  });
-  const [loading, setLoading] = useState(false)
-    
-  const textInputChange = (e) => {
-    if( e.target.value.length >= 4 ) {
-        setData({
-            ...datum,
-            username: e.target.value,
-            check_textInputChange: true,
-            isValidUser: true
-        });
-    } else {
-        setData({
-            ...datum,
-            username: e.target.value,
-            check_textInputChange: false,
-            isValidUser: false
-        });
-    }
-  }
+  useEffect(() => {
+    fetch("https://pms-apis.herokuapp.com/core/users/")
+      .then((response) => response.json())
+      .then((res) => {
+        // setUsers(res);
+        res
+          .filter((user) => user.username === "admin")
+          .map((us) => {
+            changeUrlKEY(us.id);
+            changeUserType("admin");
+          });
+      });
+  }, []);
 
-  const handlePasswordChange = (pass) => {
-    setData({
-        ...datum,
-        password: pass,
-        isValidPassword: false
+  const [loading, setLoading] = useState(false);
+
+  const HandleError = () => {
+    toast.error("Incorrect Login Details", {
+      position: toast.POSITION.TOP_LEFT,
     });
-  }
+  };
 
-  const submitForm = async (e) => {  
-    e.preventDefault();
-    if(datum.username.length <3 || datum.password.length < 4){
-      setData({
-        ...datum,
-        isShort:true
-      })
-    }else {
-      setLoading(true)
-      var datas = {
-        "username" : datum.username,
-        "password" : datum.password
-      }
+  const Bounce = styled.div`
+    animation: 2s ${keyframes`${bounce}`} infinite;
+  `;
+  const FadeIn = styled.div`
+    animation: 2s ${keyframes`${fadeIn}`} infinite;
+  `;
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      username: Yup.string().required("Username is required!"),
+      password: Yup.string().required("Password is required!"),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+      setLoading(true);
       axios
-      .post(`https://pms-apis.herokuapp.com/core/auth/new/login/`, datas)
-      .then((response) => {
-          if (response.status == 200) {
-            setLoading(false)
-            setIsLoggedIn(true)
-            navigate(`/landing`);
-            
+        .post(`https://pms-apis.herokuapp.com/core/auth/new/login/`, values)
+        .then((response) => {
+          console.log(response);
+          if (response.status === 200) {
+            setLoading(false);
+            setIsLoggedIn(true);
+            navigate(`/dashboard`);
           }
-      })
-      .catch((error) => {
-        setLoading(false)
-        alert(error.response.data["Error"])
+        })
+        .catch((error) => {
+          setLoading(false);
+          if (error.response.status === 401) {
+            HandleError();
+          }
+          if (error.message === "Network Error") {
+            alert("server down");
+          }
         });
-    }
-      
-  }
-  
-  const OtherMethods = () => (
-    <div id={styles.alternativeLogin}>
-      <div id={styles.iconGroup}>
-      </div>
-    </div>
-  );
- 
+    },
+  });
   return (
-    <main>
-      <div className={styles.bigwrapper}>
-        <div id={styles.loginform}>
-          <h2 id={styles.headerTitle}>Login</h2>
-          { 
-            datum.isShort ? 
-              <div>
-                <SlideInLeft>
-                  <h6 style={{color: 'orange', marginLeft: '2%'}}>
-                    <ul>
-                      <li>Username must be greater than 3</li>
-                      <li>Password must be greater than 3</li>
-                    </ul>
-                  </h6>
-                </SlideInLeft>
+    <main style={{ flex: "1" }}>
+      <div className="big-wrapper light">
+        <>
+          <header>
+            <div className="container">
+              <div className="logo">
+                <Bounce>
+                  <img src={coop} alt="Logo" />
+                </Bounce>
               </div>
-            :
-              null
-          }
-          <div className={styles.body}>
-            <div className={styles.row}>
-              <label>Username</label>
-              <input 
-                type="text" 
-                placeholder="Enter your username" 
-                onChange = {(e) => textInputChange(e)} 
-              />
             </div>
-            <div className={styles.row}>
-              <label>Password</label>
-              <input 
-                type="password" 
-                placeholder="Enter your password" 
-                onChange={(e)=> handlePasswordChange(e.target.value)}
-              />
-            </div>    
-            <div id={styles.button} className={styles.row}>
-              {loading ? 
-                (
-                  <Spinner
-                    style={{ marginBottom: 27 }}
-                    animation="border"
-                    variant="danger"
-                  /> 
-                )
-                :
-                <button onClick={submitForm} disabled={loading ? true : false}>Log in</button>
-              } 
+          </header>
+
+          <div className="showcase-area">
+            <div className="container">
+              <div>
+                <div className="left">
+                  <div className="big-title">
+                    <Bounce>
+                      <h1>Admin DashBoard</h1>
+                    </Bounce>
+                  </div>
+                  <FadeIn>
+                    <p className="text">
+                      "To be the leading private bank in 2025"
+                    </p>
+                  </FadeIn>
+                </div>
+                <form onSubmit={formik.handleSubmit}>
+                  <div className={styles.loginContainer}>
+                    <span className={styles.loginLabel}>Login</span>
+                    <input
+                      type="text"
+                      id="username"
+                      name="username"
+                      className={styles.loginInput}
+                      placeholder="username"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.firstName}
+                    />
+                    {formik.touched.username && formik.errors.username && (
+                      <p>{formik.errors.username}</p>
+                    )}
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      className={styles.loginInput}
+                      placeholder="password"
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      value={formik.values.password}
+                    />
+
+                    {formik.touched.password && formik.errors.password && (
+                      <p>{formik.errors.password}</p>
+                    )}
+                    <button className={styles.loginBtn} type="submit">
+                      {" "}
+                      Sign In{" "}
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <div className="right">
+                <img src={hailes} alt="Person Image" className="person" />
+              </div>
             </div>
           </div>
-          <OtherMethods />
-        </div>
+        </>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
     </main>
-  )
-}
+  );
+};
 export default Login;

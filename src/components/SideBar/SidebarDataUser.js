@@ -33,4 +33,9 @@ export const SidebarDataUser = [
       },
     ],
   },
+  {
+    title: "Change User",
+    path: "/landing",
+    icon: <i className="fa-solid fa-house-chimney"></i>,
+  },
 ];

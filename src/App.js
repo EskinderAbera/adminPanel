@@ -34,7 +34,10 @@ function App() {
                 path="/landing"
                 element={
                   <Protected isLoggedIn={isLoggedIn}>
-                    <LandingPage />
+                    <div className="sidebarContainer">
+                      <Sidebar />
+                      <LandingPage />
+                    </div>
                   </Protected>
                 }
               />

@@ -40,7 +40,7 @@ const Sidebar = () => {
 
   const showSidebar = () => setSidebar(!sidebar);
 
-  const { userType } = useAPI();
+  const { userType, NavBarUser } = useAPI();
   return (
     <div className="sideBarDiv">
       <IconContext.Provider value={{ color: "#24244e" }}>
@@ -62,7 +62,7 @@ const Sidebar = () => {
                 src="http://www.aksisweb.com/theme/fixed/layouts-1/assets/img/avtar-2.png"
                 alt=""
               />
-              <p>Admin</p>
+              <p>{NavBarUser}</p>
               <p>Welcome</p>
             </div>
             <hr />

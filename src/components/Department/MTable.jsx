@@ -3,7 +3,6 @@ import React, { useState } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { MenuItemsAdmin } from "./MenuItemsAdmin";
 import { MenuItemsUser } from "./MenuItemsUser";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -30,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tableContainer: {
     borderRadius: 15,
-    flex: "1",
+    // flex: "1",
     margin: "10px 10px",
     maxWidth: 1250,
     maxHeight: "fit-content",
@@ -39,6 +38,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     backgroundColor: theme.palette.primary.dark,
     color: theme.palette.getContrastText(theme.palette.primary.dark),
+  },
+  tableCell: {
+    height: "2px",
+    padding: "0",
+    paddingLeft: "5px",
   },
   name: {
     fontWeight: "bold",
@@ -51,7 +55,7 @@ const MTable = () => {
   const Dashboardpage = location.state.page;
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(9);
   const [kpis, setKpis] = useState([]);
   const [filteredKpis, setFilteredKpis] = useState([]);
   const [index, setIndex] = useState(0);
@@ -277,27 +281,6 @@ const MTable = () => {
           <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
-      <ul className={barClicked ? "nav-menu active" : "nav-menu"}>
-        {userType === "admin"
-          ? MenuItemsAdmin.map((items, index) => {
-              return (
-                <li key={index}>
-                  <a onClick={() => handleLinkClick(items.path, items.page)}>
-                    {items.title}
-                  </a>
-                </li>
-              );
-            })
-          : MenuItemsUser.map((items, index) => {
-              return (
-                <li key={index}>
-                  <a onClick={() => handleLinkClick(items.path, items.page)}>
-                    {items.title}
-                  </a>
-                </li>
-              );
-            })}
-      </ul>
 
       <>
         <TableContainer component={Paper} className={classes.tableContainer}>
@@ -458,13 +441,17 @@ const MTable = () => {
                   <TableRow key={index}>
                     {Dashboardpage === "dept" && (
                       <>
-                        <TableCell>{kpi.dept_name}</TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.dept_name}
+                        </TableCell>
                       </>
                     )}
                     {Dashboardpage === "subDept" && (
                       <>
-                        <TableCell>{kpi.name}</TableCell>
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.name}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
                           {usedepartments &&
                             usedepartments.length > 0 &&
                             usedepartments
@@ -475,8 +462,10 @@ const MTable = () => {
                     )}
                     {Dashboardpage === "sub-subDept" && (
                       <>
-                        <TableCell>{kpi.name}</TableCell>
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.name}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
                           {useSubDepartments &&
                             useSubDepartments.length > 0 &&
                             useSubDepartments
@@ -489,8 +478,10 @@ const MTable = () => {
                     )}
                     {Dashboardpage === "individualDep" && (
                       <>
-                        <TableCell>{kpi.name}</TableCell>
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.name}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
                           {useTeamDepartments &&
                             useTeamDepartments.length > 0 &&
                             useTeamDepartments
@@ -504,17 +495,23 @@ const MTable = () => {
                     )}
                     {Dashboardpage === "role" && (
                       <>
-                        <TableCell>{kpi.role_name}</TableCell>
-                        <TableCell>{kpi.hierarchy}</TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.role_name}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.hierarchy}
+                        </TableCell>
                       </>
                     )}
                     {Dashboardpage === "persp" && (
                       <>
-                        <TableCell>{kpi.perspective_name}</TableCell>
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.perspective_name}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
                           {parseFloat(kpi.perspective_weight) * 100}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
                           {useUsers &&
                             useUsers.length > 0 &&
                             useUsers
@@ -525,10 +522,16 @@ const MTable = () => {
                     )}
                     {Dashboardpage === "user" && (
                       <>
-                        <TableCell>{kpi.username}</TableCell>
-                        <TableCell>{kpi.first_name}</TableCell>
-                        <TableCell>{kpi.last_name}</TableCell>
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.username}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.first_name}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.last_name}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
                           {useroles && useroles.length > 0
                             ? useroles
                                 .filter((role) => role.role_id === kpi.role)
@@ -536,14 +539,14 @@ const MTable = () => {
                             : "j"}
                         </TableCell>
 
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
                           {usedepartments && usedepartments.length > 0
                             ? usedepartments
                                 .filter((dep) => dep.dept_id === kpi.department)
                                 .map((department) => department.dept_name)
                             : ""}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
                           {useSubDepartments &&
                             useSubDepartments.length > 0 &&
                             useSubDepartments
@@ -552,7 +555,7 @@ const MTable = () => {
                               )
                               .map((sub) => sub.name)}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
                           {useTeamDepartments &&
                             useTeamDepartments.length > 0 &&
                             useTeamDepartments
@@ -562,7 +565,7 @@ const MTable = () => {
                               )
                               .map((t) => t.name)}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
                           {useIndividualDepartments &&
                             useIndividualDepartments.length > 0 &&
                             useIndividualDepartments
@@ -575,11 +578,13 @@ const MTable = () => {
                     )}
                     {Dashboardpage === "obj" && (
                       <>
-                        <TableCell>{kpi.objective_name}</TableCell>
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.objective_name}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
                           {parseFloat(kpi.objective_weight) * 100}
                         </TableCell>
-                        {/* <TableCell>{kpi.perspective}</TableCell> */}
+                        {/* <TableCell className={classes.tableCell}>{kpi.perspective}</TableCell> */}
                         {perspectives && perspectives.length > 0
                           ? perspectives
                               .filter(
@@ -587,13 +592,16 @@ const MTable = () => {
                                   persp.perspective_id === kpi.perspective
                               )
                               .map((per) => (
-                                <TableCell key={index}>
+                                <TableCell
+                                  className={classes.tableCell}
+                                  key={index}
+                                >
                                   {" "}
                                   {per.perspective_name}{" "}
                                 </TableCell>
                               ))
                           : ""}
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
                           {useUsers && useUsers.length > 0
                             ? useUsers
                                 .filter((user) => user.id === kpi.user)
@@ -604,19 +612,23 @@ const MTable = () => {
                     )}
                     {Dashboardpage === "kpi" && (
                       <>
-                        <TableCell>{kpi.kpi_name}</TableCell>
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.kpi_name}
+                        </TableCell>
+                        <TableCell className={classes.tableCell}>
                           {parseFloat(kpi.kpi_weight) * 100}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className={classes.tableCell}>
                           {kpi.kpi_unit_measurement === "Percentage"
                             ? parseFloat(kpi.kpi_target) * 100
                             : kpi.kpi_target}
                         </TableCell>
-                        <TableCell>{kpi.kpi_unit_measurement}</TableCell>
+                        <TableCell className={classes.tableCell}>
+                          {kpi.kpi_unit_measurement}
+                        </TableCell>
                       </>
                     )}
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <button
                         className="btn edit"
                         onClick={() => editPage(page * rowsPerPage + index)}
@@ -639,6 +651,7 @@ const MTable = () => {
                 ))}
             </TableBody>
             <TablePagination
+              className={classes.tableCell}
               component="tbody"
               count={kpis.length}
               rowsPerPage={rowsPerPage}

@@ -14,6 +14,7 @@ export function APIContextProvider({ children }) {
   const [useroles, setRoles] = useState([]);
   const [useUsers, setUsers] = useState([]);
   const [urlKEY, setUrlKEY] = useState("");
+  const [NavBarUser, setNavBarUser] = useState("admin");
   const changeUserType = (user) => {
     setUserType(user);
   };
@@ -56,6 +57,9 @@ export function APIContextProvider({ children }) {
   };
   const changeUrlKEY = (url) => {
     setUrlKEY(url);
+  };
+  const changeNavBarUser = (user) => {
+    setNavBarUser(user);
   };
   const addDepartment = (dept_id, dept_name) => {
     setDepartments([
@@ -187,6 +191,7 @@ export function APIContextProvider({ children }) {
         useIndividualDepartments,
         useUsers,
         urlKEY,
+        NavBarUser,
         changeUserType,
         changeDepartment,
         changeSubDepartment,
@@ -199,6 +204,7 @@ export function APIContextProvider({ children }) {
         changeSubDepartments,
         changeUsers,
         changeUrlKEY,
+        changeNavBarUser,
         addDepartment,
         addSubDepartment,
         addTeamDepartment,

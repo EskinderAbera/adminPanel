@@ -57,7 +57,7 @@ const Dashboard = () => {
       </div> */}
 
       {userType === "admin" && (
-        <>
+        <div className={styles.dashboardContainer}>
           <div className={styles.charts}>
             <div className={styles.lines} onClick={handleDepartment}>
               <Spline titles="Processes" />
@@ -80,7 +80,7 @@ const Dashboard = () => {
               <Spline titles="Users" />
             </div>
           </div>
-        </>
+        </div>
       )}
       {userType !== "admin" && (
         <>
