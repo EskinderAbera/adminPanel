@@ -199,6 +199,9 @@ const MTable = () => {
       .then((res) => res.json())
       .then((result) => {
         setPerspective(result);
+      })
+      .catch((error) => {
+        console.log(error);
       });
 
     if (Dashboardpage === "dept") {
@@ -227,6 +230,9 @@ const MTable = () => {
           setKpis(result);
           perspectives !== [] && setLoading(false);
           console.log(result);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     } else if (Dashboardpage === "obj") {
       setLoading(true);
@@ -236,6 +242,9 @@ const MTable = () => {
           setKpis(result);
           perspectives !== [] && setLoading(false);
           console.log(result);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     } else if (Dashboardpage === "kpi") {
       setLoading(true);
@@ -245,6 +254,9 @@ const MTable = () => {
           setKpis(result);
           perspectives !== [] && setLoading(false);
           console.log(result);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     }
   }, [Dashboardpage]);
@@ -387,9 +399,9 @@ const MTable = () => {
                   <TableCell className={classes.tableHeaderCell}>
                     Perspective Weight
                   </TableCell>
-                  <TableCell className={classes.tableHeaderCell}>
+                  {/* <TableCell className={classes.tableHeaderCell}>
                     User
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell className={classes.tableHeaderCell}>
                     Manage
                   </TableCell>
@@ -406,9 +418,9 @@ const MTable = () => {
                   <TableCell className={classes.tableHeaderCell}>
                     Perspective
                   </TableCell>
-                  <TableCell className={classes.tableHeaderCell}>
+                  {/* <TableCell className={classes.tableHeaderCell}>
                     User
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell className={classes.tableHeaderCell}>
                     Manage
                   </TableCell>
@@ -511,13 +523,13 @@ const MTable = () => {
                         <TableCell className={classes.tableCell}>
                           {parseFloat(kpi.perspective_weight) * 100}
                         </TableCell>
-                        <TableCell className={classes.tableCell}>
+                        {/* <TableCell className={classes.tableCell}>
                           {useUsers &&
                             useUsers.length > 0 &&
                             useUsers
                               .filter((user) => user.id === kpi.user)
                               .map((us) => us.username)}
-                        </TableCell>
+                        </TableCell> */}
                       </>
                     )}
                     {Dashboardpage === "user" && (
@@ -596,18 +608,17 @@ const MTable = () => {
                                   className={classes.tableCell}
                                   key={index}
                                 >
-                                  {" "}
-                                  {per.perspective_name}{" "}
+                                  {per.perspective_name}
                                 </TableCell>
                               ))
                           : ""}
-                        <TableCell className={classes.tableCell}>
+                        {/* <TableCell className={classes.tableCell}>
                           {useUsers && useUsers.length > 0
                             ? useUsers
                                 .filter((user) => user.id === kpi.user)
                                 .map((us) => us.username)
                             : ""}
-                        </TableCell>
+                        </TableCell> */}
                       </>
                     )}
                     {Dashboardpage === "kpi" && (
@@ -656,8 +667,8 @@ const MTable = () => {
               count={kpis.length}
               rowsPerPage={rowsPerPage}
               page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </Table>
         </TableContainer>

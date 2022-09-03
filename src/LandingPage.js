@@ -22,12 +22,12 @@ const LandingPage = () => {
     changeSubDepartment,
     changeTeamDepartment,
     changeIndividualDepartment,
-    changeTeamDepartments,
-    changeIndividualDepartments,
-    changeDepartments,
-    changeSubDepartments,
-    changeRoles,
-    changeUsers,
+    useTeamDepartments,
+    useIndividualDepartments,
+    usedepartments,
+    useSubDepartments,
+    useroles,
+    useUsers,
     changeUrlKEY,
     changeNavBarUser,
   } = useAPI();
@@ -168,42 +168,12 @@ const LandingPage = () => {
   };
 
   useEffect(() => {
-    fetch("https://pms-apis.herokuapp.com/core/department/")
-      .then((response) => response.json())
-      .then((res) => {
-        setDepartmentResponse(res);
-        changeDepartments(res);
-      });
-    fetch("https://pms-apis.herokuapp.com/core/subdepartment/")
-      .then((response) => response.json())
-      .then((res) => {
-        setSubdepartmentResponse(res);
-        changeSubDepartments(res);
-      });
-    fetch("https://pms-apis.herokuapp.com/core/subsub/")
-      .then((response) => response.json())
-      .then((res) => {
-        setTeamDepartmentResponse(res);
-        changeTeamDepartments(res);
-      });
-    fetch("https://pms-apis.herokuapp.com/core/individual/")
-      .then((response) => response.json())
-      .then((res) => {
-        setIndividualDepartmentResponse(res);
-        changeIndividualDepartments(res);
-      });
-    fetch("https://pms-apis.herokuapp.com/core/role/")
-      .then((response) => response.json())
-      .then((res) => {
-        setRoleResponse(res);
-        changeRoles(res);
-      });
-    fetch("https://pms-apis.herokuapp.com/core/users/")
-      .then((response) => response.json())
-      .then((res) => {
-        setUsersList(res);
-        changeUsers(res);
-      });
+    setDepartmentResponse(usedepartments);
+    setSubdepartmentResponse(useSubDepartments);
+    setTeamDepartmentResponse(useTeamDepartments);
+    setIndividualDepartmentResponse(useIndividualDepartments);
+    setRoleResponse(useroles);
+    setUsersList(useUsers);
   }, []);
 
   useEffect(() => {
@@ -211,12 +181,19 @@ const LandingPage = () => {
   }, [userId]);
 
   useEffect(() => {
+    console.log(useUsers);
     if (
+      departmentResponse &&
       departmentResponse.length !== 0 &&
+      subDepartmentResponse &&
       subDepartmentResponse.length !== 0 &&
+      roleResponse &&
       roleResponse.length !== 0 &&
+      individualDepartmentResponse &&
       individualDepartmentResponse.length !== 0 &&
+      teamDepartmentResponse &&
       teamDepartmentResponse.length !== 0 &&
+      usersList &&
       usersList.length !== 0
     ) {
       setLoading(false);

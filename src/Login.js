@@ -23,6 +23,7 @@ const Login = ({ setIsLoggedIn }) => {
   const { changeUrlKEY, changeUserType } = useAPI();
 
   useEffect(() => {
+    changeUserType("admin");
     fetch("https://pms-apis.herokuapp.com/core/users/")
       .then((response) => response.json())
       .then((res) => {
@@ -31,17 +32,25 @@ const Login = ({ setIsLoggedIn }) => {
           .filter((user) => user.username === "admin")
           .map((us) => {
             changeUrlKEY(us.id);
-            changeUserType("admin");
           });
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }, []);
 
   const [loading, setLoading] = useState(false);
 
-  const HandleError = () => {
-    toast.error("Incorrect Login Details", {
-      position: toast.POSITION.TOP_LEFT,
-    });
+  const HandleError = (type) => {
+    if (type === "details") {
+      toast.error("Incorrect Login Details", {
+        position: toast.POSITION.TOP_LEFT,
+      });
+    } else if (type === "network") {
+      toast.error("Please check your network and try again", {
+        position: toast.POSITION.TOP_LEFT,
+      });
+    }
   };
 
   const Bounce = styled.div`
@@ -76,10 +85,10 @@ const Login = ({ setIsLoggedIn }) => {
         .catch((error) => {
           setLoading(false);
           if (error.response.status === 401) {
-            HandleError();
+            HandleError("details");
           }
           if (error.message === "Network Error") {
-            alert("server down");
+            HandleError("network");
           }
         });
     },

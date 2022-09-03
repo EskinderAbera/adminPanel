@@ -92,6 +92,9 @@ const EditDept = () => {
                 perspectives.perspective_id === kpis[index].perspective
             )
             .map((perspective) => setPerspective(perspective.perspective_name));
+      })
+      .catch((error) => {
+        console.log(error);
       });
 
     fetch(objUrl)
@@ -104,6 +107,9 @@ const EditDept = () => {
               (objectives) => objectives.objective_id === kpis[index].objective
             )
             .map((objective) => setObjective(objective.objective_name));
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }, []);
 
@@ -265,7 +271,11 @@ const EditDept = () => {
         })
 
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "subDept") {
       const subDept = {
@@ -288,7 +298,11 @@ const EditDept = () => {
           setDepartmentId("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "sub-subDept") {
       const teamDept = {
@@ -311,7 +325,11 @@ const EditDept = () => {
           setSubDepartmentId("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "individualDep") {
       const indiDep = {
@@ -334,7 +352,11 @@ const EditDept = () => {
           setTeamDepartment("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "role") {
       const role = {
@@ -359,7 +381,11 @@ const EditDept = () => {
         })
         .catch((error) => {
           // alert("There was an error!", error);
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "user") {
       const user = {
@@ -395,7 +421,11 @@ const EditDept = () => {
           setIndividualDepartment("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "persp") {
       const persp = {
@@ -423,7 +453,11 @@ const EditDept = () => {
           setUserId("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "obj") {
       const objects = {
@@ -451,7 +485,11 @@ const EditDept = () => {
           setUserId("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "kpi") {
       const kpi = {
@@ -483,7 +521,11 @@ const EditDept = () => {
           setKpiUnitMeasurement("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     }
   };
@@ -512,7 +554,11 @@ const EditDept = () => {
           setDepartment("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "subDept") {
       const subDept = {
@@ -540,7 +586,11 @@ const EditDept = () => {
           setDepartmentId("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "sub-subDept") {
       const teamDept = {
@@ -568,7 +618,11 @@ const EditDept = () => {
           setSubDepartmentId("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "individualDep") {
       const indiDep = {
@@ -597,7 +651,11 @@ const EditDept = () => {
           setTeamDepartment("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "role") {
       const role = {
@@ -625,7 +683,11 @@ const EditDept = () => {
           setHierarchy("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "user") {
       const user = {
@@ -663,7 +725,11 @@ const EditDept = () => {
           setIndividualDepartment("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "persp") {
       const persp = {
@@ -689,7 +755,11 @@ const EditDept = () => {
           setUserId("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "obj") {
       const obj = {
@@ -717,7 +787,11 @@ const EditDept = () => {
           setUserId("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     } else if (DashboardPage === "kpi") {
       const kpi = {
@@ -751,7 +825,11 @@ const EditDept = () => {
           setKpiUnitMeasurement("");
         })
         .catch((error) => {
-          HandleError();
+          if (error.code === "ERR_NETWORK") {
+            HandleError("network");
+          } else {
+            HandleError("details");
+          }
         });
     }
   };
@@ -772,10 +850,16 @@ const EditDept = () => {
     //   });
   };
 
-  const HandleError = () => {
-    toast.error("Please Fill all the required fields", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+  const HandleError = (type) => {
+    if (type === "details") {
+      toast.error("Please Fill all the required fields", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else if (type === "network") {
+      toast.error("Please check your network and try again", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
   const HandleSuccess = (name) => {
     toast.success(`${name} Added Successfully`, {

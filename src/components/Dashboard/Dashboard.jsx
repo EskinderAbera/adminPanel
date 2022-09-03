@@ -9,10 +9,72 @@ import { useAPI } from "../../Context/APIContext";
 const Dashboard = () => {
   const location = useLocation();
   let navigate = useNavigate();
-  const { userType } = useAPI();
+  // const { userType } = useAPI();
+  const {
+    changeTeamDepartments,
+    changeIndividualDepartments,
+    changeDepartments,
+    changeSubDepartments,
+    changeRoles,
+    changeUsers,
+    userType,
+  } = useAPI();
 
   const Users = ["Departments", "Roles", "Users"];
   const Bsc = ["Perspective", "Objective", "KPIs"];
+
+  useEffect(() => {
+    fetch("https://pms-apis.herokuapp.com/core/department/")
+      .then((response) => response.json())
+      .then((res) => {
+        changeDepartments(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    fetch("https://pms-apis.herokuapp.com/core/subdepartment/")
+      .then((response) => response.json())
+      .then((res) => {
+        changeSubDepartments(res);
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    fetch("https://pms-apis.herokuapp.com/core/subsub/")
+      .then((response) => response.json())
+      .then((res) => {
+        changeTeamDepartments(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    fetch("https://pms-apis.herokuapp.com/core/individual/")
+      .then((response) => response.json())
+      .then((res) => {
+        changeIndividualDepartments(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    fetch("https://pms-apis.herokuapp.com/core/role/")
+      .then((response) => response.json())
+      .then((res) => {
+        changeRoles(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    fetch("https://pms-apis.herokuapp.com/core/users/")
+      .then((response) => response.json())
+      .then((res) => {
+        changeUsers(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const handleDepartment = () => {
     navigate("/dept", { state: { page: "dept" } });
   };
