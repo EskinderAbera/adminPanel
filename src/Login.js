@@ -70,12 +70,10 @@ const Login = ({ setIsLoggedIn }) => {
       password: Yup.string().required("Password is required!"),
     }),
     onSubmit: (values) => {
-      console.log(values);
       setLoading(true);
       axios
         .post(`https://pms-apis.herokuapp.com/core/auth/new/login/`, values)
         .then((response) => {
-          console.log(response);
           if (response.status === 200) {
             setLoading(false);
             setIsLoggedIn(true);

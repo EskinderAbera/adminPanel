@@ -12,6 +12,7 @@ import { useAPI } from "../../Context/APIContext";
 const Nav = styled.div`
   // max-width: 100px;
   position: fixed;
+  z-index: 30;
 `;
 
 const NavIcon = styled.div`

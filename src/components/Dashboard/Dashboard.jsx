@@ -37,7 +37,6 @@ const Dashboard = () => {
       .then((response) => response.json())
       .then((res) => {
         changeSubDepartments(res);
-        console.log(res);
       })
       .catch((error) => {
         console.log(error);

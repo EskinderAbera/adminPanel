@@ -78,12 +78,9 @@ const EditDept = () => {
   const kpiUrl = `https://pms-apis.herokuapp.com/bsc/kpi/${urlKEY}/`;
 
   useEffect(() => {
-    console.log("filterperspectives");
-    console.log(filterperspectives);
     fetch(perspUrl)
       .then((response) => response.json())
       .then((res) => {
-        console.log(res);
         setCeoPerspective(res);
         index !== "" &&
           res
@@ -264,10 +261,10 @@ const EditDept = () => {
           }
           // HandleSuccess();
           // alert("Department ADDED Successfully");
+          setDepartment("");
           HandleSuccess("Department");
           console.log(data);
           addDepartment(data.dept_id, data.dept_name);
-          setDepartment("");
         })
 
         .catch((error) => {
@@ -290,12 +287,11 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          // alert("SubDepartment ADDED Successfully");
+          setSubDepartment("");
+          setDepartmentId("");
           HandleSuccess("SubDepartment");
           console.log(data);
           addSubDepartment(data.id, data.name, data.department);
-          setSubDepartment("");
-          setDepartmentId("");
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -317,12 +313,11 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          // alert("Team Department ADDED Successfully");
+          setTeamDepartment("");
+          setSubDepartmentId("");
           HandleSuccess("Team Department");
           console.log(data);
           addTeamDepartment(data.id, data.name, data.subdepartment);
-          setTeamDepartment("");
-          setSubDepartmentId("");
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -344,12 +339,10 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          // alert("Individual Department ADDED Successfully");
-          HandleSuccess("Individual Department");
-          console.log(data);
-          addIndividualDepartment(data.id, data.name, data.sub_subdepartment);
           setIndividualDepartment("");
           setTeamDepartment("");
+          HandleSuccess("Individual Department");
+          addIndividualDepartment(data.id, data.name, data.sub_subdepartment);
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -372,15 +365,13 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          // alert("Role ADDED Successfully");
+          setRoleName("");
+          setHierarchy("");
           HandleSuccess("Role");
           console.log(data);
           addRoles(data.role_id, data.role_name, data.hierarchy);
-          setRoleName("");
-          setHierarchy("");
         })
         .catch((error) => {
-          // alert("There was an error!", error);
           if (error.code === "ERR_NETWORK") {
             HandleError("network");
           } else {
@@ -408,9 +399,6 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          // alert("User ADDED Successfully");
-          HandleSuccess("User");
-          console.log(data);
           setUsername("");
           setFirstName("");
           setLastName("");
@@ -419,6 +407,8 @@ const EditDept = () => {
           setSubDepartment("");
           setTeamDepartment("");
           setIndividualDepartment("");
+          HandleSuccess("User");
+          console.log(data);
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -445,12 +435,12 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          // alert("Perspective ADDED Successfully");
-          HandleSuccess("Perspective");
-          console.log(data);
+
           setPerspective("");
           setPerspectiveWeight("");
           setUserId("");
+          HandleSuccess("Perspective");
+          console.log(data);
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -478,11 +468,12 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          HandleSuccess("Objective");
+
           setObjective("");
           setObjectiveWeight("");
           setPerspective("");
           setUserId("");
+          HandleSuccess("Objective");
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -511,14 +502,15 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          HandleSuccess("KPI");
-          console.log(data);
+
           setObjective("");
           setKpiName("");
           setKpiWeight("");
           setKpiTarget("");
           setPerspective("");
           setKpiUnitMeasurement("");
+          HandleSuccess("KPI");
+          console.log(data);
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -546,12 +538,13 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
+
+          setDepartment("");
           HandleSuccessUpdate("Department");
           console.log(data);
           const dept_id = data.dept_id;
           const dept_name = data.dept_name;
           updateDepartment(dept_id, { dept_id, dept_name });
-          setDepartment("");
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -576,14 +569,14 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
+          setSubDepartment("");
+          setDepartmentId("");
           HandleSuccessUpdate("Subdepartment");
           console.log(data);
           const id = data.id;
           const name = data.name;
           const department = data.department;
           updateSubDepartment(id, { id, name, department });
-          setSubDepartment("");
-          setDepartmentId("");
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -608,14 +601,14 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
+          setTeamDepartment("");
+          setSubDepartmentId("");
           HandleSuccessUpdate("Team Department");
           console.log(data);
           const id = data.id;
           const name = data.name;
           const subdepartment = data.subdepartment;
           updateTeamDepartment(id, { id, name, subdepartment });
-          setTeamDepartment("");
-          setSubDepartmentId("");
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -641,14 +634,14 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
+          setIndividualDepartment("");
+          setTeamDepartment("");
           HandleSuccessUpdate("Individual Department");
           const id = data.id;
           const name = data.name;
           const sub_subdepartment = data.sub_subdepartment;
           console.log(data);
           updateIndividualDepartment(id, { id, name, sub_subdepartment });
-          setIndividualDepartment("");
-          setTeamDepartment("");
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -673,14 +666,14 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
+          setRoleName("");
+          setHierarchy("");
           HandleSuccessUpdate("Role");
           console.log(data);
           const role_id = data.role_id;
           const role_name = data.role_name;
           const hierarchy = data.hierarchy;
           updateRoles(role_id, { role_id, role_name, hierarchy });
-          setRoleName("");
-          setHierarchy("");
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -713,8 +706,6 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          console.log(res);
-          HandleSuccessUpdate("User");
           setUsername("");
           setFirstName("");
           setLastName("");
@@ -723,6 +714,8 @@ const EditDept = () => {
           setSubDepartment("");
           setTeamDepartment("");
           setIndividualDepartment("");
+          console.log(res);
+          HandleSuccessUpdate("User");
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -749,10 +742,10 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          HandleSuccessUpdate("Perspective");
           setPerspective("");
           setPerspectiveWeight("");
           setUserId("");
+          HandleSuccessUpdate("Perspective");
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -780,11 +773,11 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          HandleSuccessUpdate("Objective");
           setObjective("");
           setObjectiveWeight("");
           setPerspective("");
           setUserId("");
+          HandleSuccessUpdate("Objective");
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {
@@ -816,13 +809,13 @@ const EditDept = () => {
             const error = (data && data.message) || res.status;
             return Promise.reject(error);
           }
-          HandleSuccessUpdate("KPI");
           setObjective("");
           setKpiName("");
           setKpiWeight("");
           setKpiTarget("");
           setPerspective("");
           setKpiUnitMeasurement("");
+          HandleSuccessUpdate("KPI");
         })
         .catch((error) => {
           if (error.code === "ERR_NETWORK") {

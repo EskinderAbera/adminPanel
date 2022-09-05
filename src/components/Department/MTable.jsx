@@ -186,11 +186,6 @@ const MTable = () => {
     }
   }, [searchTerm, kpis]);
   useEffect(() => {
-    console.log("User Type: " + userType);
-    console.log("Department: " + useDepartment);
-    console.log("Subdepartment: " + useSubDepartment);
-  }, [useDepartment, userType, barClicked]);
-  useEffect(() => {
     const perspUrl = `https://pms-apis.herokuapp.com/bsc/perspective/${urlKEY}/`;
     const objUrl = `https://pms-apis.herokuapp.com/bsc/objective/${urlKEY}/`;
 
@@ -598,21 +593,16 @@ const MTable = () => {
                           {parseFloat(kpi.objective_weight) * 100}
                         </TableCell>
                         {/* <TableCell className={classes.tableCell}>{kpi.perspective}</TableCell> */}
-                        {perspectives && perspectives.length > 0
-                          ? perspectives
+                        <TableCell className={classes.tableCell} key={index}>
+                          {perspectives &&
+                            perspectives.length > 0 &&
+                            perspectives
                               .filter(
                                 (persp) =>
                                   persp.perspective_id === kpi.perspective
                               )
-                              .map((per) => (
-                                <TableCell
-                                  className={classes.tableCell}
-                                  key={index}
-                                >
-                                  {per.perspective_name}
-                                </TableCell>
-                              ))
-                          : ""}
+                              .map((per) => per.perspective_name)}
+                        </TableCell>
                         {/* <TableCell className={classes.tableCell}>
                           {useUsers && useUsers.length > 0
                             ? useUsers

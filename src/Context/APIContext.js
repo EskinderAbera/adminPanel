@@ -110,7 +110,7 @@ export function APIContextProvider({ children }) {
   };
   const addIndividualDepartment = (id, name, sub_subdepartment) => {
     setIndividualDepartments([
-      ...useTeamDepartments,
+      ...useIndividualDepartments,
       {
         id,
         name,

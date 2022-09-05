@@ -245,7 +245,7 @@ label {
   margin-left: 10px;
 }
 .profileContainer {
-  width: 100%;
+  width: fit-content;
   height: fit-content;
   display: flex;
   position: absolute;

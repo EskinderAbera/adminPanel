@@ -11,8 +11,8 @@ const ProfileHeader = () => {
   };
   return (
     <div className="profileContainer">
-      <i class="fa-regular fa-bell"></i>
-      <i class="fa-sharp fa-regular fa-envelope"></i>
+      <i className="fa-regular fa-bell"></i>
+      <i className="fa-sharp fa-regular fa-envelope"></i>
       <div className="imageContainer">
         <img
           src="http://www.aksisweb.com/theme/fixed/layouts-1/assets/img/avtar-2.png"
