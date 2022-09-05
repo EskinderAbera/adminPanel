@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useAPI } from "../../Context/APIContext";
+import ProfileHeader from "../ProfileHeader/ProfileHeader";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -117,6 +118,8 @@ const Dashboard = () => {
           <MdOutlineWavingHand />
         </h1>
       </div> */}
+
+      <ProfileHeader />
 
       {userType === "admin" && (
         <div className={styles.dashboardContainer}>

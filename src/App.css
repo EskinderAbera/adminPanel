@@ -25,6 +25,7 @@ body {
 }
 .Table {
   display: flex;
+  position: relative;
   flex: 1;
   flex-direction: column;
   align-items: center;
@@ -74,7 +75,6 @@ body {
   box-shadow: 0 2px 4px darkslategray;
   cursor: pointer;
   transition: all 0.2s ease;
-
   color: #fff;
   background-color: #303f9f;
 }
@@ -129,7 +129,7 @@ body {
   min-width: 70%;
 }
 .search-header > .btn {
-  position: fixed;
+  position: absolute;
   right: 0;
 }
 @media only screen and (max-width: 851px) {
@@ -246,23 +246,95 @@ label {
 }
 .profileContainer {
   width: 100%;
-  height: 150px;
+  height: fit-content;
   display: flex;
-  flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 15px;
+  margin: 20px 0;
   align-items: center;
+  justify-content: flex-end;
+  font-size: 20px;
   color: #fff;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   margin: 10px auto;
 }
-
-.profileContainer > img {
-  width: 100px;
-  height: 100px;
+.profileContainer i {
+  margin: 0 15px;
+  color: #808080;
 }
-.profileContainer > p {
+.imageContainer:hover > .profile_info_iner {
+  opacity: 1;
+  visibility: visible;
+  top: 77px;
+}
+.profile_info_iner {
+  opacity: 1;
+  visibility: visible;
+  top: 77px;
+}
+.profileContainer img {
+  width: 42px;
+  height: 42px;
+}
+.profileContainer p {
   font-size: 1rem;
   margin: 0;
+}
+.profile_info_iner {
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  text-align: left;
+  width: 215px;
+  padding: 0;
+  opacity: 0;
+  font-family: "Nunito", sans-serif;
+  visibility: hidden;
+  top: 77px;
+  transition: 0.5s;
+  border-radius: 15px;
+  z-index: 20;
+  cursor: pointer;
+}
+.profile_info_iner::before {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  top: -10px;
+  right: 15px;
+  border-width: 0 11px 12px;
+  border-color: transparent transparent #567aed transparent;
+  z-index: 19;
+}
+.profile_info_iner p {
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+}
+.profile_info_iner h5 {
+  font-size: 20px;
+  color: #fff;
+  font-weight: 600;
+}
+.profile_info_iner a {
+  color: #2e4765;
+  font-size: 14px;
+  display: block;
+  padding: 10px 0;
+  font-weight: 400;
+  text-decoration: none;
+}
+.profile_author_name {
+  padding: 20px 25px;
+  background: #567aed;
+  border-radius: 10px 15px 0 0;
+}
+.profile_info_details {
+  padding: 20px 25px;
 }
 hr {
   background-color: #676e73;

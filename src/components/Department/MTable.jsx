@@ -22,6 +22,7 @@ import {
   Hidden,
 } from "@material-ui/core";
 import { useEffect } from "react";
+import ProfileHeader from "../ProfileHeader/ProfileHeader";
 
 const useStyles = makeStyles((theme) => ({
   table: {
