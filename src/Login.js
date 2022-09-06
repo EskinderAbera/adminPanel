@@ -20,7 +20,7 @@ const SlideInLeft = styled.div`
 
 const Login = ({ setIsLoggedIn }) => {
   let navigate = useNavigate();
-  const { changeUrlKEY, changeUserType } = useAPI();
+  const { changeUrlKEY, changeUserType, changeNavBarUser } = useAPI();
 
   useEffect(() => {
     changeUserType("admin");
@@ -77,6 +77,7 @@ const Login = ({ setIsLoggedIn }) => {
           if (response.status === 200) {
             setLoading(false);
             setIsLoggedIn(true);
+            changeNavBarUser("admin");
             navigate(`/dashboard`);
           }
         })
