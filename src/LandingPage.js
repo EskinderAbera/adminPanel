@@ -72,7 +72,6 @@ const LandingPage = () => {
     changeUserType(e.target.value);
     setRole(e.target.value);
     const tempRole = e.target.value;
-    console.log(e.target.value);
 
     roleResponse
       .filter((role) => role.role_name === e.target.value)
@@ -114,8 +113,6 @@ const LandingPage = () => {
   const handleDepartmentChange = (e) => {
     changeDepartment(e.target.value);
     setDepartment(e.target.value);
-
-    console.log(e.target.value);
 
     departmentResponse
       .filter((department) => department.dept_name === e.target.value)
@@ -177,11 +174,6 @@ const LandingPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log("User id: " + userId);
-  }, [userId]);
-
-  useEffect(() => {
-    console.log(useUsers);
     if (
       departmentResponse &&
       departmentResponse.length !== 0 &&
@@ -208,12 +200,6 @@ const LandingPage = () => {
   ]);
 
   const handleNavigate = () => {
-    console.log("roleId: " + roleId);
-    console.log("departmentId: " + departmentId);
-    console.log("subDepartmentId: " + subdepartmentId);
-    console.log("teamDepartmentId: " + teamDepartmentId);
-    console.log("individualDepartmentId: " + individualDepartmentId);
-
     if (role !== "Individuals") {
       usersList
         .filter((user) =>
@@ -229,7 +215,6 @@ const LandingPage = () => {
               user.individuals === individualDepartmentId
         )
         .map((us) => {
-          console.log("userId: " + us.id);
           changeUrlKEY(us.id);
           changeNavBarUser(role === "President" ? "President" : us.username);
           setUserId(us.id);

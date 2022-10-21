@@ -38,6 +38,10 @@ const EditDept = () => {
   const [kpiName, setKpiName] = useState("");
   const [kpiWeight, setKpiWeight] = useState("");
   const [kpiTarget, setKpiTarget] = useState("");
+  const [kpiQ1Target, setKpiQ1Target] = useState("");
+  const [kpiQ2Target, setKpiQ2Target] = useState("");
+  const [kpiQ3Target, setKpiQ3Target] = useState("");
+  const [kpiQ4Target, setKpiQ4Target] = useState("");
   const [perspective, setPerspective] = useState("");
   const [perspectiveWeight, setPerspectiveWeight] = useState("");
   const [objectiveWeight, setObjectiveWeight] = useState("");
@@ -223,7 +227,6 @@ const EditDept = () => {
           .map((user) => setUsername(user.username));
     } else if (DashboardPage === "kpi") {
       setKpiName(index !== "" ? kpis[index].kpi_name : "");
-      console.log();
       setKpiWeight(
         index !== "" ? parseFloat(kpis[index].kpi_weight) * 100 : ""
       );
@@ -232,6 +235,34 @@ const EditDept = () => {
           ? kpis[index].kpi_unit_measurement === "Percentage"
             ? parseFloat(kpis[index].kpi_target) * 100
             : kpis[index].kpi_target
+          : ""
+      );
+      setKpiQ1Target(
+        index !== ""
+          ? kpis[index].kpi_unit_measurement === "Percentage"
+            ? parseFloat(kpis[index].kpi_q1) * 100
+            : kpis[index].kpi_q1
+          : ""
+      );
+      setKpiQ2Target(
+        index !== ""
+          ? kpis[index].kpi_unit_measurement === "Percentage"
+            ? parseFloat(kpis[index].kpi_q2) * 100
+            : kpis[index].kpi_q2
+          : ""
+      );
+      setKpiQ3Target(
+        index !== ""
+          ? kpis[index].kpi_unit_measurement === "Percentage"
+            ? parseFloat(kpis[index].kpi_q3) * 100
+            : kpis[index].kpi_q3
+          : ""
+      );
+      setKpiQ4Target(
+        index !== ""
+          ? kpis[index].kpi_unit_measurement === "Percentage"
+            ? parseFloat(kpis[index].kpi_q4) * 100
+            : kpis[index].kpi_q4
           : ""
       );
       setKpiUnitMeasurement(
@@ -487,7 +518,11 @@ const EditDept = () => {
         objective: ceoObjectiveId,
         kpi_name: kpiName,
         kpi_weight: kpiWeight,
-        kpi_target: kpiTarget,
+        kpi_target: "0",
+        kpi_q1: kpiQ1Target,
+        kpi_q2: kpiQ2Target,
+        kpi_q3: kpiQ3Target,
+        kpi_q4: kpiQ4Target,
         perspective: ceoPerspectiveId,
         kpi_unit_measurement: kpiUnitMeasurement,
         user: userId,
@@ -507,6 +542,10 @@ const EditDept = () => {
           setKpiName("");
           setKpiWeight("");
           setKpiTarget("");
+          setKpiQ1Target("");
+          setKpiQ2Target("");
+          setKpiQ3Target("");
+          setKpiQ4Target("");
           setPerspective("");
           setKpiUnitMeasurement("");
           HandleSuccess("KPI");
@@ -791,7 +830,11 @@ const EditDept = () => {
         objective: ceoObjectiveId,
         kpi_name: kpiName,
         kpi_weight: kpiWeight,
-        kpi_target: kpiTarget,
+        kpi_target: "0",
+        kpi_q1: kpiQ1Target,
+        kpi_q2: kpiQ2Target,
+        kpi_q3: kpiQ3Target,
+        kpi_q4: kpiQ4Target,
         perspective: ceoPerspectiveId,
         kpi_unit_measurement: kpiUnitMeasurement,
         user: userId,
@@ -813,6 +856,10 @@ const EditDept = () => {
           setKpiName("");
           setKpiWeight("");
           setKpiTarget("");
+          setKpiQ1Target("");
+          setKpiQ2Target("");
+          setKpiQ3Target("");
+          setKpiQ4Target("");
           setPerspective("");
           setKpiUnitMeasurement("");
           HandleSuccessUpdate("KPI");
@@ -1470,14 +1517,40 @@ const EditDept = () => {
                   value={kpiWeight}
                 />
               </div>
-
               <div>
-                <span> KPI Target: </span>
+                <span> KPI Q1 Target: </span>
                 <input
                   id="HierarchyInput"
                   type="text"
-                  onChange={(e) => setKpiTarget(e.target.value)}
-                  value={kpiTarget}
+                  onChange={(e) => setKpiQ1Target(e.target.value)}
+                  value={kpiQ1Target}
+                />
+              </div>
+              <div>
+                <span> KPI Q2 Target: </span>
+                <input
+                  id="HierarchyInput"
+                  type="text"
+                  onChange={(e) => setKpiQ2Target(e.target.value)}
+                  value={kpiQ2Target}
+                />
+              </div>
+              <div>
+                <span> KPI Q3 Target: </span>
+                <input
+                  id="HierarchyInput"
+                  type="text"
+                  onChange={(e) => setKpiQ3Target(e.target.value)}
+                  value={kpiQ3Target}
+                />
+              </div>
+              <div>
+                <span> KPI Q4 Target: </span>
+                <input
+                  id="HierarchyInput"
+                  type="text"
+                  onChange={(e) => setKpiQ4Target(e.target.value)}
+                  value={kpiQ4Target}
                 />
               </div>
 
@@ -1711,7 +1784,7 @@ const EditDept = () => {
               </button>
             )}
 
-            {pageType !== "ADD" && (
+            {false && (
               <button className="btn delete">
                 <DeleteForeverOutlinedIcon />
                 Delete

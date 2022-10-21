@@ -24,8 +24,6 @@ const ProfileHeader = () => {
             <h5>{NavBarUser}</h5>
           </div>
           <div className="profile_info_details">
-            <a href="#">My Profile</a>
-            <a href="#">Settings</a>
             <a href="#" onClick={handleLogout}>
               Log Out
             </a>

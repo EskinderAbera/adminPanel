@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useAPI } from "../../Context/APIContext";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
+import IconBreadcrumbs from "../BreadCrumps/BreadCrumps";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -111,15 +112,10 @@ const Dashboard = () => {
 
   return (
     <main className={styles.container}>
-      {/* <div className={styles.welcome}>
-        <h1>
-          Hello , admin
-          <MdOutlineWavingHand />
-        </h1>
-      </div> */}
-
+    <div className="breadcrumps">
+        <IconBreadcrumbs />
+      </div>
       <ProfileHeader />
-
       {userType === "admin" && (
         <div className={styles.dashboardContainer}>
           <div className={styles.charts}>

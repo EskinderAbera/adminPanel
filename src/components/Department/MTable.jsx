@@ -20,6 +20,7 @@ import {
   Paper,
   TablePagination,
   Hidden,
+  TableFooter,
 } from "@material-ui/core";
 import { useEffect } from "react";
 import ProfileHeader from "../ProfileHeader/ProfileHeader";
@@ -225,7 +226,6 @@ const MTable = () => {
         .then((result) => {
           setKpis(result);
           perspectives !== [] && setLoading(false);
-          console.log(result);
         })
         .catch((error) => {
           console.log(error);
@@ -237,7 +237,6 @@ const MTable = () => {
         .then((result) => {
           setKpis(result);
           perspectives !== [] && setLoading(false);
-          console.log(result);
         })
         .catch((error) => {
           console.log(error);
@@ -249,7 +248,6 @@ const MTable = () => {
         .then((result) => {
           setKpis(result);
           perspectives !== [] && setLoading(false);
-          console.log(result);
         })
         .catch((error) => {
           console.log(error);
@@ -395,9 +393,6 @@ const MTable = () => {
                   <TableCell className={classes.tableHeaderCell}>
                     Perspective Weight
                   </TableCell>
-                  {/* <TableCell className={classes.tableHeaderCell}>
-                    User
-                  </TableCell> */}
                   <TableCell className={classes.tableHeaderCell}>
                     Manage
                   </TableCell>
@@ -414,9 +409,6 @@ const MTable = () => {
                   <TableCell className={classes.tableHeaderCell}>
                     Perspective
                   </TableCell>
-                  {/* <TableCell className={classes.tableHeaderCell}>
-                    User
-                  </TableCell> */}
                   <TableCell className={classes.tableHeaderCell}>
                     Manage
                   </TableCell>
@@ -448,12 +440,12 @@ const MTable = () => {
                 .map((kpi, index) => (
                   <TableRow key={index}>
                     {Dashboardpage === "dept" && (
-                      <>
+                      
                         <TableCell className={classes.tableCell}>
-                          {kpi.dept_name}
+                          {kpi.dept_name} Hello
                         </TableCell>
-                      </>
-                    )}
+                     
+                     )} 
                     {Dashboardpage === "subDept" && (
                       <>
                         <TableCell className={classes.tableCell}>
@@ -541,10 +533,10 @@ const MTable = () => {
                         </TableCell>
                         <TableCell className={classes.tableCell}>
                           {useroles && useroles.length > 0
-                            ? useroles
+                            && useroles
                                 .filter((role) => role.role_id === kpi.role)
                                 .map((ro) => ro.role_name)
-                            : "j"}
+                            }
                         </TableCell>
 
                         <TableCell className={classes.tableCell}>
@@ -592,7 +584,6 @@ const MTable = () => {
                         <TableCell className={classes.tableCell}>
                           {parseFloat(kpi.objective_weight) * 100}
                         </TableCell>
-                        {/* <TableCell className={classes.tableCell}>{kpi.perspective}</TableCell> */}
                         <TableCell className={classes.tableCell} key={index}>
                           {perspectives &&
                             perspectives.length > 0 &&
@@ -603,13 +594,6 @@ const MTable = () => {
                               )
                               .map((per) => per.perspective_name)}
                         </TableCell>
-                        {/* <TableCell className={classes.tableCell}>
-                          {useUsers && useUsers.length > 0
-                            ? useUsers
-                                .filter((user) => user.id === kpi.user)
-                                .map((us) => us.username)
-                            : ""}
-                        </TableCell> */}
                       </>
                     )}
                     {Dashboardpage === "kpi" && (
@@ -633,36 +617,29 @@ const MTable = () => {
                     <TableCell className={classes.tableCell}>
                       <button
                         className="btn edit"
-                        onClick={() => editPage(page * rowsPerPage + index)}
-                      >
-                        {/* Edit */}
+                        onClick={() => editPage(page * rowsPerPage + index)}>
                         <ModeEditOutlinedIcon />
                       </button>
-
-                      {/* <button
-                      className="btn delete"
-                      style={{
-                        backgroundColor: "red",
-                      }}
-                      onClick={() => handleDelete(page * rowsPerPage + index)}
-                    >
-                      Delete
-                    </button> */}
                     </TableCell>
                   </TableRow>
                 ))}
             </TableBody>
-            <TablePagination
+            <TableFooter>
+          <TableRow>
+          <TablePagination
               className={classes.tableCell}
-              component="tbody"
               count={kpis.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
-          </Table>
+            </TableRow>
+            </TableFooter>
+          </Table> 
+          
         </TableContainer>
+            
       </>
     </div>
   );
