@@ -102,7 +102,7 @@ body {
 .InputContainer {
   /* display: flex; */
   width: 50vh;
-  margin-top: 50px;
+  /* margin-top: 50px; */
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 

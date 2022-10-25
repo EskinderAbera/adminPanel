@@ -1076,11 +1076,14 @@ const EditDept = () => {
           : DashboardPage === "persp"
           ? "Add Perspective"
           : null}
+
+          <div>
         {pageType !== "ADD" && DashboardPage === "kpi"
           ? "Edit KPI"
           : DashboardPage === "kpi"
           ? "Add KPI"
           : null}
+          </div>
       </div>
 
       <div className="InputContainer">
