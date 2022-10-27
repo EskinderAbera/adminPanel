@@ -58,15 +58,6 @@ const Sidebar = () => {
                 onClick={showSidebar}
               />
             </NavIcon>
-            {/* <div className="profileContainer">
-              <img
-                src="http://www.aksisweb.com/theme/fixed/layouts-1/assets/img/avtar-2.png"
-                alt=""
-              />
-              {/* <p>{NavBarUser}</p>
-              <p>Welcome</p> 
-            </div>
-            <hr /> */}
             {userType === "admin"
               ? SidebarData.map((item, index) => {
                   return <SubMenu item={item} key={index} />;

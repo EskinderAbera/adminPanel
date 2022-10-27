@@ -69,7 +69,6 @@ const LandingPage = () => {
   };
 
   const handleRoleChange = (e) => {
-    changeUserType(e.target.value);
     setRole(e.target.value);
     const tempRole = e.target.value;
 
@@ -200,6 +199,7 @@ const LandingPage = () => {
   ]);
 
   const handleNavigate = () => {
+    changeUserType(role);
     if (role !== "Individuals") {
       usersList
         .filter((user) =>
